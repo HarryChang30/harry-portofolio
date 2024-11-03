@@ -1,0 +1,8 @@
+My name is Harry, A computer science students with minor stream Artificial Intelligence and has been working as a Software Engineer Backend around 7 years.
+Backend Development has become my specialization, but I do fine working as Cloud / DevOps Engineer / Site Reliability Engineer where focusing on building
+applications with following scalability, reliability and 12 factor apps principles. Writing code has become my passion since the moment I tried to build my own console space shooting games
+with applying core programming principles, design pattern and software engineering practices on my 2nd semester.
+
+
+Currently I'm interest learning and back to studying topics related with the Cloud Computing and Generative AI, eager to explore how these technologies can further enhance backend engineering
+and open new doors in intelligent systems development.
