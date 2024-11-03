@@ -1,6 +1,14 @@
 <script>
     export let projects = [
         {
+          name: "Personal Websites",
+          startYear: 2024,
+          endYear: 2024,
+          thumbnail: "/projects/portofolio-websites.png",
+          url: "https://harry-portofolio.vercel.app/",
+          description: "Personal portofolio websites, building the Frontend Static Sites by using Sveltekit and TailwindCSS for design layout. Purpose of this projects is to showcase my self and journey what I have done as Backend Software Engineer and starting to recap what I have learnt so far in computer science fields. Stay tune."
+        },
+        {
             name: "Prakerja Dashboard",
             startYear: 2023,
             endYear: 2024,
