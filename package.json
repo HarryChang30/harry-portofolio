@@ -27,6 +27,7 @@
 		"@fortawesome/free-brands-svg-icons": "^6.6.0",
 		"@fortawesome/free-solid-svg-icons": "^6.6.0",
 		"@fortawesome/svelte-fontawesome": "^0.2.2",
+		"@tailwindcss/typography": "^0.5.15",
 		"mdsvex": "^0.12.3"
 	}
 }
