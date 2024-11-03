@@ -12,7 +12,7 @@
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^28.0.1",
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.7.4",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"autoprefixer": "^10.4.20",
 		"postcss": "^8.4.47",
@@ -26,6 +26,8 @@
 		"@fortawesome/fontawesome-svg-core": "^6.6.0",
 		"@fortawesome/free-brands-svg-icons": "^6.6.0",
 		"@fortawesome/free-solid-svg-icons": "^6.6.0",
-		"@fortawesome/svelte-fontawesome": "^0.2.2"
+		"@fortawesome/svelte-fontawesome": "^0.2.2",
+		"@tailwindcss/typography": "^0.5.15",
+		"mdsvex": "^0.12.3"
 	}
 }

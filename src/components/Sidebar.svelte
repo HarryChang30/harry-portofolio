@@ -39,7 +39,7 @@
         </a>
       </li>
       <li>
-        <a href="#blog" on:click={() => goto('/#blog')} class="block text-lg hover:text-blue-400">
+        <a href="#blog" on:click={() => goto('/blog')} class="block text-lg hover:text-blue-400">
           Blog
         </a>
       </li>

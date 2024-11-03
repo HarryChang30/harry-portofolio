@@ -9,6 +9,7 @@
   import Experience from '../components/Experience.svelte';
   import Projects from '../components/Projects.svelte';
   import Skills from '../components/Skills.svelte';
+  import Blog from '../components/Blog.svelte';
 </script>
 
 <Sidebar />
@@ -19,9 +20,4 @@
   <Experience />
   <Projects />
   <Skills />
-
-  <section id="blog" class="mb-12">
-    <h2 class="text-3xl font-semibold text-gray-800 mb-4">Blog</h2>
-    <p class="text-gray-700">Content for Blog Section goes here...</p>
-  </section>
 </main>
