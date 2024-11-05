@@ -42,6 +42,7 @@
         {
           company: "IT Division - Binus University",
           logo: "/logos/it-binus.jpg",
+          position: "Software Engineer",
           duration: "Feb 2016 - Dec 2018",
           description: [
             "Developed features and module of web applications using technology PHP CodeIgniter, JS/Jquery and AJAX for main CMS module",
