@@ -11,7 +11,7 @@
 
 <nav class="fixed top-0 left-0 h-full w-60 bg-gray-800 text-white p-6 shadow-lg flex flex-col justify-between">
   <div>
-    <h2 class="text-2xl font-bold mb-10">Harry Chang (張哲銘)</h2>
+    <h2 class="text-2xl font-bold mb-10">Harry Chang</h2>
      <!-- Profile Icons at the Bottom -->
    <div class="mt-8 mb-8 flex justify-center space-x-6"> <!-- Increased top margin from mt-8 to mt-16 and space between icons -->
         <!-- Placeholder Image Icons (adjust as needed) -->
