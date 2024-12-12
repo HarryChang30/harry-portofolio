@@ -15,7 +15,7 @@
      <!-- Profile Icons at the Bottom -->
    <div class="mt-8 mb-8 flex justify-center space-x-6"> <!-- Increased top margin from mt-8 to mt-16 and space between icons -->
         <!-- Placeholder Image Icons (adjust as needed) -->
-    <img src="/logos/gopher.jpg" alt="Profile 1" class="w-32 h-32 rounded-full bg-gray-800 my-4">
+    <img src="/logos/go-mascot.jpg" alt="Profile 1" class="w-32 h-32 rounded-full bg-gray-800 my-4">
     </div>
     <ul class="space-y-4">
       <li>
