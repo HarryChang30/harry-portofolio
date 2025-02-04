@@ -1,9 +1,7 @@
 export interface PostMetadata {
-    title: string;
-    date: string;
-    author: string;
-    thumbnail?: string;
-  }
+  slug: string | Promise<string>;
+  content: string | Promise<string>;
+}
   
   export interface PostModule {
     default: {

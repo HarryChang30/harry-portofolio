@@ -9,7 +9,7 @@
     }
 
     export async function load({ params }: kit.LoadEvent) {
-    const post = await import(`../../posts/${params.slug}.md`);
+    const post = await import(`../../posts/${params.slug}.html`);
     return {
       props: {
         post: post.default as string,

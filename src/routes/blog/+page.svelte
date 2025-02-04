@@ -1,34 +1,35 @@
-<script context="module" lang="ts">
-    export async function load() {
-      const posts = import.meta.glob('../posts/*.md');
-      const iterablePosts = Object.entries(posts);
-  
-      const allPosts: (PostMetadata & { slug: string })[] = await Promise.all(
-        iterablePosts.map(async ([path, resolver]) => {
-          const postModule = (await resolver()) as { default: { metadata: PostMetadata } };
-          const metadata = postModule.default.metadata;
-          const slug = path.split('/').pop()?.replace('.md', '') || '';
-          
-          console.log('Loaded post:', { slug, metadata });
-          
-          return { slug, ...metadata };
-        })
-      );
-  
-      return { props: { posts: allPosts } };
+<script>
+  import { onMount } from 'svelte';
+
+  /** @type {Array<{slug: string, content: string}>} */
+  let posts = [];
+
+  onMount(async () => {
+    try {
+      const response = await fetch('/api/posts');
+      const data = await response.json();
+      posts = data.posts;
+    } catch (error) {
+      console.error('Error fetching posts:', error);
     }
-  </script>
-  
-  <script lang="ts">
-    import Blog from '../../components/Blog.svelte';
-    import type { PostMetadata } from '../../types';
-  
-    export let posts: (PostMetadata & { slug: string })[] = [];
-  </script>
-  
-  <main class="flex">
-    <section class="flex-1 p-4 sm:p-6 lg:p-8 bg-gray-100 min-h-screen">
-      <Blog {posts} />
-    </section>
-  </main>
-  
+  });
+</script>
+
+<main>
+  <title>Learning Blog</title>
+  <header class="bg-gray-800 text-white text-center py-6">
+    <h1 class="text-3xl font-bold">Learning Blog</h1>
+  </header>
+  {#each posts as post}
+    <div class="post-content">{@html post.content}</div>
+  {/each}
+  <footer class="bg-gray-800 text-white text-center py-6 cfooter">
+    <p>&copy; 2025 Learning Blog</p>
+  </footer>
+</main>
+
+<style>
+  .post-content {
+    white-space: wrap;
+  }
+</style>

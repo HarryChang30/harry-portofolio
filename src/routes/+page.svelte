@@ -9,7 +9,6 @@
   import Experience from '../components/Experience.svelte';
   import Projects from '../components/Projects.svelte';
   import Skills from '../components/Skills.svelte';
-  import Blog from '../components/Blog.svelte';
 </script>
 
 <Sidebar />
