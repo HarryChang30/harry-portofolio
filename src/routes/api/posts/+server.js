@@ -1,13 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function GET() {
   try {
-    const postsDir = path.join(__dirname, '../../../routes/posts');
-    console.log(postsDir);
+    const postsDir = path.join(process.cwd(), 'static/posts');
     const files = await fs.readdir(postsDir);
 
     const allPosts = await Promise.all(
