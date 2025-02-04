@@ -7,6 +7,8 @@
   onMount(async () => {
     try {
       const response = await fetch('/api/posts');
+      console.log(JSON.stringify(response));
+
       const data = await response.json();
       posts = data.posts;
     } catch (error) {
@@ -20,9 +22,15 @@
   <header class="bg-gray-800 text-white text-center py-6">
     <h1 class="text-3xl font-bold">Learning Blog</h1>
   </header>
-  {#each posts as post}
-    <div class="post-content">{@html post.content}</div>
-  {/each}
+  
+  {#if posts.length === 0}
+    <p class="text-center py-4">Loading posts...</p>
+  {:else}
+    {#each posts as post}
+      <div class="post-content">{@html post.content}</div>
+    {/each}
+  {/if}
+  
   <footer class="bg-gray-800 text-white text-center py-6 cfooter">
     <p>&copy; 2025 Learning Blog</p>
   </footer>
