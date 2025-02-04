@@ -1,31 +1,27 @@
-import fs from 'fs/promises';
-import path from 'path';
-
+// @ts-nocheck
 export async function GET() {
-  try {
-    const postsDir = path.join(process.cwd(), 'static/posts');
-    const files = await fs.readdir(postsDir);
-
-    const allPosts = await Promise.all(
-      files
-        .filter(file => file.endsWith('.html'))
-        .map(async (file) => {
-          const absolutePath = path.join(postsDir, file);
-          const content = await fs.readFile(absolutePath, 'utf-8');
-          const slug = path.basename(file, '.html');
-
+    try {
+      // Import all HTML files from `src/lib/posts/`
+      const files = import.meta.glob('/src/lib/posts/*.html', { as: 'raw' });
+  
+      // Read file contents
+      const allPosts = await Promise.all(
+        Object.entries(files).map(async ([filePath, resolver]) => {
+          const content = await resolver();
+          const slug = filePath ? filePath.split('/').pop().replace('.html', '') : '';
           return { slug, content };
         })
-    );
-
-    return new Response(JSON.stringify({ posts: allPosts }), {
-      headers: { 'Content-Type': 'application/json' }
-    });
-  } catch (error) {
-    console.error('Error reading posts:', error);
-    return new Response(JSON.stringify({ error: 'Failed to load posts' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+      );
+  
+      return new Response(JSON.stringify({ posts: allPosts }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } catch (error) {
+      console.error('Error reading posts:', error);
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
   }
-}
+  
