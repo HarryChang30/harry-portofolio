@@ -10,7 +10,7 @@ export default defineConfig({
     commonjs(),
     {
       name: 'custom-api',
-      apply: 'build',
+      apply: 'serve',
       configureServer(server) {
         server.middlewares.use('/api/posts', async (req, res, next) => {
           const postsDir = path.resolve(__dirname, '../harry-portofolio/src/routes/posts');
