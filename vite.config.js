@@ -1,7 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import commonjs from '@rollup/plugin-commonjs';
-import { marked } from 'marked';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -10,7 +9,8 @@ export default defineConfig({
     sveltekit(),
     commonjs(),
     {
-      name: 'vite-plugin-api',
+      name: 'custom-api',
+      apply: 'serve',
       configureServer(server) {
         server.middlewares.use('/api/posts', async (req, res, next) => {
           const postsDir = path.resolve(__dirname, '../harry-portofolio/src/routes/posts');

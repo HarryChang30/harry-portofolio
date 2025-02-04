@@ -29,7 +29,6 @@
 		"@fortawesome/svelte-fontawesome": "^0.2.2",
 		"@tailwindcss/typography": "^0.5.15",
 		"marked": "^15.0.6",
-		"mdsvex": "^0.12.3",
-		"vite-plugin-api": "^1.0.7"
+		"mdsvex": "^0.12.3"
 	}
 }
