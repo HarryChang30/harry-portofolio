@@ -5,101 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* General Body Styling */
         body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
+            min-height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9fafb;
+            background-color: #f9fafb; /* Light gray background */
+            color: #2d3748; /* Dark text color for readability */
+            max-width: 100%;
         }
+
+        /* Container Styling */
         .container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            max-width: 100%; /* Limit width for larger screens */
+            margin: 0 auto; /* Center the container horizontally */
+            padding: 2rem; /* Add padding inside the container */
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
         }
+
+        /* Header Styling */
         header {
-            background-color: #4a5568;
-            color: white;
+            background-color: #4a5568; /* Dark gray header background */
+            color: white; /* White text for contrast */
             text-align: center;
-            padding: 1rem 0;
+            max-width: 100%; /* Full width header */
         }
+
         header h1 {
-            font-size: 1.5rem;
+            font-size: 1.75rem; /* Slightly larger font size for emphasis */
             font-weight: bold;
+            margin: 0; /* Remove default margin */
         }
+
+        /* Main Content Styling */
         main {
             flex: 1;
             display: flex;
-            flex-direction: column;
-            margin-top: 2rem;
+            flex-direction: column; 
         }
+
+        /* Blog Post Styling */
         .blog-post {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
+            background-color: white; /* White background for blog posts */
+            border-radius: 12px; /* Larger rounded corners for a modern look */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            padding: 2.5rem; /* Increased padding for better spacing */
+            margin-bottom: 2.5rem; /* More space between blog posts */
         }
+
         .blog-post h2 {
-            font-size: 1.75rem;
+            font-size: 2rem; /* Larger heading for better hierarchy */
             margin-bottom: 1rem;
             color: #2d3748;
         }
+
         .blog-post p {
             font-size: 1rem;
-            line-height: 1.6;
+            line-height: 1.7; /* Slightly increased line height for readability */
             color: #4a5568;
         }
-        footer {
-            background-color: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
-        }
-        footer p {
-            font-size: 0.9rem;
-        }
 
+        /* Image Styling */
         .image-container {
-            display: flex; /* Use Flexbox for centering */
-            flex-direction: column; /* Stack items vertically */
-            align-items: center; /* Center items horizontally */
-            justify-content: center; /* Center items vertically (if needed) */
-            margin-top: 1.5rem;
-            text-align: center; /* Ensure text inside the container is centered */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center image horizontally */
+            justify-content: center; /* Center image vertically if needed */
+            margin-top: 2rem; /* Increased spacing above the image */
+            text-align: center;
         }
 
         .blog-image {
-            max-width: 80%; /* Resize the image to 80% of the container's width */
+            max-width: 70%; /* Reduced image size for better fit */
             height: auto; /* Maintain aspect ratio */
-            border-radius: 8px; /* Add rounded corners for a modern look */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            border-radius: 12px; /* Match rounded corners with blog post */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Consistent shadow */
         }
 
         figcaption {
             font-size: 0.9rem;
             color: #4a5568;
-            margin-top: 0.5rem;
-            font-style: italic; /* Make the caption italic for distinction */
+            margin-top: 0.75rem; /* Slightly more space between image and caption */
+            font-style: italic;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #2d3748; /* Dark footer background */
+            color: white; /* White text for contrast */
+            text-align: center;
+            padding: 1.5rem 0; /* Consistent padding */
+            margin-top: 2rem; /* Space above the footer */
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin: 0; /* Remove default margin */
         }
 
         /* Responsive Design */
         @media (min-width: 768px) {
             .container {
-                flex-direction: row;
-                justify-content: space-between;
+                flex-direction: row; /* Switch to a two-column layout */
+                justify-content: space-between; /* Add space between main and aside */
             }
+
             main {
-                flex: 2;
-                margin-right: 2rem;
+                flex: 2; /* Main content takes up more space */
             }
+
             aside {
-                flex: 1;
+                flex: 1; /* Sidebar takes up less space */
             }
         }
     </style>
@@ -111,12 +132,9 @@
             <article class="blog-post">
                 <h2>Raft Consensus Algorithm</h2>
                 <p>
-                    The Raft Consensus Algorithm is a distributed consensus protocol designed to manage a replicated log in a distributed system. It ensures that multiple servers agree on the same sequence of operations, even in the presence of failures. Unlike its predecessor, Paxos, Raft is known for its simplicity and ease of understanding, making it a popular choice for building reliable distributed systems.
+                    The Raft Consensus Algorithm is a distributed consensus protocol designed to manage a replicated log in a distributed system. It ensures that multiple servers agree on the same sequence of operations, even in the presence of failures. Unlike its predecessor, Paxos, Raft is known for its simplicity and ease of understanding, making it a popular choice for building reliable distributed systems. As its core, Raft divides the consensus problem into three key components: leader election, log replication, and safety. A single leader is elected to manage the log replication process, ensuring that all followers stay in sync. If the leader fails, a new leader is elected through a voting mechanism. This approach simplifies the process of maintaining consistency across nodes in a distributed system.
                 </p>
-                <p>
-                    At its core, Raft divides the consensus problem into three key components: leader election, log replication, and safety. A single leader is elected to manage the log replication process, ensuring that all followers stay in sync. If the leader fails, a new leader is elected through a voting mechanism. This approach simplifies the process of maintaining consistency across nodes in a distributed system.
-                </p>
-            
+
                 <!-- Image Figure -->
                 <figure class="image-container">
                     <img src="/blog/raft-consensus.png" alt="Visualization of the Raft Consensus Algorithm" class="blog-image">
