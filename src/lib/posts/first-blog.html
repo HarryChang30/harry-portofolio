@@ -14,7 +14,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f9fafb; /* Light gray background */
             color: #2d3748; /* Dark text color for readability */
-            max-width: 100%;
+            line-height: 1.6; /* Consistent line height */
         }
 
         /* Container Styling */
@@ -30,38 +30,48 @@
 
         /* Header Styling */
         header {
-            background-color: #4a5568; /* Dark gray header background */
+            background-color: #1e3a8a; /* Deep blue header background */
             color: white; /* White text for contrast */
             text-align: center;
-            max-width: 100%; /* Full width header */
+            padding: 2rem 0; /* Increased padding for better spacing */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            max-width: 100%;
         }
 
         header h1 {
-            font-size: 1.75rem; /* Slightly larger font size for emphasis */
+            font-size: 2rem; /* Larger font size for emphasis */
             font-weight: bold;
             margin: 0; /* Remove default margin */
+            letter-spacing: 1px; /* Slightly spaced-out letters */
         }
 
         /* Main Content Styling */
         main {
             flex: 1;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
         }
 
         /* Blog Post Styling */
         .blog-post {
             background-color: white; /* White background for blog posts */
-            border-radius: 12px; /* Larger rounded corners for a modern look */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
-            padding: 2.5rem; /* Increased padding for better spacing */
-            margin-bottom: 2.5rem; /* More space between blog posts */
+            border-radius: 16px; /* Larger rounded corners for a modern look */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+            padding: 3rem; /* Increased padding for better spacing */
+            margin-bottom: 3rem; /* More space between blog posts */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px); /* Lift the card slightly on hover */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
         }
 
         .blog-post h2 {
-            font-size: 2rem; /* Larger heading for better hierarchy */
-            margin-bottom: 1rem;
-            color: #2d3748;
+            font-size: 2.25rem; /* Larger heading for better hierarchy */
+            margin-bottom: 1.5rem;
+            color: #1e3a8a; /* Match header color for consistency */
+            font-weight: bold;
         }
 
         .blog-post p {
@@ -81,31 +91,54 @@
         }
 
         .blog-image {
-            max-width: 70%; /* Reduced image size for better fit */
+            max-width: 100%; /* Make the image responsive */
             height: auto; /* Maintain aspect ratio */
-            border-radius: 12px; /* Match rounded corners with blog post */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+            border-radius: 16px; /* Match rounded corners with blog post */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+
+        .blog-image:hover {
+            transform: scale(1.05); /* Slightly zoom in on hover */
         }
 
         figcaption {
             font-size: 0.9rem;
             color: #4a5568;
-            margin-top: 0.75rem; /* Slightly more space between image and caption */
+            margin-top: 1rem; /* Slightly more space between image and caption */
             font-style: italic;
+        }
+
+        /* Lists Styling */
+        ul {
+            list-style-type: disc; /* Use bullet points */
+            padding-left: 1.5rem; /* Indentation for lists */
+            margin-top: 1rem; /* Space above lists */
+        }
+
+        li {
+            margin-bottom: 0.5rem; /* Space between list items */
+            color: #2d3748;
+        }
+
+        strong {
+            color: #1e3a8a; /* Highlight important text with the header color */
         }
 
         /* Footer Styling */
         footer {
-            background-color: #2d3748; /* Dark footer background */
+            background-color: #1e3a8a; /* Deep blue footer background */
             color: white; /* White text for contrast */
             text-align: center;
-            padding: 1.5rem 0; /* Consistent padding */
+            padding: 2rem 0; /* Consistent padding */
             margin-top: 2rem; /* Space above the footer */
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
         }
 
         footer p {
             font-size: 0.9rem;
             margin: 0; /* Remove default margin */
+            letter-spacing: 1px; /* Slightly spaced-out letters */
         }
 
         /* Responsive Design */
@@ -140,6 +173,94 @@
                     <img src="/blog/raft-consensus.png" alt="Visualization of the Raft Consensus Algorithm" class="blog-image">
                     <figcaption>Figure 1: Visualization of the Raft Consensus Algorithm showing leader election.</figcaption>
                 </figure>
+                <br>
+                <p> In this part of the blog post, we'll explore the core concepts of the Raft Consensus Algorithm and how it ensures fault tolerance and consistency in distributed systems. Raft is designed to be simple and understandable, making it an excellent choice for developers and researchers working on distributed systems. </p>
+                <p> This blog will break down the Raft algorithm into its three main states: <strong>Follower</strong>, <strong>Candidate</strong>, and <strong>Leader</strong>, and explore how these states interact to ensure a reliable, fault-tolerant system. We'll also examine the election process, leader discovery, and how Raft resolves conflicts. </p>
+                <p> Here’s what we’ll cover in this post: </p>
+                    <ul>
+                    <li><strong>Raft Overview</strong>: A quick introduction to the algorithm and its goals.</li>
+                    <li><strong>State 1: Follower</strong>: The starting point for every server in the cluster.</li>
+                    <li><strong>State 2: Candidate</strong>: What happens when a Follower times out and initiates an election.</li>
+                    <li><strong>State 3: Leader</strong>: The server responsible for maintaining cluster consistency.</li>
+                    <li><strong>Timeouts and Elections</strong>: How Raft ensures a new Leader is chosen quickly.</li>
+                    <li><strong>Conflict Resolution</strong>: Handling higher terms and stale Leaders.</li>
+                    <li><strong>Fault Tolerance</strong>: The mechanisms that make Raft resilient.</li>
+                    </ul>
+                <p> By the end of this post, you'll have a clear understanding of how Raft works and why it’s one of the most widely adopted consensus algorithms today. Let’s dive in! </p>
+                <br><br>
+                <h2>Raft Overview</h2>
+                <p>
+                    Raft is a consensus algorithm designed to manage replicated logs in a distributed system. It was introduced by Diego Ongaro and John Ousterhout in 2014 as an alternative to the more complex Paxos algorithm. Raft is known for its simplicity and understandability, making it an excellent choice for building reliable distributed systems.
+                    The primary goal of Raft is to ensure that multiple servers agree on the same sequence of operations, even in the presence of failures. This is achieved by electing a single leader to manage the log replication process. The leader is responsible for coordinating updates and ensuring that all followers stay in sync.
+                </p>
+                <br><br>
+                <h2>Follower</h2>
+                <p>
+                    The Follower state is the starting point for every server in a Raft cluster. In this state, servers listen for incoming messages from the leader and other followers. If a follower doesn’t receive any messages for a certain period (known as the election timeout), it transitions to the Candidate state and initiates an election.
+                </p>
+                <br>
+                <p>
+                    Let's try to implement the node, cluster and initiate the follower in this section with Go implementation.
+                </p>
+                <ul>
+                    <li>
+                        <strong>Node</strong>: A single server in the Raft cluster.
+                        <pre>
+                            <code class="language-go">
+                                // Node represents a single server in the Raft cluster.
+                                type Node struct {
+                                    mu       sync.Mutex
+                                    id       int
+                                    state    string
+                                    term     int
+                                    votes    int
+                                    leaderID int
+                                }
+                            </code>
+                        </pre>
+                    </li>
+                    <li>
+                        <strong>Cluster</strong>: A group of nodes that communicate with each other.
+                        <pre>
+                            <code class="language-go">
+                                // Constants
+                                const (
+                                    FOLLOWER  = "Follower"
+                                    CANDIDATE = "Candidate"
+                                    LEADER    = "Leader"
+                                )
+
+                                // Cluster represents a group of nodes in the Raft cluster.
+                                type Cluster struct {
+                                    nodes []*Node
+                                }
+                            </code>
+                        </pre>
+                    </li>
+                    <li>
+                        <strong>Initiate Follower</strong>: Start a server in the Follower state.
+                        <pre>
+                            <code class="language-go">
+                                // NewCluster initializes a new cluster with n nodes
+                                func NewCluster(n int) *Cluster {
+                                    cluster := &Cluster{}
+                                    for i := 0; i < n; i++ {
+                                        node := &Node{
+                                            id:       i,
+                                            state:    FOLLOWER,
+                                            term:     0,
+                                            votes:    0,
+                                            leaderID: -1,
+                                        }
+                                        cluster.nodes = append(cluster.nodes, node)
+                                    }
+                                    return cluster
+                                }
+                            </code>
+                        </pre>
+                    </li>
+                </ul>
+
             </article>
 
             <!-- Another Blog Post -->
