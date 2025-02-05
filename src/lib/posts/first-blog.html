@@ -109,6 +109,36 @@
             font-style: italic;
         }
 
+        /* Code Block Styling */
+        .code-container {
+            background-color: #f7fafc; /* Light background for code blocks */
+            border-radius: 16px; /* Match rounded corners with blog post */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+            padding: 2rem; /* Padding inside the code block */
+            margin-top: 2rem; /* Space above the code block */
+            overflow-x: auto; /* Horizontal scrolling for long code lines */
+        }
+
+        pre {
+            margin: 0; /* Remove default margin */
+            font-size: 0.9rem; /* Slightly smaller font size for code */
+            line-height: 1.6; /* Consistent line height */
+            color: #2d3748; /* Dark text color for readability */
+        }
+
+        code {
+            display: block; /* Make it behave like a block element */
+            white-space: pre-wrap; /* Allow wrapping within the viewport */
+            background-color: #f4f4f9; /* Light background for better readability */
+            border: 1px solid #ddd; /* Add a subtle border */
+            border-radius: 8px; /* Rounded corners */
+            padding: 1rem; /* Add some padding */
+            font-family: monospace; /* Use a monospace font for code */
+            font-size: 0.9rem; /* Adjust font size for readability on mobile */
+            overflow-x: auto; /* Enable horizontal scrolling for long lines */
+            word-break: break-word; /* Break words if needed for small screens */
+        }
+
         /* Lists Styling */
         ul {
             list-style-type: disc; /* Use bullet points */
@@ -154,6 +184,11 @@
 
             aside {
                 flex: 1; /* Sidebar takes up less space */
+            }
+
+            code {
+                font-size: 0.85rem; /* Slightly smaller font on smaller devices */
+                padding: 0.75rem; /* Adjust padding for mobile */
             }
         }
     </style>
@@ -204,15 +239,15 @@
                         <strong>Node</strong>: A single server in the Raft cluster.
                         <pre>
                             <code class="language-go">
-                                // Node represents a single server in the Raft cluster.
-                                type Node struct {
-                                    mu       sync.Mutex
-                                    id       int
-                                    state    string
-                                    term     int
-                                    votes    int
-                                    leaderID int
-                                }
+// Node represents a single server in the Raft cluster.
+type Node struct {
+    mu       sync.Mutex
+    id       int
+    state    string
+    term     int
+    votes    int
+    leaderID int
+}
                             </code>
                         </pre>
                     </li>
@@ -220,17 +255,17 @@
                         <strong>Cluster</strong>: A group of nodes that communicate with each other.
                         <pre>
                             <code class="language-go">
-                                // Constants
-                                const (
-                                    FOLLOWER  = "Follower"
-                                    CANDIDATE = "Candidate"
-                                    LEADER    = "Leader"
-                                )
+// Constants
+const (
+    FOLLOWER  = "Follower"
+    CANDIDATE = "Candidate"
+    LEADER    = "Leader"
+)
 
-                                // Cluster represents a group of nodes in the Raft cluster.
-                                type Cluster struct {
-                                    nodes []*Node
-                                }
+// Cluster represents a group of nodes in the Raft cluster.
+type Cluster struct {
+    nodes []*Node
+}
                             </code>
                         </pre>
                     </li>
@@ -238,21 +273,21 @@
                         <strong>Initiate Follower</strong>: Start a server in the Follower state.
                         <pre>
                             <code class="language-go">
-                                // NewCluster initializes a new cluster with n nodes
-                                func NewCluster(n int) *Cluster {
-                                    cluster := &Cluster{}
-                                    for i := 0; i < n; i++ {
-                                        node := &Node{
-                                            id:       i,
-                                            state:    FOLLOWER,
-                                            term:     0,
-                                            votes:    0,
-                                            leaderID: -1,
-                                        }
-                                        cluster.nodes = append(cluster.nodes, node)
-                                    }
-                                    return cluster
-                                }
+// NewCluster initializes a new cluster with n nodes
+func NewCluster(n int) *Cluster {
+    cluster := &Cluster{}
+    for i := 0; i < n; i++ {
+        node := &Node{
+            id:       i,
+            state:    FOLLOWER,
+            term:     0,
+            votes:    0,
+            leaderID: -1,
+        }
+        cluster.nodes = append(cluster.nodes, node)
+    }
+    return cluster
+}
                             </code>
                         </pre>
                     </li>
@@ -271,34 +306,34 @@
                         <strong>Start Election</strong>: A follower transitions to the candidate state and starts an election. If the candidate receives votes from a majority of servers, it becomes the leader.
                         <pre>
                             <code class="language-go">
-                                // StartElection attempts to elect a leader
-                                func (n *Node) StartElection(cluster *Cluster) {
-                                    n.mu.Lock()
-                                    n.state = CANDIDATE
-                                    n.term++
-                                    n.votes = 1
-                                    n.mu.Unlock()
+// StartElection attempts to elect a leader
+func (n *Node) StartElection(cluster *Cluster) {
+    n.mu.Lock()
+    n.state = CANDIDATE
+    n.term++
+    n.votes = 1
+    n.mu.Unlock()
 
-                                    fmt.Printf("Node %d starts election for Term %d\n", n.id, n.term)
+    fmt.Printf("Node %d starts election for Term %d\n", n.id, n.term)
 
-                                    // Request votes from other nodes
-                                    votes := 1
-                                    for _, peer := range cluster.nodes {
-                                        if peer.id != n.id && peer.RequestVote(n.term) {
-                                            votes++
-                                        }
-                                    }
+    // Request votes from other nodes
+    votes := 1
+    for _, peer := range cluster.nodes {
+        if peer.id != n.id && peer.RequestVote(n.term) {
+            votes++
+        }
+    }
 
-                                    // Check if election was successful
-                                    if votes > len(cluster.nodes)/2 {
-                                        n.mu.Lock()
-                                        n.state = LEADER
-                                        n.leaderID = n.id
-                                        n.mu.Unlock()
-                                        fmt.Printf("Node %d is elected as leader for term %d\n", n.id, n.term)
-                                        go n.SendHeartbeats(cluster)
-                                    }
-                                }
+    // Check if election was successful
+    if votes > len(cluster.nodes)/2 {
+        n.mu.Lock()
+        n.state = LEADER
+        n.leaderID = n.id
+        n.mu.Unlock()
+        fmt.Printf("Node %d is elected as leader for term %d\n", n.id, n.term)
+        go n.SendHeartbeats(cluster)
+    }
+}
                             </code>
                         </pre>
                     </li>
@@ -306,20 +341,20 @@
                         <strong>Request Votes</strong>: A candidate requests votes from other servers in the cluster.
                         <pre>
                             <code class="language-go">
-                                // RequestVote handles a vote request
-                                func (n *Node) RequestVote(term int) bool {
-                                    n.mu.Lock()
-                                    defer n.mu.Unlock()
+// RequestVote handles a vote request
+func (n *Node) RequestVote(term int) bool {
+    n.mu.Lock()
+    defer n.mu.Unlock()
 
-                                    if term > n.term {
-                                        n.term = term
-                                        n.state = FOLLOWER
-                                        fmt.Printf("Node %d voted for term %d\n", n.id, term)
-                                        return true
-                                    }
+    if term > n.term {
+        n.term = term
+        n.state = FOLLOWER
+        fmt.Printf("Node %d voted for term %d\n", n.id, term)
+        return true
+    }
 
-                                    return false
-                                }
+    return false
+}
                             </code>
                         </pre>
                     </li>
@@ -338,22 +373,22 @@
                         <strong>Send Heartbeats</strong>: The leader sends heartbeat messages to followers to maintain cluster consistency.
                         <pre>
                             <code class="language-go">
-                                // SendHeartbeats simulates leader sending heartbeats
-                                func (n *Node) SendHeartbeats(cluster *Cluster) {
-                                    for {
-                                        if n.state != LEADER {
-                                            return
-                                        }
+// SendHeartbeats simulates leader sending heartbeats
+func (n *Node) SendHeartbeats(cluster *Cluster) {
+    for {
+        if n.state != LEADER {
+            return
+        }
 
-                                        fmt.Printf("Leader %d sending heartbeats...\n", n.id)
-                                        for _, peer := range cluster.nodes {
-                                            if peer.id != n.id {
-                                                peer.ReceiveHeartbeat(n.id)
-                                            }
-                                        }
-                                        time.Sleep(2 * time.Second)
-                                    }
-                                }
+        fmt.Printf("Leader %d sending heartbeats...\n", n.id)
+        for _, peer := range cluster.nodes {
+            if peer.id != n.id {
+                peer.ReceiveHeartbeat(n.id)
+            }
+        }
+        time.Sleep(2 * time.Second)
+    }
+}
                             </code>
                         </pre>
                     </li>
@@ -361,14 +396,14 @@
                         <strong>Follower Receiving Heartbeats</strong>: A follower receives heartbeats from the leader to stay in sync.
                         <pre>
                             <code class="language-go">
-                                // ReceiveHeartbeat resets election timeout
-                                func (n *Node) ReceiveHeartbeat(leaderID int) {
-                                    n.mu.Lock()
-                                    n.state = FOLLOWER
-                                    n.leaderID = leaderID
-                                    n.mu.Unlock()
-                                    fmt.Printf("Node %d received heartbeat from leader %d\n", n.id, leaderID)
-                                }
+// ReceiveHeartbeat resets election timeout
+func (n *Node) ReceiveHeartbeat(leaderID int) {
+    n.mu.Lock()
+    n.state = FOLLOWER
+    n.leaderID = leaderID
+    n.mu.Unlock()
+    fmt.Printf("Node %d received heartbeat from leader %d\n", n.id, leaderID)
+}
                             </code>
                         </pre>
                     </li>
@@ -380,29 +415,29 @@
                 </p>
                 <pre>
                     <code class="language-go">
-                        // Simulate runs the Raft protocol
-                        func (c *Cluster) Simulate() {
-                            for _, node := range c.nodes {
-                                go func(n *Node) {
-                                    for {
-                                        time.Sleep(time.Duration(rand.Intn(5)+3) * time.Second)
-                                        if n.state == FOLLOWER {
-                                            n.StartElection(c)
-                                        }
-                                    }
-                                }(node)
-                            }
-                        }
+// Simulate runs the Raft protocol
+func (c *Cluster) Simulate() {
+    for _, node := range c.nodes {
+        go func(n *Node) {
+            for {
+                time.Sleep(time.Duration(rand.Intn(5)+3) * time.Second)
+                if n.state == FOLLOWER {
+                    n.StartElection(c)
+                }
+            }
+        }(node)
+    }
+}
 
-                        func main() {
-                            rand.Seed(time.Now().UnixNano())
-                        
-                            // Initialize a cluster with 5 nodes
-                            cluster := NewCluster(5)
-                            cluster.Simulate()
-                        
-                            time.Sleep(20 * time.Second) // Allow time for elections
-                        }
+func main() {
+    rand.Seed(time.Now().UnixNano())
+
+    // Initialize a cluster with 5 nodes
+    cluster := NewCluster(5)
+    cluster.Simulate()
+
+    time.Sleep(20 * time.Second) // Allow time for elections
+}
                     </code>
                 </pre>
                 <figure class="image-container">
