@@ -182,9 +182,6 @@
                     <li><strong>State 1: Follower</strong>: The starting point for every server in the cluster.</li>
                     <li><strong>State 2: Candidate</strong>: What happens when a Follower times out and initiates an election.</li>
                     <li><strong>State 3: Leader</strong>: The server responsible for maintaining cluster consistency.</li>
-                    <li><strong>Timeouts and Elections</strong>: How Raft ensures a new Leader is chosen quickly.</li>
-                    <li><strong>Conflict Resolution</strong>: Handling higher terms and stale Leaders.</li>
-                    <li><strong>Fault Tolerance</strong>: The mechanisms that make Raft resilient.</li>
                     </ul>
                 <p> By the end of this post, you'll have a clear understanding of how Raft works and why it’s one of the most widely adopted consensus algorithms today. Let’s dive in! </p>
                 <br><br>
@@ -261,6 +258,174 @@
                     </li>
                 </ul>
 
+                <h2>Candidate</h2>
+                <p>
+                    The Candidate state is entered when a follower times out and initiates an election. In this state, the server transitions from follower to candidate and requests votes from other servers in the cluster. If a candidate receives votes from a majority of servers, it becomes the new leader. Otherwise, the election fails, and the candidate reverts to the follower state.
+                </p>
+                <br>
+                <p>
+                    In this part of implementation, we'll explore how the candidate will request votes from other servers and become the leader.
+                </p>
+                <ul>
+                    <li>
+                        <strong>Start Election</strong>: A follower transitions to the candidate state and starts an election. If the candidate receives votes from a majority of servers, it becomes the leader.
+                        <pre>
+                            <code class="language-go">
+                                // StartElection attempts to elect a leader
+                                func (n *Node) StartElection(cluster *Cluster) {
+                                    n.mu.Lock()
+                                    n.state = CANDIDATE
+                                    n.term++
+                                    n.votes = 1
+                                    n.mu.Unlock()
+
+                                    fmt.Printf("Node %d starts election for Term %d\n", n.id, n.term)
+
+                                    // Request votes from other nodes
+                                    votes := 1
+                                    for _, peer := range cluster.nodes {
+                                        if peer.id != n.id && peer.RequestVote(n.term) {
+                                            votes++
+                                        }
+                                    }
+
+                                    // Check if election was successful
+                                    if votes > len(cluster.nodes)/2 {
+                                        n.mu.Lock()
+                                        n.state = LEADER
+                                        n.leaderID = n.id
+                                        n.mu.Unlock()
+                                        fmt.Printf("Node %d is elected as leader for term %d\n", n.id, n.term)
+                                        go n.SendHeartbeats(cluster)
+                                    }
+                                }
+                            </code>
+                        </pre>
+                    </li>
+                    <li>
+                        <strong>Request Votes</strong>: A candidate requests votes from other servers in the cluster.
+                        <pre>
+                            <code class="language-go">
+                                // RequestVote handles a vote request
+                                func (n *Node) RequestVote(term int) bool {
+                                    n.mu.Lock()
+                                    defer n.mu.Unlock()
+
+                                    if term > n.term {
+                                        n.term = term
+                                        n.state = FOLLOWER
+                                        fmt.Printf("Node %d voted for term %d\n", n.id, term)
+                                        return true
+                                    }
+
+                                    return false
+                                }
+                            </code>
+                        </pre>
+                    </li>
+                </ul>
+                <br><br>
+                <h2>Leader</h2>
+                <p>
+                    The Leader state is responsible for maintaining cluster consistency by coordinating updates and ensuring that all followers stay in sync. The leader sends heartbeat messages to followers to let them know it's still active. If a follower doesn't receive a heartbeat within a certain period, it transitions back to the candidate state and starts a new election.
+                </p>
+                <br><br>
+                <p>
+                    In this section, we'll explore how the leader sends heartbeat messages to followers and maintains cluster consistency.
+                </p>
+                <ul>
+                    <li>
+                        <strong>Send Heartbeats</strong>: The leader sends heartbeat messages to followers to maintain cluster consistency.
+                        <pre>
+                            <code class="language-go">
+                                // SendHeartbeats simulates leader sending heartbeats
+                                func (n *Node) SendHeartbeats(cluster *Cluster) {
+                                    for {
+                                        if n.state != LEADER {
+                                            return
+                                        }
+
+                                        fmt.Printf("Leader %d sending heartbeats...\n", n.id)
+                                        for _, peer := range cluster.nodes {
+                                            if peer.id != n.id {
+                                                peer.ReceiveHeartbeat(n.id)
+                                            }
+                                        }
+                                        time.Sleep(2 * time.Second)
+                                    }
+                                }
+                            </code>
+                        </pre>
+                    </li>
+                    <li>
+                        <strong>Follower Receiving Heartbeats</strong>: A follower receives heartbeats from the leader to stay in sync.
+                        <pre>
+                            <code class="language-go">
+                                // ReceiveHeartbeat resets election timeout
+                                func (n *Node) ReceiveHeartbeat(leaderID int) {
+                                    n.mu.Lock()
+                                    n.state = FOLLOWER
+                                    n.leaderID = leaderID
+                                    n.mu.Unlock()
+                                    fmt.Printf("Node %d received heartbeat from leader %d\n", n.id, leaderID)
+                                }
+                            </code>
+                        </pre>
+                    </li>
+                </ul>
+            
+                <h2>Cluster Simulation</h2>
+                <p>
+                    Now that we've implemented the core components of the Raft algorithm, let's simulate a Raft cluster with multiple nodes and observe how they interact. We'll start by creating a new cluster with three nodes and initiating an election to elect a leader. We'll then simulate the leader sending heartbeats to followers to maintain cluster consistency.
+                </p>
+                <pre>
+                    <code class="language-go">
+                        // Simulate runs the Raft protocol
+                        func (c *Cluster) Simulate() {
+                            for _, node := range c.nodes {
+                                go func(n *Node) {
+                                    for {
+                                        time.Sleep(time.Duration(rand.Intn(5)+3) * time.Second)
+                                        if n.state == FOLLOWER {
+                                            n.StartElection(c)
+                                        }
+                                    }
+                                }(node)
+                            }
+                        }
+
+                        func main() {
+                            rand.Seed(time.Now().UnixNano())
+                        
+                            // Initialize a cluster with 5 nodes
+                            cluster := NewCluster(5)
+                            cluster.Simulate()
+                        
+                            time.Sleep(20 * time.Second) // Allow time for elections
+                        }
+                    </code>
+                </pre>
+                <figure class="image-container">
+                    <img src="/blog/raft-simulation.png" alt="Raft Cluster Simulation" class="blog-image">
+                    <figcaption>Figure 2: Visualization of a Raft cluster simulation with multiple nodes.</figcaption>
+                </figure>
+                <br>
+                <p>
+                    In the visualization above, we can see a Node 4 starts election for Term 19 and is elected as the leader for the term. The leader sends
+                    heartbeats to other nodes to maintain cluster consistency. This simulation demonstrates how Raft ensures fault tolerance and consistency in a distributed system.
+                </p>
+
+                <h2>Conclusion</h2>
+                <p>
+                    The Raft Consensus Algorithm is a powerful tool for building reliable distributed systems. By dividing the consensus problem into leader election, log replication, and safety, Raft simplifies the process of maintaining consistency across nodes in a distributed system. Its clear and understandable design makes it an excellent choice for developers and researchers working on distributed systems. In this blog post, we explored the core concepts of the Raft algorithm, including the Follower, Candidate, and Leader states, and how they interact to ensure fault tolerance and consistency. We implemented a basic version of Raft in Go to simulate a Raft cluster with multiple nodes and observed how they elect a leader and maintain cluster consistency.
+                </p>
+
+                <h2>References:</h2>
+                <ul>
+                    <li><a href="https://raft.github.io/">Raft Consensus Algorithm</a></li>
+                    <li><a href="https://raft.github.io/raft.pdf">The Raft Consensus Algorithm (PDF)</a></li>
+                    <li><a href="https://github.com/HarryChang30/go-raft-consensus">Full Source Code Implementation</a></li>
+                </ul>
             </article>
 
             <!-- Another Blog Post -->
