@@ -3,13 +3,14 @@
         {
             company: "Nafas - Air Quality Solutions",
             logo: "/logos/nafas.png",
-            position: "Fullstack Software Engineer",
+            position: "Backend Software Engineer",
             duration: "Mar 2025 - Present",
             description: [
+                "Working on several projects support the company's mission expanding their product and services to Qatar and Middle East region.",
                 "Working on frontend and backend development of web applications supporting the billing and accounting process of the company",
                 "Working on backend development applications supporting of device air quality monitoring such as reading and processing data from sensor, storing data to database, and providing API for frontend",
                 "Working on backend development for redesigning and refactoring the legacy system into new microservices architecture writing in Go programming language",
-                "Working on backend development for data restructuring and implement the worker pool 500k on average data processing to Bigquery by leverages Go concurrency and NSQ",
+                "Working on backend development for data restructuring and implement the worker pool 100k on average data processing sensor air quality data to Bigquery by leverages Go concurrency and NSQ",
             ]
         },
         {
