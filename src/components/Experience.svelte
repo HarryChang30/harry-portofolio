@@ -1,9 +1,9 @@
 <script>
     export let experiences = [
         {
-            company: "Nafas - Air Quality Solutions",
+            company: "Nafas (Singapore)",
             logo: "/logos/nafas.png",
-            position: "Backend Software Engineer",
+            position: "Backend Software Engineer - Remote",
             duration: "Mar 2025 - Present",
             description: [
                 "Working on several projects support the company's mission expanding their product and services to Qatar and Middle East region.",
