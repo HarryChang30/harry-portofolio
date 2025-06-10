@@ -3,7 +3,7 @@
         {
             company: "Nafas (Singapore)",
             logo: "/logos/nafas.png",
-            position: "Backend Software Engineer - Remote",
+            position: "Software Engineer - Remote",
             duration: "Mar 2025 - Present",
             description: [
                 "Working on several projects support the company's mission expanding their product and services to Qatar and Middle East region.",
