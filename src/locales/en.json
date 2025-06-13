@@ -1,0 +1,46 @@
+{
+  "introduction_title": "Introduction",
+  "experience_title": "Working Experience",
+  "project_title": "Projects",
+  "skills_title": "Technology Stack",
+  "connect_with_me": "Connect with me",
+  "bio": "I am a software engineer with experience in backend development...",
+  
+  "experience": {
+    "nafas": {
+      "company": "Nafas (Singapore)",
+      "position": "Software Engineer - Remote",
+      "duration": "Mar 2025 - Present",
+      "description": [
+        "Working on several projects support the company's mission expanding their product and services to Qatar and Middle East region.",
+        "Working on frontend and backend development of web applications supporting the billing and accounting process of the company",
+        "Working on backend development applications supporting of device air quality monitoring such as reading and processing data from sensor, storing data to database, and providing API for frontend",
+        "Working on backend development for redesigning and refactoring the legacy system into new microservices architecture writing in Go programming language",
+        "Working on backend development for data restructuring and implement the worker pool 100k on average data processing sensor air quality data to Bigquery by leverages Go concurrency and NSQ"
+      ]
+    },
+    "prakerja": {
+      "company": "Coordinating Ministry for Economic Affairs - Prakerja",
+      "position": "Senior Software Engineer Backend",
+      "duration": "Jul 2023 - Dec 2024",
+      "description": [
+        "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
+        "Contributing into system design and backend architecture",
+        "Improving unit test, security and refactoring codebase",
+        "Provide support on-call 24/7 for production issues and initiate the root cause analysis",
+        "Provide support for partner integration in module fraud engine to prevent any fraud users"
+      ]
+    }
+  },
+  
+  "projects": {
+    "personal_website": {
+      "name": "Personal Websites",
+      "description": "Personal portofolio websites, building the Frontend Static Sites by using Sveltekit and TailwindCSS for design layout. Purpose of this projects is to showcase my self and journey what I have done as Backend Software Engineer and starting to recap what I have learnt so far in computer science fields. Stay tune."
+    },
+    "prakerja_dashboard": {
+      "name": "Prakerja Dashboard",
+      "description": "Prakerja Dashboard Web Applications, let users going through the digital platform, register batch program and getting the course credits for joining and participate the training courses."
+    }
+  }
+}

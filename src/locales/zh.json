@@ -1,0 +1,46 @@
+{
+  "introduction_title": "介绍",
+  "experience_title": "工作经验",
+  "project_title": "项目",
+  "skills_title": "技术栈",
+  "connect_with_me": "联系我",
+  "bio": "我是一名软件工程师，拥有后端开发经验...",
+  
+  "experience": {
+    "nafas": {
+      "company": "Nafas (新加坡)",
+      "position": "软件工程师 - 远程",
+      "duration": "2025年3月 - 至今",
+      "description": [
+        "致力于支持公司将产品和服务扩展到卡塔尔和中东地区的多个项目。",
+        "开发支持公司账单和会计流程的Web应用程序的前端和后端",
+        "开发支持设备空气质量监测的后端应用程序，如从传感器读取和处理数据，将数据存储到数据库，并为前端提供API",
+        "使用Go编程语言进行后端开发，重新设计和重构遗留系统为新的微服务架构",
+        "进行后端开发，用于数据重组和实现工作池，平均处理10万条传感器空气质量数据到Bigquery，利用Go并发和NSQ"
+      ]
+    },
+    "prakerja": {
+      "company": "经济事务协调部 - Prakerja",
+      "position": "高级后端软件工程师",
+      "duration": "2023年7月 - 2024年12月",
+      "description": [
+        "使用Go和NodeJS开发后端微服务，为可扩展的微服务架构做出贡献",
+        "参与系统设计和后端架构",
+        "改进单元测试、安全性并重构代码库",
+        "提供24/7的生产问题支持，并启动根本原因分析",
+        "为合作伙伴集成提供支持，在欺诈引擎模块中防止任何欺诈用户"
+      ]
+    }
+  },
+  
+  "projects": {
+    "personal_website": {
+      "name": "个人网站",
+      "description": "个人作品集网站，使用Sveltekit和TailwindCSS构建前端静态站点。这个项目的目的是展示我自己和我作为后端软件工程师所做的工作，并开始回顾我在计算机科学领域所学到的知识。敬请期待。"
+    },
+    "prakerja_dashboard": {
+      "name": "Prakerja仪表板",
+      "description": "Prakerja仪表板Web应用程序，让用户通过数字平台，注册批次程序并获得参加培训课程的课程学分。"
+    }
+  }
+}
