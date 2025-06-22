@@ -29,7 +29,7 @@
         {
             company: "Kuncie - EdTech",
             logo: "/logos/kuncie.png",
-            position: "Software Engineer Backend",
+            position: "Senior Software Engineer Backend",
             duration: "Nov 2021 - Jun 2023",
             description: [
                 "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
