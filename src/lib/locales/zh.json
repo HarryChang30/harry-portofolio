@@ -1,0 +1,179 @@
+{
+  "nav": {
+    "introduction": "简介",
+    "experience": "工作经历",
+    "projects": "项目",
+    "skills": "技能",
+    "blog": "博客"
+  },
+  "sections": {
+    "introduction": {
+      "title": "简介"
+    },
+    "experience": {
+      "title": "工作经历"
+    },
+    "projects": {
+      "title": "项目",
+      "view_project": "查看项目"
+    },
+    "skills": {
+      "title": "技能"
+    }
+  },
+  "bio": {
+    "paragraph1": "你好！我是Harry，一名充满热情的后端软件工程师，拥有超过8年构建可扩展Web应用程序和微服务的经验。我在软件开发领域的旅程源于对解决复杂问题的热爱，以及创建高效、可维护解决方案的追求。",
+    "paragraph2": "在我的职业生涯中，我使用过各种技术，包括Go、Node.js、TypeScript和现代Web框架。我专注于后端开发、微服务架构和系统设计，特别注重性能优化和可扩展性。",
+    "paragraph3": "当我不在编程时，我喜欢探索新技术、为开源项目做贡献，并与开发者社区分享知识。我相信持续学习，并保持对最新行业趋势和最佳实践的了解。"
+  },
+  "experience": {
+    "companies": {
+      "nafas": {
+        "company": "Nafas（新加坡）",
+        "position": "高级软件工程师 - 远程",
+        "duration": "2025年3月 - 至今",
+        "description": [
+          "参与多个项目，支持公司将产品和服务扩展到卡塔尔和中东地区的使命。",
+          "负责支持公司计费和会计流程的Web应用程序的前端和后端开发",
+          "负责支持设备空气质量监测的后端应用程序开发，如从传感器读取和处理数据、将数据存储到数据库以及为前端提供API",
+          "负责使用Go编程语言将遗留系统重新设计和重构为新的微服务架构的后端开发",
+          "负责数据重构的后端开发，并利用Go并发和NSQ实现平均10万数据处理的工作池，将传感器空气质量数据处理到Bigquery"
+        ]
+      },
+      "prakerja": {
+        "company": "经济统筹部 - Prakerja",
+        "position": "高级后端软件工程师",
+        "duration": "2023年7月 - 2024年12月",
+        "description": [
+          "使用Go和NodeJS开发后端微服务，为可扩展的微服务架构做出贡献",
+          "参与系统设计和后端架构",
+          "改进单元测试、安全性和代码库重构",
+          "为生产问题提供24/7待命支持并启动根本原因分析",
+          "为合作伙伴集成提供欺诈引擎模块支持，以防止任何欺诈用户"
+        ]
+      },
+      "kuncie": {
+        "company": "Kuncie - 教育科技",
+        "position": "高级后端软件工程师",
+        "duration": "2021年11月 - 2023年6月",
+        "description": [
+          "使用Go和NodeJS开发后端微服务，为可扩展的微服务架构做出贡献",
+          "参与系统设计、无服务器架构和微服务架构",
+          "改进单元测试、安全性、设计模式和代码库重构",
+          "负责将遗留系统迁移到新的微服务",
+          "为生产问题提供24/7待命支持并启动根本原因分析"
+        ]
+      },
+      "grabovo": {
+        "company": "Grab - OVO",
+        "position": "高级后端软件工程师",
+        "duration": "2019年1月 - 2021年10月",
+        "description": [
+          "使用Go和NodeJS开发后端微服务，为可扩展的微服务架构做出贡献",
+          "参与系统设计和微服务架构",
+          "改进单元测试、安全性、设计模式和代码库重构",
+          "负责将遗留单体应用程序迁移分解为微服务",
+          "为生产问题提供24/7待命支持并启动根本原因分析"
+        ]
+      },
+      "binus": {
+        "company": "IT部门 - 宾努斯大学",
+        "position": "软件工程师",
+        "duration": "2016年2月 - 2018年12月",
+        "description": [
+          "使用PHP CodeIgniter、JS/Jquery和AJAX技术为主要CMS模块开发Web应用程序的功能和模块",
+          "使用ASP.Net MVC为一些大学内部模块开发Web应用程序的功能和模块",
+          "参与考试调度和评分模块中Web应用程序的系统设计和架构",
+          "重构和优化现有代码和查询，以提高考试调度、监控和学生考勤的性能",
+          "在物联网项目研究领域做出贡献，使用CodeIgniter RestServer和Arduino Web客户端为智能冰箱项目构建Web API"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "items": {
+      "portfolio": {
+        "name": "个人网站",
+        "startYear": 2024,
+        "endYear": 2024,
+        "description": "个人作品集网站，使用 Sveltekit 和 TailwindCSS 构建前端静态网站进行设计布局。此项目的目的是展示我作为后端软件工程师的自我和历程，并开始回顾我在计算机科学领域迄今为止所学到的知识。敬请期待。"
+      },
+      "prakerja_dashboard": {
+        "name": "Prakerja 仪表板",
+        "startYear": 2023,
+        "endYear": 2024,
+        "description": "Prakerja 仪表板网络应用程序，让用户通过数字平台注册批次项目，并获得参与培训课程的课程学分。"
+      },
+      "prakerja_job": {
+        "name": "Prakerja 求职平台",
+        "startYear": 2023,
+        "endYear": 2024,
+        "description": "Prakerja 求职平台，与 Prakerja 仪表板集成，允许 prakerja 用户在参加 Prakerja 和学习合作伙伴提供的培训课程后搜索工作。帮助 prakerja 用户通过平台找到工作，并根据培训参与情况提供相关推荐。"
+      },
+      "prakerja_api": {
+        "name": "Prakerja 开放 API",
+        "startYear": 2023,
+        "endYear": 2024,
+        "description": "Prakerja 开放 API 平台，为学习合作伙伴提供 API 规范，实现其系统与 Prakerja 平台之间的无缝集成，支持购买、培训和课程验证等各种活动。"
+      },
+      "kuncie_mobile": {
+        "name": "Kuncie 移动应用",
+        "startYear": 2021,
+        "endYear": 2023,
+        "description": "Kuncie 移动应用程序，通过移动应用提供学习和教育服务。让学生通过观看移动应用上的点播视频内容进行学习。"
+      },
+      "kuncie_catalog": {
+        "name": "Kuncie 产品目录 - 商务平台",
+        "startYear": 2022,
+        "endYear": 2023,
+        "description": "Kuncie 产品目录商务平台。Kuncie 产品和服务的市场平台，学生可以在 Kuncie 产品目录平台上购买感兴趣的课程。"
+      },
+      "kuncie_package": {
+        "name": "Kuncie 课程套餐",
+        "startYear": 2021,
+        "endYear": 2023,
+        "description": "Kuncie 课程套餐，Kuncie 创收产品之一，集成 Kuncie 和 Telkomsel 移动网络套餐，提供互联网流量以观看视频学习内容。"
+      },
+      "ovo_paylater": {
+        "name": "OVO 先享后付 - Tokopedia（最小可行产品）",
+        "startYear": 2019,
+        "endYear": 2020,
+        "description": "2019年推出首个 OVO 先买后付产品最小可行产品，与 Tokopedia 合作，获得超过5万活跃用户在 Tokopedia 电商平台使用虚拟信用卡进行购买和交易。（业务已暂停）疫情期间。"
+      },
+      "ovo_modal": {
+        "name": "OVO 营运资金",
+        "startYear": 2020,
+        "endYear": 2021,
+        "description": "OVO 营运资金 -（发票融资）是 OVO 借贷产品之一，通过抵押进行中的发票作为贷款还款来源来帮助改善公司现金流。"
+      },
+      "binusmaya": {
+        "name": "Binusmaya 5",
+        "startYear": 2016,
+        "endYear": 2018,
+        "description": "Binusmaya 5 - 大学网络应用程序，为学生提供学习管理系统模块，用于学校学习活动以及其他学生支持服务，以支持大学中的学生活动。"
+      },
+      "smart_refrigerator": {
+        "name": "智能冰箱 - 物联网研究",
+        "startYear": 2016,
+        "endYear": 2017,
+        "description": "智能冰箱 - 贡献于后端服务器上的网络服务 API 如何连接到 Arduino 客户端的实现，使用 PHP CodeIgniter REST 服务器作为后端，Arduino 作为客户端。"
+      },
+      "space_shooter": {
+        "name": "太空射击 - 桌面控制台射击游戏",
+        "startYear": 2015,
+        "endYear": 2015,
+        "description": "太空射击 - 控制台游戏。作为5人团队的领导者，使用简单直接媒体层（SDL 2.0.3）和 C++ 编程语言开发无尽太空射击游戏，以完成面向对象编程课程的期末项目。"
+      }
+    }
+  },
+  "skills": {
+    "categories": {
+      "programming_languages": "编程语言",
+      "frameworks": "框架",
+      "databases": "数据库",
+      "tools": "工具",
+      "cloud": "云服务",
+      "protocols": "协议"
+    }
+  }
+}

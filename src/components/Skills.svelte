@@ -1,4 +1,6 @@
 <script>
+    import { _ } from '../lib/i18n.js';
+    
     export let skills = [
         {
             name: "Go",
@@ -123,19 +125,19 @@
     ];
 </script>
 
-<section id="skills" class="mb-12">
-  <h2 class="text-3xl font-semibold text-gray-800 mb-6">Technology Stack</h2>
+<section id="skills" class="mb-8 md:mb-12">
+  <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 md:mb-6">{$_('sections.skills.title')}</h2>
 
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
     {#each skills as skill}
-      <div class="flex flex-col items-center p-4 bg-white shadow-md rounded-lg text-center hover:shadow-lg transition-shadow">
+      <div class="flex flex-col items-center p-3 md:p-4 bg-white shadow-md rounded-lg text-center hover:shadow-lg transition-all duration-300 hover:scale-105">
         <img
             src={skill.icon}
             alt={skill.name}
-            class="{skill.icon.includes('kubernetes-icon.png') ? 'w-16 h-10' : 'w-12 h-12'} mb-2"
+            class="{skill.icon.includes('kubernetes-icon.png') ? 'w-12 h-8 md:w-16 md:h-10' : 'w-10 h-10 md:w-12 md:h-12'} mb-2 object-contain"
         />
-        <h3 class="text-lg font-semibold text-gray-800">{skill.name}</h3>
-        <p class="text-sm text-gray-500">{skill.category}</p>
+        <h3 class="text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight">{skill.name}</h3>
+        <p class="text-xs md:text-sm text-gray-500 mt-1">{skill.category}</p>
       </div>
     {/each}
   </div>

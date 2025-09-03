@@ -1,27 +1,13 @@
 <!-- src/components/Introduction.svelte -->
 <script>
-  import { onDestroy, onMount } from 'svelte'
-
-  export let bio = "";
-
-  const fetchBio = async () => {
-    const response = await fetch('/introduction/bio.txt')
-    bio = await response.text();
-  };
-
-  onMount(async () => {
-    fetchBio();
-  })
-
-  onDestroy(() => {});
-
-  // Split bio by newline characters into paragraphs
-  $: paragraphs = bio.split(/\n\s*\n/); // Split by two newlines
+    import { _ } from '../lib/i18n.js';
 </script>
 
-<section id="introduction" class="mb-12">
-  <h2 class="text-3xl font-semibold text-gray-800 mb-4">Introduction</h2>
-  {#each paragraphs as paragraph}
-    <p class="text-gray-600 mt-2 leading-relaxed">{paragraph}</p>
-  {/each}
+<section id="introduction" class="mb-6 md:mb-12">
+    <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">{$_('sections.introduction.title')}</h2>
+    <div class="space-y-4">
+        <p class="text-base md:text-lg leading-relaxed text-gray-600">{$_('bio.paragraph1')}</p>
+        <p class="text-base md:text-lg leading-relaxed text-gray-600">{$_('bio.paragraph2')}</p>
+        <p class="text-base md:text-lg leading-relaxed text-gray-600">{$_('bio.paragraph3')}</p>
+    </div>
 </section>

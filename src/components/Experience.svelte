@@ -1,87 +1,58 @@
 <script>
-    export let experiences = [
-        {
-            company: "Nafas (Singapore)",
-            logo: "/logos/nafas.png",
-            position: "Senior Software Engineer - Remote",
-            duration: "Mar 2025 - Present",
-            description: [
-                "Working on several projects support the company's mission expanding their product and services to Qatar and Middle East region.",
-                "Working on frontend and backend development of web applications supporting the billing and accounting process of the company",
-                "Working on backend development applications supporting of device air quality monitoring such as reading and processing data from sensor, storing data to database, and providing API for frontend",
-                "Working on backend development for redesigning and refactoring the legacy system into new microservices architecture writing in Go programming language",
-                "Working on backend development for data restructuring and implement the worker pool 100k on average data processing sensor air quality data to Bigquery by leverages Go concurrency and NSQ",
-            ]
-        },
-        {
-            company: "Coordinating Ministry for Economic Affairs - Prakerja",
-            logo: "/logos/prakerja.jpg",
-            position: "Senior Software Engineer Backend",
-            duration: "Jul 2023 - Dec 2024",
-            description: [
-                "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
-                "Contributing into system design and backend architecture",
-                "Improving unit test, security and refactoring codebase",
-                "Provide support on-call 24/7 for production issues and initiate the root cause analysis",
-                "Provide support for partner integration in module fraud engine to prevent any fraud users",
-            ]
-        },
-        {
-            company: "Kuncie - EdTech",
-            logo: "/logos/kuncie.png",
-            position: "Senior Software Engineer Backend",
-            duration: "Nov 2021 - Jun 2023",
-            description: [
-                "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
-                "Contributing into system design, serverless architecture and microservices architecture",
-                "Improving unit test, security, design pattern and refactoring codebase",
-                "Working on migration of legacy system into the new microservices",
-                "Provide support on-call 24/7 for production issues and initiate the root cause analysis",
-            ]
-        },
-        {
-          company: "Grab - OVO",
-          logo: "/logos/grab-ovo-logo.jpg",
-          position: "Senior Software Engineer Backend",
-          duration: "Jan 2019 - Oct 2021",
-          description: [
-            "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
-            "Contributing into system design and microservices architecture",
-            "Improving unit test, security, design pattern and refactoring codebases",
-            "Working on migration of legacy monolithic applications break down into microservices",
-            "Provide support on-call 24/7 for production issues and initiate the root cause analysis",
-          ]
-        },
-        {
-          company: "IT Division - Binus University",
-          logo: "/logos/it-binus.jpg",
-          position: "Software Engineer",
-          duration: "Feb 2016 - Dec 2018",
-          description: [
-            "Developed features and module of web applications using technology PHP CodeIgniter, JS/Jquery and AJAX for main CMS module",
-            "Developed features and moduel of web applications using ASP.Net MVC for some university internal modules",
-            "Contributing in system design and architecture of web applications in exam scheduling and scoring module",
-            "Refactoring and Optimized existing code and queries for improved performance in exam scheduling, monitoring and student attendance",
-            "Contributing in research area of IoT projects for building the web APIs using CodeIgniter RestServer and Arduino Web Client for smart refrigerator projects",
-          ]
-        },
+    import { _, json } from '../lib/i18n.js';
+    import { currentLanguage } from '../stores/languageStore.js';
+    
+    // Define experience keys that correspond to the locale files
+    const experienceKeys = [
+        'nafas',
+        'prakerja', 
+        'kuncie',
+        'grabovo',
+        'binus'
     ];
+    
+    // Company logos mapping
+    const companyLogos = {
+        nafas: "/logos/nafas.png",
+        prakerja: "/logos/prakerja.jpg",
+        kuncie: "/logos/kuncie.png",
+        grabovo: "/logos/grab-ovo-logo.jpg",
+        binus: "/logos/it-binus.jpg"
+    };
+    
+    // Reactive statement to detect language changes
+    $: currentLang = $currentLanguage;
+    
+    // Log language changes for debugging (optional)
+    $: if (currentLang) {
+        console.log('Language changed to:', currentLang);
+    }
 </script>
 
-<section id="experience" class="mb-12">
-  <h2 class="text-3xl font-semibold text-gray-800 mb-6">Working Experience</h2>
+<section id="experience" class="mb-8 md:mb-12">
+  <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 md:mb-6">{$_('sections.experience.title')}</h2>
   
-  <div class="space-y-6">
-    {#each experiences as experience}
-      <div class="flex items-start p-4 bg-white shadow-lg rounded-lg">
-        <img src={experience.logo} alt={experience.company} class="{experience.logo.includes('grab-ovo-logo.jpg') ? 'w-16 h-13' : 'w-16 h-16'} rounded-full mr-4" />
+  <div class="space-y-4 md:space-y-6">
+    {#each experienceKeys as experienceKey}
+      <div class="flex flex-col sm:flex-row items-start p-4 md:p-6 bg-white shadow-lg rounded-lg">
+        <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4 md:mr-6">
+          <img 
+            src={companyLogos[experienceKey]} 
+            alt={$_(`experience.companies.${experienceKey}.company`)} 
+            class="{companyLogos[experienceKey].includes('grab-ovo-logo.jpg') ? 'w-12 h-10 sm:w-16 sm:h-13' : 'w-12 h-12 sm:w-16 sm:h-16'} rounded-full object-cover" 
+          />
+        </div>
 
-        <div>
-          <h3 class="text-xl font-semibold text-gray-600">{experience.position}</h3>
-          <p class="text-sm text-gray-500 mb-1">{experience.company} | {experience.duration}</p>
-          <ul class="list-disc list-inside text-gray-700 space-y-1">
-            {#each experience.description as point}
-              <li>{point}</li>
+        <div class="flex-1 min-w-0">
+          <h3 class="text-lg md:text-xl font-semibold text-gray-600 mb-1">
+            {$_(`experience.companies.${experienceKey}.position`)}
+          </h3>
+          <p class="text-xs md:text-sm text-gray-500 mb-2 md:mb-3">
+            {$_(`experience.companies.${experienceKey}.company`)} | {$_(`experience.companies.${experienceKey}.duration`)}
+          </p>
+          <ul class="list-disc list-inside text-gray-700 space-y-1 md:space-y-2">
+            {#each $json(`experience.companies.${experienceKey}.description`) as point}
+              <li class="text-sm md:text-base leading-relaxed">{point}</li>
             {/each}
           </ul>
         </div>

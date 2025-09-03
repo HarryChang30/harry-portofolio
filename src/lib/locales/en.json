@@ -1,0 +1,179 @@
+{
+  "nav": {
+    "introduction": "Introduction",
+    "experience": "Experience",
+    "projects": "Projects",
+    "skills": "Skills",
+    "blog": "Blog"
+  },
+  "sections": {
+    "introduction": {
+      "title": "Introduction"
+    },
+    "experience": {
+      "title": "Working Experience"
+    },
+    "projects": {
+      "title": "Projects",
+      "view_project": "View Project"
+    },
+    "skills": {
+      "title": "Skills"
+    }
+  },
+  "bio": {
+    "paragraph1": "Hello! I'm Harry, a passionate Backend Software Engineer with over 8 years of experience in building scalable web applications and microservices. My journey in software development has been driven by a love for solving complex problems and creating efficient, maintainable solutions.",
+    "paragraph2": "Throughout my career, I've worked with various technologies including Go, Node.js, TypeScript, and modern web frameworks. I specialize in backend development, microservices architecture, and system design, with a strong focus on performance optimization and scalability.",
+    "paragraph3": "When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and sharing knowledge with the developer community. I believe in continuous learning and staying updated with the latest industry trends and best practices."
+  },
+  "experience": {
+    "companies": {
+      "nafas": {
+        "company": "Nafas (Singapore)",
+        "position": "Senior Software Engineer - Remote",
+        "duration": "Mar 2025 - Present",
+        "description": [
+          "Working on several projects support the company's mission expanding their product and services to Qatar and Middle East region.",
+          "Working on frontend and backend development of web applications supporting the billing and accounting process of the company",
+          "Working on backend development applications supporting of device air quality monitoring such as reading and processing data from sensor, storing data to database, and providing API for frontend",
+          "Working on backend development for redesigning and refactoring the legacy system into new microservices architecture writing in Go programming language",
+          "Working on backend development for data restructuring and implement the worker pool 100k on average data processing sensor air quality data to Bigquery by leverages Go concurrency and NSQ"
+        ]
+      },
+      "prakerja": {
+        "company": "Coordinating Ministry for Economic Affairs - Prakerja",
+        "position": "Senior Software Engineer Backend",
+        "duration": "Jul 2023 - Dec 2024",
+        "description": [
+          "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
+          "Contributing into system design and backend architecture",
+          "Improving unit test, security and refactoring codebase",
+          "Provide support on-call 24/7 for production issues and initiate the root cause analysis",
+          "Provide support for partner integration in module fraud engine to prevent any fraud users"
+        ]
+      },
+      "kuncie": {
+        "company": "Kuncie - EdTech",
+        "position": "Senior Software Engineer Backend",
+        "duration": "Nov 2021 - Jun 2023",
+        "description": [
+          "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
+          "Contributing into system design, serverless architecture and microservices architecture",
+          "Improving unit test, security, design pattern and refactoring codebase",
+          "Working on migration of legacy system into the new microservices",
+          "Provide support on-call 24/7 for production issues and initiate the root cause analysis"
+        ]
+      },
+      "grabovo": {
+        "company": "Grab - OVO",
+        "position": "Senior Software Engineer Backend",
+        "duration": "Jan 2019 - Oct 2021",
+        "description": [
+          "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
+          "Contributing into system design and microservices architecture",
+          "Improving unit test, security, design pattern and refactoring codebases",
+          "Working on migration of legacy monolithic applications break down into microservices",
+          "Provide support on-call 24/7 for production issues and initiate the root cause analysis"
+        ]
+      },
+      "binus": {
+        "company": "IT Division - Binus University",
+        "position": "Software Engineer",
+        "duration": "Feb 2016 - Dec 2018",
+        "description": [
+          "Developed features and module of web applications using technology PHP CodeIgniter, JS/Jquery and AJAX for main CMS module",
+          "Developed features and moduel of web applications using ASP.Net MVC for some university internal modules",
+          "Contributing in system design and architecture of web applications in exam scheduling and scoring module",
+          "Refactoring and Optimized existing code and queries for improved performance in exam scheduling, monitoring and student attendance",
+          "Contributing in research area of IoT projects for building the web APIs using CodeIgniter RestServer and Arduino Web Client for smart refrigerator projects"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "items": {
+      "portfolio": {
+        "name": "Personal Websites",
+        "startYear": 2024,
+        "endYear": 2024,
+        "description": "Personal portofolio websites, building the Frontend Static Sites by using Sveltekit and TailwindCSS for design layout. Purpose of this projects is to showcase my self and journey what I have done as Backend Software Engineer and starting to recap what I have learnt so far in computer science fields. Stay tune."
+      },
+      "prakerja_dashboard": {
+        "name": "Prakerja Dashboard",
+        "startYear": 2023,
+        "endYear": 2024,
+        "description": "Prakerja Dashboard Web Applications, let users going through the digital platform, register batch program and getting the course credits for joining and participate the training courses."
+      },
+      "prakerja_job": {
+        "name": "Prakerja Job Platform",
+        "startYear": 2023,
+        "endYear": 2024,
+        "description": "Prakerja Job Platform, being integrated with the Prakerja dasboard allowing prakerja users for going through searching the jobs after join the training courses that already provided by Prakerja and Learning Partner. Help prakerja users find their jobs through the platform and provide relevant recommendation based on participation of training."
+      },
+      "prakerja_api": {
+        "name": "Prakerja Open API",
+        "startYear": 2023,
+        "endYear": 2024,
+        "description": "Prakerja Open API platform, providing API specifications for learning partner do the seamless integrations between their system with Prakerja platform for any activities that support purchase, training and verification courses."
+      },
+      "kuncie_mobile": {
+        "name": "Kuncie Mobile Apps",
+        "startYear": 2021,
+        "endYear": 2023,
+        "description": "Kuncie mobile applications, providing learning and education through mobile apps. Let students learn by watching the on demand video contents on mobile apps."
+      },
+      "kuncie_catalog": {
+        "name": "Kuncie Product Catalog - Commerce",
+        "startYear": 2022,
+        "endYear": 2023,
+        "description": "Kuncie product catalog commerce. Marketplace for kuncie product and services, where student can purchase their interest course on Kuncie product catalog platform."
+      },
+      "kuncie_package": {
+        "name": "Kuncie Course Package",
+        "startYear": 2021,
+        "endYear": 2023,
+        "description": "Kuncie course package, one of the kuncie generated revenue products integration between Kuncie and Telkomsel mobile network package providing internet quota for being able to watch video learning contents"
+      },
+      "ovo_paylater": {
+        "name": "OVO Paylater - Tokopedia (MVP)",
+        "startYear": 2019,
+        "endYear": 2020,
+        "description": "Launching first MVP OVO BNPL Product partnering with the Tokopedia on 2019, gained more than 50k+ active users for doing purchase and transactions using virtual credit card on the Tokopedia ecommerce platforms. (Business Suspended) During the COVID - Pandemic years"
+      },
+      "ovo_modal": {
+        "name": "OVO Modal Usaha",
+        "startYear": 2020,
+        "endYear": 2021,
+        "description": "OVO Modal Usaha - (Invoice Financing) is one of the OVO lending product that funding done by pledging ongoing invoices as source of loan payments to help improving the company cash flow."
+      },
+      "binusmaya": {
+        "name": "Binusmaya 5",
+        "startYear": 2016,
+        "endYear": 2018,
+        "description": "Binusmaya 5 - Web applications for universities providing students the LMS module for their learning activities in schools along with other student support services to support student activities in the universities."
+      },
+      "smart_refrigerator": {
+        "name": "Smart Refrigerator - Internet of Things Research",
+        "startYear": 2016,
+        "endYear": 2017,
+        "description": "Smart Refrigerator - Contribute on implementations for how the web services APIs on backend server can connected to the Arduino Client using the PHP CodeIgniter REST Server for Backend and Arduino for the Client."
+      },
+      "space_shooter": {
+        "name": "Space Shooter - Desktop Console Shooting Games",
+        "startYear": 2015,
+        "endYear": 2015,
+        "description": "Space Shooter - Console Games. Working as leading team of 5 members to develop the endless space shooting game with Simple Directmedia Layer (SDL 2.0.3) and C++ programming language to fullfill final Object Oriented Programming courses."
+      }
+    }
+  },
+  "skills": {
+    "categories": {
+      "programming_languages": "Programming Languages",
+      "frameworks": "Frameworks",
+      "databases": "Databases",
+      "tools": "Tools",
+      "cloud": "Cloud Services",
+      "protocols": "Protocols"
+    }
+  }
+}

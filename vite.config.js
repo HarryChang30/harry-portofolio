@@ -7,9 +7,23 @@ import path from 'path';
 export default defineConfig({
   plugins: [
     sveltekit(),
-    commonjs(),
+    commonjs({
+      include: ['node_modules/**'],
+    }),
   ],
   optimizeDeps: {
     include: ['@fortawesome/fontawesome-svg-core'],
+  },
+  build: {
+    rollupOptions: {
+      external: [],
+      output: {
+        manualChunks: undefined,
+      },
+    },
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true,
+    },
   },
 });
