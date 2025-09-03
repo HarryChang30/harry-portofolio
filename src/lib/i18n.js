@@ -1,26 +1,18 @@
 import { writable, derived } from 'svelte/store';
+import enData from './locales/en.json';
+import zhData from './locales/zh.json';
 
 // Create locale store
 export const locale = writable('en');
 
-// Import locale data
-let localeData = {};
+// Import locale data synchronously
+const localeData = {
+  en: enData,
+  zh: zhData
+};
 
-// Load locale data
-async function loadLocaleData() {
-  const [enData, zhData] = await Promise.all([
-    import('./locales/en.json'),
-    import('./locales/zh.json')
-  ]);
-  
-  localeData = {
-    en: enData.default,
-    zh: zhData.default
-  };
-}
-
-// Initialize locale data
-loadLocaleData();
+// Create a store to track if translations are ready
+export const translationsReady = writable(true);
 
 // Translation function
 export const _ = derived(locale, ($locale) => {
@@ -61,16 +53,24 @@ export const json = derived(locale, ($locale) => {
 // Function to change language
 export function changeLanguage(lang) {
   locale.set(lang);
-  localStorage.setItem('language', lang);
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    localStorage.setItem('language', lang);
+  }
 }
 
 // Function to get stored language
 export function getStoredLanguage() {
-  return localStorage.getItem('language');
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    return localStorage.getItem('language');
+  }
+  return null;
 }
 
 // Function to initialize language
 export function initializeLanguage() {
+  // Only run on client-side
+  if (typeof window === 'undefined') return;
+  
   const storedLang = getStoredLanguage();
   if (storedLang) {
     locale.set(storedLang);
