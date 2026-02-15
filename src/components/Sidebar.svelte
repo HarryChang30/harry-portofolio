@@ -1,14 +1,13 @@
 <script>
-  import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import { _ } from '../lib/i18n.js';
   import LanguageSwitcher from './LanguageSwitcher.svelte';
-  // Import Font Awesome icons if using Font Awesome
-  import { faGithub, faLinkedin, faGoogle } from "@fortawesome/free-brands-svg-icons";
+  import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+  import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   
   let isMenuOpen = false;
-  let isMobile = false;
+  let scrolled = false;
   
   const toggleMenu = () => {
     isMenuOpen = !isMenuOpen;
@@ -18,119 +17,155 @@
     isMenuOpen = false;
   };
   
-  const checkMobile = () => {
-    isMobile = window.innerWidth < 768;
-    if (!isMobile) {
-      isMenuOpen = false;
-    }
+  const handleScroll = () => {
+    scrolled = window.scrollY > 20;
   };
   
   onMount(() => {
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
     
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('scroll', handleScroll);
     };
   });
+  
+  const navItems = [
+    { key: 'introduction', href: '#introduction' },
+    { key: 'experience', href: '#experience' },
+    { key: 'projects', href: '#projects' },
+    { key: 'skills', href: '#skills' },
+    { key: 'blog', href: '/blog', external: true }
+  ];
 </script>
 
-<!-- Mobile hamburger button -->
-<button 
-  class="md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 text-white rounded-md shadow-lg"
-  on:click={toggleMenu}
-  aria-label="Toggle menu"
->
-  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 {scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <!-- Logo / Name -->
+      <a href="/" class="flex items-center space-x-3 group" on:click={closeMenu}>
+        <img 
+          src="/logos/go-mascot.jpg" 
+          alt="Harry Chang" 
+          class="w-10 h-10 rounded-xl object-cover shadow-md group-hover:scale-110 transition-transform duration-300"
+        />
+        <span class="font-bold text-xl text-gray-800 hidden sm:block">
+          Harry Chang
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-1">
+        {#each navItems as item}
+          <a 
+            href={item.href} 
+            class="px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium transition-all duration-200"
+          >
+            {$_(`nav.${item.key}`)}
+          </a>
+        {/each}
+      </div>
+
+      <!-- Desktop Actions -->
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="flex items-center space-x-3">
+          <a 
+            href="https://github.com/HarryChang30" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
+            aria-label="GitHub"
+          >
+            <FontAwesomeIcon icon={faGithub} class="w-5 h-5" />
+          </a>
+          <a 
+            href="https://linkedin.com/in/harrychang12" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg text-gray-600 hover:text-blue-700 hover:bg-gray-100 transition-all duration-200"
+            aria-label="LinkedIn"
+          >
+            <FontAwesomeIcon icon={faLinkedin} class="w-5 h-5" />
+          </a>
+          <a 
+            href="mailto:harrychang120@gmail.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg text-gray-600 hover:text-red-600 hover:bg-gray-100 transition-all duration-200"
+            aria-label="Email"
+          >
+            <FontAwesomeIcon icon={faEnvelope} class="w-5 h-5" />
+          </a>
+        </div>
+        <div class="w-px h-8 bg-gray-300"></div>
+        <div class="flex-shrink-0">
+          <LanguageSwitcher />
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        class="md:hidden p-2 rounded-lg {scrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-700'} transition-all duration-200"
+        on:click={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {#if isMenuOpen}
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          {:else}
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          {/if}
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
     {#if isMenuOpen}
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    {:else}
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      <div class="md:hidden bg-white border-t border-gray-100 shadow-lg -mx-4 sm:-mx-6 px-4 sm:px-6 pb-4">
+        <div class="space-y-1 pt-2">
+          {#each navItems as item}
+            <a 
+              href={item.href}
+              on:click={closeMenu}
+              class="block px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium transition-all duration-200"
+            >
+              {$_(`nav.${item.key}`)}
+            </a>
+          {/each}
+        </div>
+        <div class="flex items-center space-x-4 mt-4 pt-4 border-t border-gray-100">
+          <a 
+            href="https://github.com/HarryChang30" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            aria-label="GitHub"
+          >
+            <FontAwesomeIcon icon={faGithub} class="w-5 h-5" />
+          </a>
+          <a 
+            href="https://linkedin.com/in/harrychang12" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg text-gray-600 hover:text-blue-700 hover:bg-gray-100"
+            aria-label="LinkedIn"
+          >
+            <FontAwesomeIcon icon={faLinkedin} class="w-5 h-5" />
+          </a>
+          <a 
+            href="mailto:harrychang120@gmail.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg text-gray-600 hover:text-red-600 hover:bg-gray-100"
+            aria-label="Email"
+          >
+            <FontAwesomeIcon icon={faEnvelope} class="w-5 h-5" />
+          </a>
+          <div class="ml-auto">
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </div>
     {/if}
-  </svg>
-</button>
-
-<!-- Mobile overlay -->
-{#if isMenuOpen && isMobile}
-  <div 
-    class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-    on:click={closeMenu}
-    role="button"
-    tabindex="0"
-    on:keydown={(e) => e.key === 'Enter' && closeMenu()}
-  ></div>
-{/if}
-
-<nav class="fixed top-0 left-0 h-full w-60 bg-gray-800 text-white p-6 shadow-lg flex flex-col justify-between z-40 transform transition-transform duration-300 ease-in-out {isMobile ? (isMenuOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'} md:translate-x-0">
-  <div>
-    <h2 class="text-2xl font-bold mb-10">Harry Chang</h2>
-     <!-- Profile Icons at the Bottom -->
-   <div class="mt-8 mb-8 flex justify-center space-x-6"> <!-- Increased top margin from mt-8 to mt-16 and space between icons -->
-        <!-- Placeholder Image Icons (adjust as needed) -->
-    <img src="/logos/go-mascot.jpg" alt="Profile 1" class="w-32 h-32 rounded-full bg-gray-800 my-4">
-    </div>
-    <ul class="space-y-4">
-      <li>
-        <a href="#introduction" on:click={() => { goto('/#introduction'); closeMenu(); }} class="block text-lg hover:text-blue-400 py-2 px-2 rounded transition-colors">
-          {$_('nav.introduction')}
-        </a>
-      </li>
-      <li>
-        <a href="#experience" on:click={() => { goto('/#experience'); closeMenu(); }} class="block text-lg hover:text-blue-400 py-2 px-2 rounded transition-colors">
-          {$_('nav.experience')}
-        </a>
-      </li>
-      <li>
-        <a href="#projects" on:click={() => { goto('/#projects'); closeMenu(); }} class="block text-lg hover:text-blue-400 py-2 px-2 rounded transition-colors">
-          {$_('nav.projects')}
-        </a>
-      </li>
-      <li>
-        <a href="#skills" on:click={() => { goto('/#skills'); closeMenu(); }} class="block text-lg hover:text-blue-400 py-2 px-2 rounded transition-colors">
-          {$_('nav.skills')}
-        </a>
-      </li>
-      <li>
-        <a href="#blog" on:click={() => { goto('/blog'); closeMenu(); }} class="block text-lg hover:text-blue-400 py-2 px-2 rounded transition-colors">
-          {$_('nav.blog')}
-        </a>
-      </li>
-    </ul>
-    
-    <!-- Language Switcher -->
-    <div class="mt-8">
-      <LanguageSwitcher />
-    </div>
-  </div>
-
-  <!-- Social Links Section -->
-  <div class="mt-8 space-y-4">
-    <h3 class="text-xl font-semibold">Connect with me</h3>
-    <div class="flex space-x-4">
-      <!-- GitHub Link -->
-      <a href="https://github.com/HarryChang30" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white">
-        <!-- Using Heroicons -->
-        <!-- <GithubIcon class="w-6 h-6" /> -->
-        <!-- Using Font Awesome -->
-        <FontAwesomeIcon icon={faGithub} class="w-6 h-6" />
-      </a>
-
-      <!-- LinkedIn Link -->
-      <a href="https://linkedin.com/in/harrychang12" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white">
-        <!-- Using Heroicons -->
-        <!-- <LinkedinIcon class="w-6 h-6" /> -->
-        <!-- Using Font Awesome -->
-        <FontAwesomeIcon icon={faLinkedin} class="w-6 h-6" />
-      </a>
-
-      <!-- Gmail Link -->
-      <a href="mailto:harrychang120@gmail.com" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white">
-        <!-- Using Heroicons -->
-        <!-- <LinkedinIcon class="w-6 h-6" /> -->
-        <!-- Using Font Awesome -->
-        <FontAwesomeIcon icon={faGoogle} class="w-6 h-6" />
-      </a>
-      
-    </div>
-  </div>
-</nav>
+  </nav>
+</header>

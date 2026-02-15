@@ -8,8 +8,7 @@
 
 <Sidebar />
 
-<main class="ml-0 md:ml-64 pt-16 md:pt-8 px-4 md:px-8 pb-8 bg-gray-100 min-h-screen transition-all duration-300">
-  <!-- Introduction with a button to toggle visibility -->
+<main class="pt-16 md:pt-20 bg-gray-50 min-h-screen">
   <Introduction />
   <Experience />
   <Projects />

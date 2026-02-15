@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from 'svelte';
   import { currentLanguage, changeLanguage } from '../stores/languageStore.js';
   
   let isChanging = false;
@@ -20,36 +19,19 @@
   };
 </script>
 
-<div class="language-switcher">
+<div class="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
   <button
     on:click={handleLanguageToggle}
     disabled={isChanging}
-    class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-    title={$currentLanguage === 'en' ? 'Switch to Chinese' : 'Switch to English'}
+    class="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 {$currentLanguage === 'en' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}"
   >
-    <!-- Language Icons -->
-    <div class="flex items-center space-x-1">
-      <span class="text-sm font-medium {$currentLanguage === 'en' ? 'text-blue-600' : 'text-gray-400'}">
-        EN
-      </span>
-      <div class="w-8 h-5 bg-gray-300 rounded-full relative transition-colors duration-200 {$currentLanguage === 'zh' ? 'bg-blue-500' : ''}">
-        <div class="w-4 h-4 bg-white rounded-full absolute top-0.5 transition-transform duration-200 {$currentLanguage === 'zh' ? 'translate-x-3' : 'translate-x-0.5'}">
-        </div>
-      </div>
-      <span class="text-sm font-medium {$currentLanguage === 'zh' ? 'text-blue-600' : 'text-gray-400'}">
-        中
-      </span>
-    </div>
-    
-    <!-- Loading indicator -->
-    {#if isChanging}
-      <div class="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-    {/if}
+    EN
+  </button>
+  <button
+    on:click={handleLanguageToggle}
+    disabled={isChanging}
+    class="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 {$currentLanguage === 'zh' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}"
+  >
+    中
   </button>
 </div>
-
-<style>
-  .language-switcher {
-    user-select: none;
-  }
-</style>
