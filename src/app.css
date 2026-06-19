@@ -1,3 +1,75 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-cream-100 text-ink-200 font-sans;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif text-ink-400;
+    font-feature-settings: 'ss01', 'ss02';
+  }
+  ::selection {
+    @apply bg-sienna-100 text-ink-400;
+  }
+}
+
+@layer components {
+  .fable-card {
+    @apply bg-cream-50 border border-line rounded-2xl transition-all duration-300 ease-soft;
+  }
+  .fable-card:hover {
+    @apply border-sienna-200;
+  }
+  .fable-rule {
+    @apply h-px bg-line;
+  }
+  .fable-eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.18em] text-ink-50;
+  }
+  .fable-link {
+    @apply text-ink-300 underline decoration-line decoration-1 underline-offset-4 transition-colors duration-200;
+  }
+  .fable-link:hover {
+    @apply text-sienna-400 decoration-sienna-300;
+  }
+  .fable-btn {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ease-soft;
+  }
+  .fable-btn-primary {
+    @apply fable-btn bg-ink-400 text-cream-50 hover:bg-sienna-400;
+  }
+  .fable-btn-ghost {
+    @apply fable-btn border border-line text-ink-200 hover:border-ink-300 hover:text-ink-400;
+  }
+}
+
+/* Prose tuning for blog content */
+.prose {
+  @apply text-ink-200;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply font-serif text-ink-400;
+}
+.prose a {
+  @apply text-sienna-400 underline decoration-sienna-200 underline-offset-2;
+}
+.prose a:hover {
+  @apply decoration-sienna-400;
+}
+.prose code {
+  @apply font-mono text-sm bg-cream-200 px-1.5 py-0.5 rounded text-ink-300;
+}
+.prose pre {
+  @apply bg-ink-400 text-cream-50 rounded-xl p-5;
+}
+.prose pre code {
+  @apply bg-transparent text-cream-50 p-0;
+}

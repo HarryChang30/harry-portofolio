@@ -8,7 +8,7 @@
 
 <Sidebar />
 
-<main class="pt-16 md:pt-20 bg-gray-50 min-h-screen">
+<main class="pt-16 md:pt-20">
   <Introduction />
   <Experience />
   <Projects />

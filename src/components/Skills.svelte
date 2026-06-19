@@ -1,9 +1,9 @@
 <script lang="ts">
     import { _ } from '../lib/i18n.js';
-    
+
     const skillCategories = [
         {
-            name: "Programming Languages",
+            name: "Languages",
             skills: [
                 { name: "Go", icon: "/icons/go-icon.png" },
                 { name: "TypeScript", icon: "/icons/typescript-icon.png" },
@@ -14,21 +14,22 @@
             ]
         },
         {
-            name: "Backend Frameworks",
+            name: "Frameworks",
             skills: [
                 { name: "Node.js", icon: "/icons/node-js-icon.png" },
                 { name: "Echo", icon: "/icons/echo-framework-icon.png" },
             ]
         },
         {
-            name: "Protocols & APIs",
+            name: "Protocols",
             skills: [
-                { name: "REST API", icon: "/icons/rest-api-icon.png" },
+                { name: "REST", icon: "/icons/rest-api-icon.png" },
                 { name: "gRPC", icon: "/icons/grpc-icon.png" },
+                { name: "MQTT", icon: "/icons/mqtt-icon.png" },
             ]
         },
         {
-            name: "Databases",
+            name: "Datastores",
             skills: [
                 { name: "MySQL", icon: "/icons/mysql-icon.png" },
                 { name: "PostgreSQL", icon: "/icons/postgresql-icon.png" },
@@ -38,7 +39,7 @@
             ]
         },
         {
-            name: "Message Brokers",
+            name: "Messaging",
             skills: [
                 { name: "RabbitMQ", icon: "/icons/rabbitmq-icon.png" },
                 { name: "NSQ", icon: "/icons/nsq-icon.png" },
@@ -46,7 +47,7 @@
             ]
         },
         {
-            name: "DevOps & Cloud",
+            name: "Infra & Cloud",
             skills: [
                 { name: "Docker", icon: "/icons/docker-icon.png" },
                 { name: "Kubernetes", icon: "/icons/kubernetes-icon.png" },
@@ -57,41 +58,61 @@
                 { name: "GCP", icon: "/icons/gcp-icon.png" },
                 { name: "AliCloud", icon: "/icons/alicloud-icon.png" },
             ]
+        },
+        {
+            name: "AI Coding Agents",
+            skills: [
+                { name: "Codex", icon: "/icons/openai-icon.png" },
+                { name: "Claude Code", icon: "/icons/anthropic-icon.png" },
+                { name: "Pi.dev", icon: "/icons/pi-icon.png" },
+                { name: "OpenCode", icon: "/icons/opencode-icon.png" },
+            ]
+        },
+        {
+            name: "AI Agent SDKs",
+            skills: [
+                { name: "OpenAI-compatible", icon: "/icons/openai-icon.png" },
+                { name: "Mastra", icon: "/icons/mastra-icon.png" },
+                { name: "Anthropic SDK", icon: "/icons/anthropic-icon.png" },
+            ]
         }
     ];
 </script>
 
-<section id="skills" class="py-16 md:py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 md:mb-16">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{$_('sections.skills.title')}</h2>
-      <div class="w-20 h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
-      <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+<section id="skills" class="py-20 md:py-28 bg-cream-50 border-y border-line">
+  <div class="max-w-6xl mx-auto px-6 sm:px-8">
+    <div class="mb-14 md:mb-20 max-w-3xl">
+      <div class="fable-eyebrow mb-4">— {$_('sections.skills.title')}</div>
+      <h2 class="text-display-lg font-serif font-medium text-ink-400 mb-5">
+        Tools I reach for, plus the ones I'm still learning.
+      </h2>
+      <p class="text-ink-100 text-lg leading-relaxed max-w-prose">
         Technologies and tools I use to build scalable applications.
       </p>
     </div>
 
-    <div class="space-y-12">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
       {#each skillCategories as category}
         <div>
-          <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-            <span class="w-2 h-8 bg-gradient-to-b from-blue-600 to-indigo-600 rounded-full"></span>
+          <h3 class="font-mono text-xs uppercase tracking-[0.18em] text-sienna-400 mb-5 pb-3 border-b border-line">
             {category.name}
           </h3>
-          <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+          <ul class="space-y-3">
             {#each category.skills as skill}
-              <div class="group flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 border border-transparent hover:border-gray-100">
-                <div class="w-12 h-12 mb-3 flex items-center justify-center">
+              <li class="flex items-center gap-3 text-ink-200">
+                {#if skill.icon}
                   <img
-                      src={skill.icon}
-                      alt={skill.name}
-                      class="max-w-full max-h-full object-contain"
+                    src={skill.icon}
+                    alt={skill.name}
+                    class="w-5 h-5 object-contain opacity-90"
                   />
-                </div>
-                <h4 class="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors text-center">{skill.name}</h4>
-              </div>
+                {:else}
+                  <span class="w-5 h-5 inline-flex items-center justify-center text-sienna-400 font-mono text-sm leading-none">+</span>
+                {/if}
+                <span class="text-[15px]">{skill.name}</span>
+              </li>
             {/each}
-          </div>
+          </ul>
         </div>
       {/each}
     </div>

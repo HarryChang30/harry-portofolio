@@ -1,15 +1,15 @@
 <script lang="ts">
     import { _, json } from '../lib/i18n.js';
     import { currentLanguage } from '../stores/languageStore.js';
-    
+
     const experienceKeys = [
         'nafas',
-        'prakerja', 
+        'prakerja',
         'kuncie',
         'grabovo',
         'binus'
     ];
-    
+
     const companyLogos: Record<string, string> = {
         nafas: "/logos/nafas.png",
         prakerja: "/logos/prakerja.jpg",
@@ -17,58 +17,59 @@
         grabovo: "/logos/grab-ovo-logo.jpg",
         binus: "/logos/it-binus.jpg"
     };
-    
+
     $: currentLang = $currentLanguage;
 </script>
 
-<section id="experience" class="py-16 md:py-24 bg-white">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 md:mb-16">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{$_('sections.experience.title')}</h2>
-      <div class="w-20 h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
+<section id="experience" class="py-20 md:py-28 bg-cream-50 border-y border-line">
+  <div class="max-w-5xl mx-auto px-6 sm:px-8">
+    <div class="mb-14 md:mb-20">
+      <div class="fable-eyebrow mb-4">— {$_('sections.experience.title')}</div>
+      <h2 class="text-display-lg font-serif font-medium text-ink-400 max-w-3xl">
+        A trail of teams, problems, and the things I learned to leave behind.
+      </h2>
     </div>
-    
+
     <div class="relative">
-      <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 via-indigo-500 to-purple-500 transform md:-translate-x-1/2"></div>
-      
-      <div class="space-y-8 md:space-y-12">
+      <div class="absolute left-0 md:left-[140px] top-0 bottom-0 w-px bg-line"></div>
+
+      <div class="space-y-12 md:space-y-16">
         {#each experienceKeys as experienceKey, index}
-          <div class="relative flex items-center {index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}">
-            <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-white border-4 border-blue-600 rounded-full transform -translate-x-1/2 z-10"></div>
-            
-            <div class="ml-12 md:ml-0 md:w-5/12 {index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}">
-              <div class="bg-gray-50 p-5 md:p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-                <div class="flex items-center {index % 2 === 0 ? 'md:flex-row-reverse' : ''} gap-4 mb-3">
-                  <img 
-                    src={companyLogos[experienceKey]} 
-                    alt={$_(`experience.companies.${experienceKey}.company`)} 
-                    class="w-12 h-12 rounded-lg object-cover shadow-sm flex-shrink-0" 
-                  />
-                  <div>
-                    <h3 class="text-lg font-bold text-gray-800">
-                      {$_(`experience.companies.${experienceKey}.position`)}
-                    </h3>
-                    <p class="text-blue-600 font-medium text-sm">
-                      {$_(`experience.companies.${experienceKey}.company`)}
-                    </p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-2 text-gray-500 text-sm mb-3 {index % 2 === 0 ? 'md:flex-row-reverse' : ''}">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>{$_(`experience.companies.${experienceKey}.duration`)}</span>
-                </div>
-                <ul class="space-y-2 text-gray-600 text-sm {index % 2 === 0 ? 'md:text-right' : ''}">
-                  {#each $json(`experience.companies.${experienceKey}.description`) as point}
-                    <li class="leading-relaxed">{point}</li>
-                  {/each}
-                </ul>
+          <article class="relative grid md:grid-cols-[140px_1fr] gap-6 md:gap-12 pl-8 md:pl-0">
+            <div class="absolute left-0 md:left-[140px] top-2 -translate-x-1/2 w-2.5 h-2.5 bg-cream-50 border-2 border-sienna-300 rounded-full z-10"></div>
+
+            <div class="md:pt-1">
+              <div class="font-mono text-xs uppercase tracking-wider text-ink-50">
+                {$_(`experience.companies.${experienceKey}.duration`)}
               </div>
             </div>
-            
-            <div class="hidden md:block md:w-5/12"></div>
-          </div>
+
+            <div>
+              <div class="flex items-start gap-4 mb-4">
+                <img
+                  src={companyLogos[experienceKey]}
+                  alt={$_(`experience.companies.${experienceKey}.company`)}
+                  class="w-11 h-11 rounded-lg object-cover ring-1 ring-line flex-shrink-0"
+                />
+                <div>
+                  <h3 class="text-xl md:text-2xl font-serif text-ink-400 leading-snug">
+                    {$_(`experience.companies.${experienceKey}.position`)}
+                  </h3>
+                  <p class="text-sienna-400 text-sm font-medium mt-0.5">
+                    {$_(`experience.companies.${experienceKey}.company`)}
+                  </p>
+                </div>
+              </div>
+              <ul class="space-y-2 text-ink-100 text-[15px] leading-relaxed max-w-prose">
+                {#each $json(`experience.companies.${experienceKey}.description`) as point}
+                  <li class="flex gap-3">
+                    <span class="text-sienna-300 mt-2 select-none">·</span>
+                    <span>{point}</span>
+                  </li>
+                {/each}
+              </ul>
+            </div>
+          </article>
         {/each}
       </div>
     </div>

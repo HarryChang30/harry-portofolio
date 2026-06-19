@@ -1,14 +1,12 @@
 <script>
   import { currentLanguage, changeLanguage } from '../stores/languageStore.js';
-  
+
   let isChanging = false;
-  
+
   const handleLanguageToggle = async () => {
     if (isChanging) return;
-    
     isChanging = true;
     const newLanguage = $currentLanguage === 'en' ? 'zh' : 'en';
-    
     try {
       await changeLanguage(newLanguage);
     } catch (error) {
@@ -19,18 +17,21 @@
   };
 </script>
 
-<div class="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+<div class="flex items-center gap-0.5 text-xs font-mono">
   <button
     on:click={handleLanguageToggle}
     disabled={isChanging}
-    class="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 {$currentLanguage === 'en' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}"
+    class="px-2 py-1 rounded transition-colors duration-200 {$currentLanguage === 'en' ? 'text-ink-400' : 'text-ink-50 hover:text-ink-200'}"
+    aria-label="Switch to English"
   >
     EN
   </button>
+  <span class="text-line">/</span>
   <button
     on:click={handleLanguageToggle}
     disabled={isChanging}
-    class="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 {$currentLanguage === 'zh' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}"
+    class="px-2 py-1 rounded transition-colors duration-200 {$currentLanguage === 'zh' ? 'text-ink-400' : 'text-ink-50 hover:text-ink-200'}"
+    aria-label="Switch to Chinese"
   >
     中
   </button>

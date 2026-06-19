@@ -1,11 +1,11 @@
 <script lang="ts">
     import { _ } from '../lib/i18n.js';
     import { currentLanguage } from '../stores/languageStore.js';
-    
+
     const projectKeys = [
         'portfolio',
         'prakerja_dashboard',
-        'prakerja_job', 
+        'prakerja_job',
         'prakerja_api',
         'kuncie_mobile',
         'kuncie_catalog',
@@ -16,7 +16,7 @@
         'smart_refrigerator',
         'space_shooter'
     ];
-    
+
     const projectThumbnails: Record<string, string> = {
         portfolio: "/projects/portofolio-websites.png",
         prakerja_dashboard: "/projects/prakerja-dashboard.png",
@@ -31,7 +31,7 @@
         smart_refrigerator: "/projects/journal-science-technology.png",
         space_shooter: "/projects/space-shooter-console.png"
     };
-    
+
     const projectUrls: Record<string, string> = {
         portfolio: "https://harry-portofolio.vercel.app/",
         prakerja_dashboard: "https://dashboard.prakerja.go.id/masuk?history=/",
@@ -46,9 +46,9 @@
         smart_refrigerator: "https://drive.google.com/file/d/0B9tsy3xkLgLZU1NkMVV1cnZjWWs/view?resourcekey=0-Mu-Kl0j87-rPQMJluF7Lyg",
         space_shooter: "https://www.youtube.com/watch?v=XKv58jD25YI"
     };
-    
+
     $: currentLang = $currentLanguage;
-    
+
     function getSortedProjectKeys() {
         return projectKeys.sort((a, b) => {
             const endYearA = $_(`projects.items.${a}.endYear`) || new Date().getFullYear();
@@ -58,53 +58,51 @@
     }
 </script>
 
-<section id="projects" class="py-16 md:py-24 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 md:mb-16">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{$_('sections.projects.title')}</h2>
-      <div class="w-20 h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
-      <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+<section id="projects" class="py-20 md:py-28">
+  <div class="max-w-6xl mx-auto px-6 sm:px-8">
+    <div class="mb-14 md:mb-20 max-w-3xl">
+      <div class="fable-eyebrow mb-4">— {$_('sections.projects.title')}</div>
+      <h2 class="text-display-lg font-serif font-medium text-ink-400 mb-5">
+        Things I shipped, mostly because someone needed them working on Monday.
+      </h2>
+      <p class="text-ink-100 text-lg leading-relaxed max-w-prose">
         Here are some of the projects I've worked on throughout my career as a Backend Software Engineer.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
       {#each getSortedProjectKeys() as projectKey}
-        <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-          <a href={projectUrls[projectKey]} target="_blank" rel="noopener noreferrer" class="block relative overflow-hidden">
-            <div class="aspect-video bg-gray-200 relative">
-              <img 
-                src={projectThumbnails[projectKey]} 
-                alt={$_(`projects.items.${projectKey}.name`)} 
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                <span class="text-white font-medium flex items-center gap-2">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                  View Project
-                </span>
-              </div>
-            </div>
-          </a>
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-2">
-              <a 
-                href={projectUrls[projectKey]} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors"
-              >
+        <a
+          href={projectUrls[projectKey]}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group fable-card overflow-hidden flex flex-col"
+        >
+          <div class="aspect-[4/3] overflow-hidden bg-cream-200 relative">
+            <img
+              src={projectThumbnails[projectKey]}
+              alt={$_(`projects.items.${projectKey}.name`)}
+              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-soft"
+            />
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="flex items-baseline justify-between gap-3 mb-3">
+              <h3 class="text-lg font-serif text-ink-400 group-hover:text-sienna-400 transition-colors leading-snug">
                 {$_(`projects.items.${projectKey}.name`)}
-              </a>
-              <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                {$_(`projects.items.${projectKey}.startYear`)} - {$_(`projects.items.${projectKey}.endYear`) || "Present"}
+              </h3>
+              <span class="font-mono text-[10px] uppercase tracking-wider text-ink-50 whitespace-nowrap">
+                {$_(`projects.items.${projectKey}.startYear`)} · {$_(`projects.items.${projectKey}.endYear`) || "Now"}
               </span>
             </div>
-            <p class="text-gray-600 text-sm leading-relaxed line-clamp-2">{$_(`projects.items.${projectKey}.description`)}</p>
+            <p class="text-ink-100 text-sm leading-relaxed flex-1">
+              {$_(`projects.items.${projectKey}.description`)}
+            </p>
+            <div class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-sienna-400 group-hover:gap-2.5 transition-all duration-300">
+              <span>Read more</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
           </div>
-        </div>
+        </a>
       {/each}
     </div>
   </div>
