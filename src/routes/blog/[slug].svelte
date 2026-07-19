@@ -26,7 +26,7 @@
 
   <main class="min-h-screen pt-28 pb-20">
     <article class="max-w-3xl mx-auto px-6 sm:px-8">
-      <a href="/blog" class="fable-eyebrow inline-flex items-center gap-2 mb-12 hover:text-sienna-400 transition-colors">
+      <a href="/blog" class="fable-eyebrow inline-flex items-center gap-2 mb-12 hover:text-azure-400 transition-colors">
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Back to writing
       </a>

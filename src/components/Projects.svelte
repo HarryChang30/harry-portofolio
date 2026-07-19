@@ -3,6 +3,7 @@
     import { currentLanguage } from '../stores/languageStore.js';
 
     const projectKeys = [
+        'idxplore',
         'portfolio',
         'prakerja_dashboard',
         'prakerja_job',
@@ -18,6 +19,7 @@
     ];
 
     const projectThumbnails: Record<string, string> = {
+        idxplore: "/projects/idxplore-dashboard.png",
         portfolio: "/projects/portofolio-websites.png",
         prakerja_dashboard: "/projects/prakerja-dashboard.png",
         prakerja_job: "/projects/prakerja-job-platform.png",
@@ -33,6 +35,7 @@
     };
 
     const projectUrls: Record<string, string> = {
+        idxplore: "https://builder-dashboard-three.vercel.app/",
         portfolio: "https://harry-portofolio.vercel.app/",
         prakerja_dashboard: "https://dashboard.prakerja.go.id/masuk?history=/",
         prakerja_job: "https://dashboard.prakerja.go.id/masuk?history=/",
@@ -66,7 +69,7 @@
         Things I shipped, mostly because someone needed them working on Monday.
       </h2>
       <p class="text-ink-100 text-lg leading-relaxed max-w-prose">
-        Here are some of the projects I've worked on throughout my career as a Backend Software Engineer.
+        A selection of products I helped build and keep running over the years — every one of them a team effort.
       </p>
     </div>
 
@@ -78,7 +81,7 @@
           rel="noopener noreferrer"
           class="group fable-card overflow-hidden flex flex-col"
         >
-          <div class="aspect-[4/3] overflow-hidden bg-cream-200 relative">
+          <div class="aspect-[4/3] overflow-hidden bg-frost-200 relative">
             <img
               src={projectThumbnails[projectKey]}
               alt={$_(`projects.items.${projectKey}.name`)}
@@ -87,7 +90,7 @@
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <div class="flex items-baseline justify-between gap-3 mb-3">
-              <h3 class="text-lg font-serif text-ink-400 group-hover:text-sienna-400 transition-colors leading-snug">
+              <h3 class="text-lg font-serif text-ink-400 group-hover:text-azure-400 transition-colors leading-snug">
                 {$_(`projects.items.${projectKey}.name`)}
               </h3>
               <span class="font-mono text-[10px] uppercase tracking-wider text-ink-50 whitespace-nowrap">
@@ -97,7 +100,7 @@
             <p class="text-ink-100 text-sm leading-relaxed flex-1">
               {$_(`projects.items.${projectKey}.description`)}
             </p>
-            <div class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-sienna-400 group-hover:gap-2.5 transition-all duration-300">
+            <div class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-azure-400 group-hover:gap-2.5 transition-all duration-300">
               <span>Read more</span>
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </div>

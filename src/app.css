@@ -3,13 +3,54 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Light blue theme */
+    --frost-50: 255 255 255;
+    --frost-100: 246 249 254;
+    --frost-200: 237 243 252;
+    --frost-300: 221 232 248;
+    --frost-400: 201 219 245;
+    --ink-50: 96 116 148;
+    --ink-100: 61 80 110;
+    --ink-200: 42 58 88;
+    --ink-300: 27 39 66;
+    --ink-400: 15 25 48;
+    --azure-50: 239 246 255;
+    --azure-100: 219 234 254;
+    --azure-200: 147 197 253;
+    --azure-300: 96 165 250;
+    --azure-400: 59 130 246;
+    --azure-500: 37 99 235;
+    --line: 220 230 245;
+  }
+  .dark {
+    /* Dark blue theme */
+    --frost-50: 23 34 60;
+    --frost-100: 13 22 42;
+    --frost-200: 18 29 52;
+    --frost-300: 27 40 70;
+    --frost-400: 37 53 90;
+    --ink-50: 133 156 196;
+    --ink-100: 169 190 224;
+    --ink-200: 201 216 240;
+    --ink-300: 224 234 250;
+    --ink-400: 240 246 255;
+    --azure-50: 30 58 138;
+    --azure-100: 44 74 138;
+    --azure-200: 59 110 200;
+    --azure-300: 79 131 232;
+    --azure-400: 111 168 255;
+    --azure-500: 147 197 253;
+    --line: 34 51 85;
+  }
+
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
   body {
-    @apply bg-cream-100 text-ink-200 font-sans;
+    @apply bg-frost-100 text-ink-200 font-sans transition-colors duration-300;
     font-feature-settings: 'ss01', 'cv11';
   }
   h1, h2, h3, h4 {
@@ -17,16 +58,16 @@
     font-feature-settings: 'ss01', 'ss02';
   }
   ::selection {
-    @apply bg-sienna-100 text-ink-400;
+    @apply bg-azure-100 text-ink-400;
   }
 }
 
 @layer components {
   .fable-card {
-    @apply bg-cream-50 border border-line rounded-2xl transition-all duration-300 ease-soft;
+    @apply bg-frost-50 border border-line rounded-2xl transition-all duration-300 ease-soft;
   }
   .fable-card:hover {
-    @apply border-sienna-200;
+    @apply border-azure-300;
   }
   .fable-rule {
     @apply h-px bg-line;
@@ -38,16 +79,19 @@
     @apply text-ink-300 underline decoration-line decoration-1 underline-offset-4 transition-colors duration-200;
   }
   .fable-link:hover {
-    @apply text-sienna-400 decoration-sienna-300;
+    @apply text-azure-400 decoration-azure-300;
   }
   .fable-btn {
     @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ease-soft;
   }
   .fable-btn-primary {
-    @apply fable-btn bg-ink-400 text-cream-50 hover:bg-sienna-400;
+    @apply fable-btn bg-azure-500 text-white hover:bg-azure-400;
+  }
+  .dark .fable-btn-primary {
+    @apply bg-azure-300 text-frost-100 hover:bg-azure-400;
   }
   .fable-btn-ghost {
-    @apply fable-btn border border-line text-ink-200 hover:border-ink-300 hover:text-ink-400;
+    @apply fable-btn border border-line text-ink-200 hover:border-azure-300 hover:text-azure-400;
   }
 }
 
@@ -58,18 +102,30 @@
 .prose h1, .prose h2, .prose h3, .prose h4 {
   @apply font-serif text-ink-400;
 }
+.prose p, .prose li {
+  @apply text-ink-200;
+}
 .prose a {
-  @apply text-sienna-400 underline decoration-sienna-200 underline-offset-2;
+  @apply text-azure-400 underline decoration-azure-200 underline-offset-2;
 }
 .prose a:hover {
-  @apply decoration-sienna-400;
+  @apply decoration-azure-400;
+}
+.prose strong {
+  @apply text-ink-300;
 }
 .prose code {
-  @apply font-mono text-sm bg-cream-200 px-1.5 py-0.5 rounded text-ink-300;
+  @apply font-mono text-sm bg-frost-200 px-1.5 py-0.5 rounded text-ink-300;
 }
 .prose pre {
-  @apply bg-ink-400 text-cream-50 rounded-xl p-5;
+  @apply bg-ink-400 text-frost-50 rounded-xl p-5;
 }
 .prose pre code {
-  @apply bg-transparent text-cream-50 p-0;
+  @apply bg-transparent text-frost-50 p-0;
+}
+.dark .prose pre {
+  @apply bg-frost-200 text-ink-200;
+}
+.dark .prose pre code {
+  @apply text-ink-200;
 }

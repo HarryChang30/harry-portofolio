@@ -79,7 +79,7 @@
     ];
 </script>
 
-<section id="skills" class="py-20 md:py-28 bg-cream-50 border-y border-line">
+<section id="skills" class="py-20 md:py-28 bg-frost-50 border-y border-line">
   <div class="max-w-6xl mx-auto px-6 sm:px-8">
     <div class="mb-14 md:mb-20 max-w-3xl">
       <div class="fable-eyebrow mb-4">— {$_('sections.skills.title')}</div>
@@ -94,7 +94,7 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
       {#each skillCategories as category}
         <div>
-          <h3 class="font-mono text-xs uppercase tracking-[0.18em] text-sienna-400 mb-5 pb-3 border-b border-line">
+          <h3 class="font-mono text-xs uppercase tracking-[0.18em] text-azure-400 mb-5 pb-3 border-b border-line">
             {category.name}
           </h3>
           <ul class="space-y-3">
@@ -107,7 +107,7 @@
                     class="w-5 h-5 object-contain opacity-90"
                   />
                 {:else}
-                  <span class="w-5 h-5 inline-flex items-center justify-center text-sienna-400 font-mono text-sm leading-none">+</span>
+                  <span class="w-5 h-5 inline-flex items-center justify-center text-azure-400 font-mono text-sm leading-none">+</span>
                 {/if}
                 <span class="text-[15px]">{skill.name}</span>
               </li>

@@ -7,11 +7,11 @@
     <div class="grid md:grid-cols-12 gap-10 md:gap-12 items-center">
       <div class="order-2 md:order-1 md:col-span-7">
         <div class="fable-eyebrow mb-6">
-          <span class="inline-block w-8 h-px bg-sienna-300 align-middle mr-3"></span>
+          <span class="inline-block w-8 h-px bg-azure-300 align-middle mr-3"></span>
           Backend Software Engineer
         </div>
         <h1 class="text-display-xl font-serif font-medium text-ink-400 mb-6">
-          Hi, I'm <span class="italic text-sienna-400">Harry</span>.
+          Hi, I'm <span class="italic text-azure-400">Harry</span>.
           <br class="hidden sm:block" />
           I build quiet systems
           <span class="text-ink-50">that keep running.</span>
@@ -32,7 +32,7 @@
 
       <div class="order-1 md:order-2 md:col-span-5 flex justify-center md:justify-end">
         <div class="relative">
-          <div class="absolute -inset-3 border border-sienna-200 rounded-2xl rotate-3"></div>
+          <div class="absolute -inset-3 border border-azure-200 rounded-2xl rotate-3"></div>
           <img
             src="/logos/go-mascot.jpg"
             alt="Harry Chang"

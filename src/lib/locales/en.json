@@ -22,147 +22,149 @@
     }
   },
   "bio": {
-    "paragraph1": "Hello! I'm Harry, a passionate Backend Software Engineer with over 8 years of experience in building scalable web applications and microservices. My journey in software development has been driven by a love for solving complex problems and creating efficient, maintainable solutions.",
-    "paragraph2": "Throughout my career, I've worked with various technologies including Go, Node.js, TypeScript, and modern web frameworks. I specialize in backend development, microservices architecture, and system design, with a strong focus on performance optimization and scalability.",
-    "paragraph3": "When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and sharing knowledge with the developer community. I believe in continuous learning and staying updated with the latest industry trends and best practices."
+    "paragraph1": "Hello! I'm Harry, a backend software engineer based in Jakarta. Since 2016 I've built and maintained systems across quite different worlds — a university platform, fintech lending, an ed-tech startup, a national government program, and now IoT air-quality monitoring.",
+    "paragraph2": "Most of my day-to-day work is in Go, with PHP and Node.js/TypeScript along the way: REST and gRPC services, relational databases, message queues, and cloud infrastructure. A big part of the job has been the unglamorous side — production support, on-call, observability, testing, and modernizing legacy systems one slice at a time.",
+    "paragraph3": "This site collects the projects I've been part of. I've tried to describe them as they were: team efforts where I played one role among many. If anything here interests you, my inbox is open."
   },
   "experience": {
     "companies": {
       "nafas": {
         "company": "Nafas Air Quality Solutions",
-        "position": "Software Engineer - Backend",
+        "position": "Backend Software Engineer",
         "duration": "Mar 2025 - Present",
         "description": [
-          "Working on several projects support the company's mission expanding their product and services to Qatar and Middle East region.",
-          "Working on frontend and backend development of web applications supporting the billing and accounting process of the company",
-          "Working on backend development applications supporting of device air quality monitoring such as reading and processing data from sensor, storing data to database, and providing API for frontend",
-          "Working on backend development for redesigning and refactoring the legacy system into new microservices architecture writing in Go programming language",
-          "Working on backend development for data restructuring and implement the worker pool 100k on average data processing sensor air quality data to Bigquery by leverages Go concurrency and NSQ"
+          "Build and maintain components of a billing, subscription, and payment management system supporting scheduled payment collection — backend services in Go, billing interface with Next.js and React.",
+          "Developed an NSQ-based worker pipeline that processes roughly 100,000 air-quality sensor telemetry records per day and forwards them to BigQuery for analytics.",
+          "Implemented MQTT-based backend capabilities for two-way communication and remote commands between the platform and connected IoT devices.",
+          "Contribute to the gradual decomposition of a legacy monolith by building new Go services and improving the maintainability of existing components."
         ]
       },
       "prakerja": {
         "company": "Coordinating Ministry for Economic Affairs - Prakerja",
-        "position": "Senior Software Engineer Backend",
+        "position": "Senior Software Engineer",
         "duration": "Jul 2023 - Dec 2024",
         "description": [
-          "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
-          "Contributing into system design and backend architecture",
-          "Improving unit test, security and refactoring codebase",
-          "Provide support on-call 24/7 for production issues and initiate the root cause analysis",
-          "Provide support for partner integration in module fraud engine to prevent any fraud users"
+          "Developed backend features for identity verification and registration workflows supporting more than 10,000 daily registrations, on a platform with approximately 18.4 million registered users.",
+          "Implemented integrations that let users view and apply for jobs through the platform, which carried around 35,000 active job listings per month.",
+          "Worked on learning-partner integrations across more than 30 external partner APIs and contributed to the platform's Open API services.",
+          "Supported remediation work identified through penetration testing and security reviews, including backend fixes aligned with ISO 27001 requirements and OWASP API security practices."
         ]
       },
       "kuncie": {
         "company": "Kuncie - EdTech",
-        "position": "Senior Software Engineer Backend",
+        "position": "Backend Software Engineer",
         "duration": "Nov 2021 - Jun 2023",
         "description": [
-          "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
-          "Contributing into system design, serverless architecture and microservices architecture",
-          "Improving unit test, security, design pattern and refactoring codebase",
-          "Working on migration of legacy system into the new microservices",
-          "Provide support on-call 24/7 for production issues and initiate the root cause analysis"
+          "Developed backend features for content management, user onboarding, video experiences, and gamification on an education platform serving more than 30,000 monthly active users.",
+          "Implemented payment and subscription workflows for premium content access.",
+          "Added and maintained unit tests for legacy services, increasing coverage in the areas under the team's ownership.",
+          "Evaluated technologies and contributed technical input for potential adoption across engineering teams."
         ]
       },
       "grabovo": {
-        "company": "Grab - OVO",
-        "position": "Senior Software Engineer Backend",
+        "company": "OVO - Grab",
+        "position": "Software Engineer → Senior Software Engineer",
         "duration": "Jan 2019 - Oct 2021",
         "description": [
-          "Developed backend microservices in Go and NodeJS, contributing to scalable microservices architecture",
-          "Contributing into system design and microservices architecture",
-          "Improving unit test, security, design pattern and refactoring codebases",
-          "Working on migration of legacy monolithic applications break down into microservices",
-          "Provide support on-call 24/7 for production issues and initiate the root cause analysis"
+          "Developed and maintained loan origination and loan management services — onboarding consumers and business partners, repayment tracking, and outstanding-balance management.",
+          "Contributed to the migration of lending data and workflows from a monolithic system to microservices, covering approximately 10 million loan transactions and 1 million users.",
+          "Refactored legacy code, applied Domain-Driven Design and dependency-injection patterns where they fit, and expanded unit-test coverage for selected modules.",
+          "Integrated Datadog and New Relic monitoring for service health visibility, and configured Kong API Gateway routes for public-facing endpoints.",
+          "Participated in on-call rotations, investigated production incidents, and documented root-cause analyses."
         ]
       },
       "binus": {
         "company": "IT Division - Binus University",
         "position": "Software Engineer",
-        "duration": "Feb 2016 - Dec 2018",
+        "duration": "Mar 2016 - Dec 2018",
         "description": [
-          "Developed features and module of web applications using technology PHP CodeIgniter, JS/Jquery and AJAX for main CMS module",
-          "Developed features and moduel of web applications using ASP.Net MVC for some university internal modules",
-          "Contributing in system design and architecture of web applications in exam scheduling and scoring module",
-          "Refactoring and Optimized existing code and queries for improved performance in exam scheduling, monitoring and student attendance",
-          "Contributing in research area of IoT projects for building the web APIs using CodeIgniter RestServer and Arduino Web Client for smart refrigerator projects"
+          "Progressed from part-time to full-time software engineer while developing features for the Binusmaya 5 web platform.",
+          "Built web APIs with PHP CodeIgniter and contributed an Arduino-connected web client for an IoT smart-refrigerator research project.",
+          "Maintained modules for enrichment programs, registration, student-service helpdesk workflows, exam scheduling, monitoring, and attendance.",
+          "Collaborated with other engineers to plan, implement, and support university web-application features."
         ]
       }
     }
   },
   "projects": {
     "items": {
+      "idxplore": {
+        "name": "IDXplore - Stock Analysis Platform",
+        "startYear": 2025,
+        "endYear": 2025,
+        "description": "A stock analysis platform for the Indonesia Stock Exchange (IDX) covering 150+ tickers. I built the Python ETL pipeline that ingests daily market data and computes technical indicators (RSI, ADX, moving averages, Fibonacci, Bollinger Bands), the Bun/TypeScript backend API serving pre-computed screening results and fundamental data, and the Next.js frontend dashboard with a visual query builder, market screeners, and portfolio tracking. Deployed on Vercel with serverless TiDB MySQL."
+      },
       "portfolio": {
-        "name": "Personal Websites",
+        "name": "Personal Website",
         "startYear": 2024,
         "endYear": 2024,
-        "description": "Personal portofolio websites, building the Frontend Static Sites by using Sveltekit and TailwindCSS for design layout. Purpose of this projects is to showcase my self and journey what I have done as Backend Software Engineer and starting to recap what I have learnt so far in computer science fields. Stay tune."
+        "description": "A static SvelteKit and TailwindCSS build where I collect my work and occasionally write. It doubles as my excuse to keep my frontend skills from rusting completely."
       },
       "prakerja_dashboard": {
         "name": "Prakerja Dashboard",
         "startYear": 2023,
         "endYear": 2024,
-        "description": "Prakerja Dashboard Web Applications, let users going through the digital platform, register batch program and getting the course credits for joining and participate the training courses."
+        "description": "The main Prakerja web application — registration, program batches, and training-course participation for Indonesia's national upskilling program serving ~18 million users. I worked on identity verification, registration workflows, and partner integrations on the Go backend."
       },
       "prakerja_job": {
         "name": "Prakerja Job Platform",
         "startYear": 2023,
         "endYear": 2024,
-        "description": "Prakerja Job Platform, being integrated with the Prakerja dasboard allowing prakerja users for going through searching the jobs after join the training courses that already provided by Prakerja and Learning Partner. Help prakerja users find their jobs through the platform and provide relevant recommendation based on participation of training."
+        "description": "A job platform inside the Prakerja dashboard that surfaces relevant openings to training graduates. I built backend integrations for listing and applying to jobs — roughly 35,000 active listings per month."
       },
       "prakerja_api": {
         "name": "Prakerja Open API",
         "startYear": 2023,
         "endYear": 2024,
-        "description": "Prakerja Open API platform, providing API specifications for learning partner do the seamless integrations between their system with Prakerja platform for any activities that support purchase, training and verification courses."
+        "description": "The public API surface for Prakerja's 30+ learning partners — purchase, training, and course-verification integrations. I contributed to the backend services behind it."
       },
       "kuncie_mobile": {
         "name": "Kuncie Mobile Apps",
         "startYear": 2021,
         "endYear": 2023,
-        "description": "Kuncie mobile applications, providing learning and education through mobile apps. Let students learn by watching the on demand video contents on mobile apps."
+        "description": "Kuncie's mobile learning app with on-demand video courses. I worked on the backend for content management, user onboarding, video experiences, and gamification."
       },
       "kuncie_catalog": {
         "name": "Kuncie Product Catalog - Commerce",
         "startYear": 2022,
         "endYear": 2023,
-        "description": "Kuncie product catalog commerce. Marketplace for kuncie product and services, where student can purchase their interest course on Kuncie product catalog platform."
+        "description": "A commerce catalog where students browse and purchase Kuncie courses. I implemented the backend payment and subscription workflows behind it."
       },
       "kuncie_package": {
         "name": "Kuncie Course Package",
         "startYear": 2021,
         "endYear": 2023,
-        "description": "Kuncie course package, one of the kuncie generated revenue products integration between Kuncie and Telkomsel mobile network package providing internet quota for being able to watch video learning contents"
+        "description": "A bundle between Kuncie and Telkomsel pairing course access with mobile data quota, so students could stream lessons on the go. I handled backend integration for the package."
       },
       "ovo_paylater": {
         "name": "OVO Paylater - Tokopedia (MVP)",
         "startYear": 2019,
         "endYear": 2020,
-        "description": "Launching first MVP OVO BNPL Product partnering with the Tokopedia on 2019, gained more than 50k+ active users for doing purchase and transactions using virtual credit card on the Tokopedia ecommerce platforms. (Business Suspended) During the COVID - Pandemic years"
+        "description": "OVO's first BNPL product, launched with Tokopedia in 2019 — virtual credit at checkout that grew past 50k active users before the business was suspended during the pandemic. I developed loan origination workflows on the Go backend."
       },
       "ovo_modal": {
         "name": "OVO Modal Usaha",
         "startYear": 2020,
         "endYear": 2021,
-        "description": "OVO Modal Usaha - (Invoice Financing) is one of the OVO lending product that funding done by pledging ongoing invoices as source of loan payments to help improving the company cash flow."
+        "description": "An invoice-financing lending product letting businesses pledge ongoing invoices as a source of loan repayment to smooth out cash flow. I maintained the loan management services behind it."
       },
       "binusmaya": {
         "name": "Binusmaya 5",
         "startYear": 2016,
         "endYear": 2018,
-        "description": "Binusmaya 5 - Web applications for universities providing students the LMS module for their learning activities in schools along with other student support services to support student activities in the universities."
+        "description": "Binus University's student platform — LMS modules plus student support services. My first engineering job: PHP CodeIgniter features, exam scheduling, registration, and attendance modules."
       },
       "smart_refrigerator": {
         "name": "Smart Refrigerator - Internet of Things Research",
         "startYear": 2016,
         "endYear": 2017,
-        "description": "Smart Refrigerator - Contribute on implementations for how the web services APIs on backend server can connected to the Arduino Client using the PHP CodeIgniter REST Server for Backend and Arduino for the Client."
+        "description": "A university research project connecting an Arduino client to backend web APIs (PHP CodeIgniter REST Server) for a smart refrigerator. My first taste of IoT — years before it became my day job."
       },
       "space_shooter": {
         "name": "Space Shooter - Desktop Console Shooting Games",
         "startYear": 2015,
         "endYear": 2015,
-        "description": "Space Shooter - Console Games. Working as leading team of 5 members to develop the endless space shooting game with Simple Directmedia Layer (SDL 2.0.3) and C++ programming language to fullfill final Object Oriented Programming courses."
+        "description": "An endless space-shooter game built with SDL 2.0.3 and C++ as the final project for my Object-Oriented Programming course — developed in a team of five, where I served as team lead."
       }
     }
   },

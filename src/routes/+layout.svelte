@@ -21,7 +21,7 @@
         © {new Date().getFullYear()} · Harry Chang
       </div>
       <div class="font-serif text-sm text-ink-100 italic">
-        Built quietly, served warm.
+        Built quietly, kept running.
       </div>
     </div>
   </footer>

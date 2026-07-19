@@ -1,40 +1,37 @@
 /** @type {import('tailwindcss').Config} */
+// ponytail: colors are CSS vars (see app.css) so dark mode is one .dark class, no dark: variants anywhere
+const v = (name) => `rgb(var(${name}) / <alpha-value>)`;
+
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Fable 5 warm editorial palette
-        cream: {
-          50: '#FDFBF7',
-          100: '#FAF7F2',
-          200: '#F5EFE4',
-          300: '#EDE3D0',
-          400: '#E0D2B7',
+        // Light/Dark Blue palette — values live in app.css :root / .dark
+        frost: {
+          50: v('--frost-50'),
+          100: v('--frost-100'),
+          200: v('--frost-200'),
+          300: v('--frost-300'),
+          400: v('--frost-400'),
         },
         ink: {
-          50: '#7A6E5F',
-          100: '#5A4F42',
-          200: '#3A3128',
-          300: '#26201A',
-          400: '#1A1612',
+          50: v('--ink-50'),
+          100: v('--ink-100'),
+          200: v('--ink-200'),
+          300: v('--ink-300'),
+          400: v('--ink-400'),
         },
-        sienna: {
-          50: '#FCF1E8',
-          100: '#F8DCC4',
-          200: '#EBA678',
-          300: '#D77E4A',
-          400: '#B85A28',
-          500: '#8E3F12',
+        azure: {
+          50: v('--azure-50'),
+          100: v('--azure-100'),
+          200: v('--azure-200'),
+          300: v('--azure-300'),
+          400: v('--azure-400'),
+          500: v('--azure-500'),
         },
-        moss: {
-          50: '#EEF1E8',
-          100: '#D4DBBE',
-          200: '#9DAA7B',
-          300: '#6B7A47',
-          400: '#4A5732',
-        },
-        line: '#E8DCC8',
+        line: v('--line'),
       },
       fontFamily: {
         serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
