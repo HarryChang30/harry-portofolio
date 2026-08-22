@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-// ponytail: colors are CSS vars (see app.css) so dark mode is one .dark class, no dark: variants anywhere
+// Colors are CSS vars (see app.css :root / .dark / .light) so theme is one class swap
 const v = (name) => `rgb(var(${name}) / <alpha-value>)`;
 
 export default {
@@ -8,13 +8,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Light/Dark Blue palette — values live in app.css :root / .dark
-        frost: {
-          50: v('--frost-50'),
-          100: v('--frost-100'),
-          200: v('--frost-200'),
-          300: v('--frost-300'),
-          400: v('--frost-400'),
+        surface: {
+          0: v('--surface-0'),
+          1: v('--surface-1'),
+          2: v('--surface-2'),
+          3: v('--surface-3'),
         },
         ink: {
           50: v('--ink-50'),
@@ -23,25 +21,23 @@ export default {
           300: v('--ink-300'),
           400: v('--ink-400'),
         },
-        azure: {
-          50: v('--azure-50'),
-          100: v('--azure-100'),
-          200: v('--azure-200'),
-          300: v('--azure-300'),
-          400: v('--azure-400'),
-          500: v('--azure-500'),
+        accent: {
+          200: v('--accent-200'),
+          300: v('--accent-300'),
+          400: v('--accent-400'),
         },
         line: v('--line'),
+        'line-bright': v('--line-bright'),
       },
       fontFamily: {
-        serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
+        display: ['"Space Grotesk"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
-        'display-xl': ['clamp(3rem, 6vw + 1rem, 5.5rem)', { lineHeight: '1.02', letterSpacing: '-0.025em' }],
-        'display-lg': ['clamp(2.25rem, 4vw + 1rem, 3.75rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
-        'display': ['clamp(1.75rem, 2.5vw + 1rem, 2.5rem)', { lineHeight: '1.1', letterSpacing: '-0.015em' }],
+        'display-xl': ['clamp(3rem, 6vw + 1rem, 6rem)', { lineHeight: '1.0', letterSpacing: '-0.035em' }],
+        'display-lg': ['clamp(2.25rem, 4vw + 1rem, 4rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+        'display': ['clamp(1.5rem, 2.5vw + 1rem, 2.25rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
       },
       maxWidth: {
         prose: '68ch',
@@ -49,6 +45,31 @@ export default {
       },
       transitionTimingFunction: {
         'soft': 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
+      keyframes: {
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.8' },
+        },
+        'signal': {
+          '0%': { opacity: '0', transform: 'scale(0.8)' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0', transform: 'scale(1.4)' },
+        },
+      },
+      animation: {
+        'fade-up': 'fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        'fade-in': 'fade-in 1s ease forwards',
+        'pulse-soft': 'pulse-soft 4s ease-in-out infinite',
+        'signal': 'signal 3s ease-out infinite',
       },
     },
   },

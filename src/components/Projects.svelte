@@ -1,111 +1,210 @@
 <script lang="ts">
-    import { _ } from '../lib/i18n.js';
-    import { currentLanguage } from '../stores/languageStore.js';
+  import { _ } from '../lib/i18n.js';
+  import { currentLanguage } from '../stores/languageStore.js';
+  import { onMount } from 'svelte';
 
-    const projectKeys = [
-        'idxplore',
-        'portfolio',
-        'prakerja_dashboard',
-        'prakerja_job',
-        'prakerja_api',
-        'kuncie_mobile',
-        'kuncie_catalog',
-        'kuncie_package',
-        'ovo_paylater',
-        'ovo_modal',
-        'binusmaya',
-        'smart_refrigerator',
-        'space_shooter'
-    ];
+  const projectKeys = [
+    'idxplore',
+    'prakerja_dashboard', 'prakerja_job', 'prakerja_api',
+    'kuncie_mobile', 'kuncie_catalog', 'kuncie_package',
+    'ovo_paylater', 'ovo_modal',
+    'binusmaya',
+    'portfolio',
+    'smart_refrigerator',
+    'space_shooter'
+  ];
 
-    const projectThumbnails: Record<string, string> = {
-        idxplore: "/projects/idxplore-dashboard.png",
-        portfolio: "/projects/portofolio-websites.png",
-        prakerja_dashboard: "/projects/prakerja-dashboard.png",
-        prakerja_job: "/projects/prakerja-job-platform.png",
-        prakerja_api: "/projects/prakerja-open-api.png",
-        kuncie_mobile: "/projects/kuncie-playstore.png",
-        kuncie_catalog: "/projects/kuncie-product-catalog.png",
-        kuncie_package: "/projects/kuncie-course-package.png",
-        ovo_paylater: "/projects/ovo-paylater-tokopedia.jpg",
-        ovo_modal: "/projects/ovo-invoice-financing.png",
-        binusmaya: "/projects/binusmaya-5.png",
-        smart_refrigerator: "/projects/journal-science-technology.png",
-        space_shooter: "/projects/space-shooter-console.png"
-    };
+  const projectThumbnails: Record<string, string> = {
+    idxplore: "/projects/idxplore-dashboard.png",
+    portfolio: "/projects/portofolio-websites.png",
+    prakerja_dashboard: "/projects/prakerja-dashboard.png",
+    prakerja_job: "/projects/prakerja-job-platform.png",
+    prakerja_api: "/projects/prakerja-open-api.png",
+    kuncie_mobile: "/projects/kuncie-playstore.png",
+    kuncie_catalog: "/projects/kuncie-product-catalog.png",
+    kuncie_package: "/projects/kuncie-course-package.png",
+    ovo_paylater: "/projects/ovo-paylater-tokopedia.jpg",
+    ovo_modal: "/projects/ovo-invoice-financing.png",
+    binusmaya: "/projects/binusmaya-5.png",
+    smart_refrigerator: "/projects/journal-science-technology.png",
+    space_shooter: "/projects/space-shooter-console.png"
+  };
 
-    const projectUrls: Record<string, string> = {
-        idxplore: "https://builder-dashboard-three.vercel.app/",
-        portfolio: "https://harry-portofolio.vercel.app/",
-        prakerja_dashboard: "https://dashboard.prakerja.go.id/masuk?history=/",
-        prakerja_job: "https://dashboard.prakerja.go.id/masuk?history=/",
-        prakerja_api: "https://developer.prakerja.go.id",
-        kuncie_mobile: "https://play.google.com/store/apps/details?id=com.kuncie.app&pli=1",
-        kuncie_catalog: "https://www.kuncie.com/product-catalog/?page=1",
-        kuncie_package: "https://www.kuncie.com/public-classes/course-package/",
-        ovo_paylater: "https://www.tokopedia.com/blog/ovo-paylater/",
-        ovo_modal: "https://www.ovofinansial.com/omu/landing/borrower",
-        binusmaya: "https://binusmaya.binus.ac.id/login",
-        smart_refrigerator: "https://drive.google.com/file/d/0B9tsy3xkLgLZU1NkMVV1cnZjWWs/view?resourcekey=0-Mu-Kl0j87-rPQMJluF7Lyg",
-        space_shooter: "https://www.youtube.com/watch?v=XKv58jD25YI"
-    };
+  const projectUrls: Record<string, string> = {
+    idxplore: "https://builder-dashboard-three.vercel.app/",
+    portfolio: "https://harry-portofolio.vercel.app/",
+    prakerja_dashboard: "https://dashboard.prakerja.go.id/masuk?history=/",
+    prakerja_job: "https://dashboard.prakerja.go.id/masuk?history=/",
+    prakerja_api: "https://developer.prakerja.go.id",
+    kuncie_mobile: "https://play.google.com/store/apps/details?id=com.kuncie.app&pli=1",
+    kuncie_catalog: "https://www.kuncie.com/product-catalog/?page=1",
+    kuncie_package: "https://www.kuncie.com/public-classes/course-package/",
+    ovo_paylater: "https://www.tokopedia.com/blog/ovo-paylater/",
+    ovo_modal: "https://www.ovofinansial.com/omu/landing/borrower",
+    binusmaya: "https://binusmaya.binus.ac.id/login",
+    smart_refrigerator: "https://drive.google.com/file/d/0B9tsy3xkLgLZU1NkMVV1cnZjWWs/view?resourcekey=0-Mu-Kl0j87-rPQMJluF7Lyg",
+    space_shooter: "https://www.youtube.com/watch?v=XKv58jD25YI"
+  };
 
-    $: currentLang = $currentLanguage;
+  // IDXplore pipeline labels
+  const idxplorePipeline = [
+    'RAW MARKET DATA', 'PYTHON ETL', 'TECHNICAL INDICATORS',
+    'SCREENING ENGINE', 'BUN API', 'DASHBOARD'
+  ];
 
-    function getSortedProjectKeys() {
-        return projectKeys.sort((a, b) => {
-            const endYearA = $_(`projects.items.${a}.endYear`) || new Date().getFullYear();
-            const endYearB = $_(`projects.items.${b}.endYear`) || new Date().getFullYear();
-            return Number(endYearB) - Number(endYearA);
+  $: currentLang = $currentLanguage;
+
+  $: sortedKeys = [...projectKeys].sort((a, b) => {
+    const endYearA = $_(`projects.items.${a}.endYear`) || new Date().getFullYear();
+    const endYearB = $_(`projects.items.${b}.endYear`) || new Date().getFullYear();
+    return Number(endYearB) - Number(endYearA);
+  });
+
+  $: featuredKey = sortedKeys[0];
+  $: otherKeys = sortedKeys.slice(1);
+
+  let visibleEls = new Set();
+  let sectionVisible = false;
+
+  onMount(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            visibleEls.add(e.target.dataset.idx || e.target.dataset.key);
+            visibleEls = visibleEls;
+            if (e.target.dataset.section === 'projects-header') sectionVisible = true;
+          }
         });
-    }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    document.querySelectorAll('[data-observe]').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  });
 </script>
 
-<section id="projects" class="py-20 md:py-28">
-  <div class="max-w-6xl mx-auto px-6 sm:px-8">
-    <div class="mb-14 md:mb-20 max-w-3xl">
-      <div class="fable-eyebrow mb-4">— {$_('sections.projects.title')}</div>
-      <h2 class="text-display-lg font-serif font-medium text-ink-400 mb-5">
+<section id="projects" class="relative py-28 md:py-40">
+  <!-- Section header -->
+  <div class="max-w-6xl mx-auto px-6 sm:px-8 mb-16 md:mb-24">
+    <div
+      data-observe
+      data-section="projects-header"
+      class="transition-all duration-700 ease-soft"
+      style="opacity: {sectionVisible ? '1' : '0'}; transform: translateY({sectionVisible ? '0' : '16px'})"
+    >
+      <div class="sys-eyebrow mb-5">02 — PROJECTS</div>
+      <h2 class="sys-display text-display-lg max-w-3xl mb-4" style="line-height: 1.08">
         Things I shipped, mostly because someone needed them working on Monday.
       </h2>
-      <p class="text-ink-100 text-lg leading-relaxed max-w-prose">
+      <p class="text-ink-200 text-lg leading-relaxed max-w-prose">
         A selection of products I helped build and keep running over the years — every one of them a team effort.
       </p>
     </div>
+  </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
-      {#each getSortedProjectKeys() as projectKey}
-        <a
-          href={projectUrls[projectKey]}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group fable-card overflow-hidden flex flex-col"
-        >
-          <div class="aspect-[4/3] overflow-hidden bg-frost-200 relative">
-            <img
-              src={projectThumbnails[projectKey]}
-              alt={$_(`projects.items.${projectKey}.name`)}
-              class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-soft"
-            />
+  <!-- IDXplore — hero case study -->
+  <div class="max-w-6xl mx-auto px-6 sm:px-8 mb-20 md:mb-32">
+    <article
+      data-observe
+      data-key="idxplore"
+      class="transition-all duration-1000 ease-soft"
+      style="opacity: {visibleEls.has('idxplore') ? '1' : '0'}; transform: translateY({visibleEls.has('idxplore') ? '0' : '32px'})}"
+    >
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-10">
+        <!-- Visual -->
+        <div class="lg:col-span-7 group">
+          <a href={projectUrls.idxplore} target="_blank" rel="noopener noreferrer" class="block relative overflow-hidden rounded-lg border border-line">
+            <div class="aspect-[16/10] overflow-hidden bg-surface-1">
+              <img
+                src={projectThumbnails.idxplore}
+                alt="IDXplore Dashboard"
+                class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-soft"
+              />
+            </div>
+            <!-- Pipeline overlay -->
+            <div class="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-surface-0/90 to-transparent">
+              <div class="flex items-center gap-2 flex-wrap">
+                {#each idxplorePipeline as step, i}
+                  <span class="font-mono text-[9px] md:text-[10px] text-ink-100 tracking-wider">{step}</span>
+                  {#if i < idxplorePipeline.length - 1}
+                    <span class="text-accent-400/60 text-[10px]">→</span>
+                  {/if}
+                {/each}
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Text -->
+        <div class="lg:col-span-5 flex flex-col justify-center">
+          <div class="sys-label mb-3">FEATURED · 2025</div>
+          <h3 class="text-2xl md:text-3xl font-display text-ink-400 font-medium mb-2">
+            {$_(`projects.items.idxplore.name`)}
+          </h3>
+          <div class="font-mono text-xs text-ink-50 tracking-wider mb-5 uppercase">
+            Python ETL · Bun/TypeScript · Next.js · TiDB
           </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <div class="flex items-baseline justify-between gap-3 mb-3">
-              <h3 class="text-lg font-serif text-ink-400 group-hover:text-azure-400 transition-colors leading-snug">
+          <p class="text-ink-200 text-[15px] leading-relaxed mb-6">
+            {$_(`projects.items.idxplore.description`)}
+          </p>
+          <a href={projectUrls.idxplore} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 text-sm font-mono text-accent-400 hover:gap-3 transition-all duration-300">
+            VIEW SYSTEM
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Other projects — cinematic index -->
+  <div class="max-w-6xl mx-auto px-6 sm:px-8">
+    <div class="space-y-0">
+      {#each otherKeys as projectKey, index}
+        <article
+          data-observe
+          data-idx={index}
+          class="group border-t border-line py-7 md:py-8 transition-all duration-700 ease-soft"
+          style="opacity: {visibleEls.has(String(index)) ? '1' : '0'}; transform: translateY({visibleEls.has(String(index)) ? '0' : '16px'}); transition-delay: {index * 80}ms"
+        >
+          <a href={projectUrls[projectKey]} target="_blank" rel="noopener noreferrer" class="grid md:grid-cols-12 gap-4 md:gap-8 items-center">
+            <div class="md:col-span-1">
+              <span class="font-mono text-xs text-ink-50">{String(index + 1).padStart(2, '0')}</span>
+            </div>
+            <!-- Thumbnail -->
+            <div class="md:col-span-2 md:row-span-1">
+              <div class="aspect-[16/10] rounded-md overflow-hidden border border-line bg-surface-1">
+                <img
+                  src={projectThumbnails[projectKey]}
+                  alt={$_(`projects.items.${projectKey}.name`)}
+                  class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-soft"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="md:col-span-3">
+              <h3 class="text-lg font-display text-ink-300 group-hover:text-accent-400 transition-colors duration-300">
                 {$_(`projects.items.${projectKey}.name`)}
               </h3>
-              <span class="font-mono text-[10px] uppercase tracking-wider text-ink-50 whitespace-nowrap">
-                {$_(`projects.items.${projectKey}.startYear`)} · {$_(`projects.items.${projectKey}.endYear`) || "Now"}
+            </div>
+            <div class="md:col-span-4">
+              <p class="text-ink-200 text-sm leading-relaxed line-clamp-2">
+                {$_(`projects.items.${projectKey}.description`)}
+              </p>
+            </div>
+            <div class="md:col-span-1">
+              <span class="font-mono text-[10px] text-ink-50 tracking-wider uppercase">
+                {$_(`projects.items.${projectKey}.startYear`)} — {$_(`projects.items.${projectKey}.endYear`) || "NOW"}
               </span>
             </div>
-            <p class="text-ink-100 text-sm leading-relaxed flex-1">
-              {$_(`projects.items.${projectKey}.description`)}
-            </p>
-            <div class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-azure-400 group-hover:gap-2.5 transition-all duration-300">
-              <span>Read more</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            <div class="md:col-span-1 flex justify-end">
+              <svg class="w-4 h-4 text-ink-500 group-hover:text-accent-400 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
             </div>
-          </div>
-        </a>
+          </a>
+        </article>
       {/each}
     </div>
   </div>

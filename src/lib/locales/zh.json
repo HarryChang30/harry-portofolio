@@ -1,9 +1,9 @@
 {
   "nav": {
-    "introduction": "简介",
     "experience": "工作经历",
     "projects": "项目",
-    "skills": "技能",
+    "systems": "系统",
+    "contact": "联系",
     "blog": "博客"
   },
   "sections": {

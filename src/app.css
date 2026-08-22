@@ -3,129 +3,131 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Light blue theme */
-    --frost-50: 255 255 255;
-    --frost-100: 246 249 254;
-    --frost-200: 237 243 252;
-    --frost-300: 221 232 248;
-    --frost-400: 201 219 245;
-    --ink-50: 96 116 148;
-    --ink-100: 61 80 110;
-    --ink-200: 42 58 88;
-    --ink-300: 27 39 66;
-    --ink-400: 15 25 48;
-    --azure-50: 239 246 255;
-    --azure-100: 219 234 254;
-    --azure-200: 147 197 253;
-    --azure-300: 96 165 250;
-    --azure-400: 59 130 246;
-    --azure-500: 37 99 235;
-    --line: 220 230 245;
+  /* ─────────────────────────────────────────────
+     DARK — default theme
+     Near-black graphite, off-white type, phosphor accent
+     ───────────────────────────────────────────── */
+  :root, .dark {
+    --surface-0: 13 15 19;       /* deepest background — #0d0f13 */
+    --surface-1: 19 22 27;       /* primary surface — #13161b */
+    --surface-2: 27 31 38;       /* elevated — #1b1f26 */
+    --surface-3: 36 41 50;       /* cards — #242932 */
+
+    --ink-400: 233 236 240;      /* primary text — #e9ecf0 */
+    --ink-300: 196 201 210;      /* secondary — #c4c9d2 */
+    --ink-200: 150 158 170;      /* body — #969eaa */
+    --ink-100: 110 118 130;      /* muted — #6e7682 */
+    --ink-50: 78 85 96;          /* faint — #4e5560 */
+
+    --accent-400: 120 190 220;    /* phosphor cyan — #78bedc */
+    --accent-300: 95 165 200;     /* — #5fa5c8 */
+    --accent-200: 70 140 180;     /* — #468cb4 */
+
+    --line: 38 44 54;            /* borders — #262c36 */
+    --line-bright: 56 64 76;     /* — #38404c */
   }
-  .dark {
-    /* Dark blue theme */
-    --frost-50: 23 34 60;
-    --frost-100: 13 22 42;
-    --frost-200: 18 29 52;
-    --frost-300: 27 40 70;
-    --frost-400: 37 53 90;
-    --ink-50: 133 156 196;
-    --ink-100: 169 190 224;
-    --ink-200: 201 216 240;
-    --ink-300: 224 234 250;
-    --ink-400: 240 246 255;
-    --azure-50: 30 58 138;
-    --azure-100: 44 74 138;
-    --azure-200: 59 110 200;
-    --azure-300: 79 131 232;
-    --azure-400: 111 168 255;
-    --azure-500: 147 197 253;
-    --line: 34 51 85;
+
+  /* ─────────────────────────────────────────────
+     LIGHT — opt-in
+     ───────────────────────────────────────────── */
+  .light {
+    --surface-0: 250 251 253;
+    --surface-1: 255 255 255;
+    --surface-2: 244 246 249;
+    --surface-3: 232 237 244;
+
+    --ink-400: 15 22 40;
+    --ink-300: 40 55 80;
+    --ink-200: 70 85 110;
+    --ink-100: 110 125 150;
+    --ink-50: 150 165 185;
+
+    --accent-400: 40 120 170;
+    --accent-300: 30 100 150;
+    --accent-200: 25 85 130;
+
+    --line: 225 231 240;
+    --line-bright: 205 214 228;
   }
 
   html {
+    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
   body {
-    @apply bg-frost-100 text-ink-200 font-sans transition-colors duration-300;
+    @apply bg-surface-0 text-ink-200 font-sans transition-colors duration-300;
     font-feature-settings: 'ss01', 'cv11';
-  }
-  h1, h2, h3, h4 {
-    @apply font-serif text-ink-400;
-    font-feature-settings: 'ss01', 'ss02';
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--accent-300) / 0.04), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgb(var(--accent-300) / 0.02), transparent);
+    background-attachment: fixed;
   }
   ::selection {
-    @apply bg-azure-100 text-ink-400;
+    @apply bg-accent-300/20 text-ink-400;
   }
 }
 
+/* ─────────────────────────────────────────────
+   Component primitives
+   ───────────────────────────────────────────── */
 @layer components {
-  .fable-card {
-    @apply bg-frost-50 border border-line rounded-2xl transition-all duration-300 ease-soft;
+  .sys-card {
+    @apply bg-surface-1 border border-line rounded-lg transition-all duration-300;
   }
-  .fable-card:hover {
-    @apply border-azure-300;
+  .sys-card:hover {
+    @apply border-line-bright;
   }
-  .fable-rule {
-    @apply h-px bg-line;
+  .sys-eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-ink-100;
   }
-  .fable-eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.18em] text-ink-50;
+  .sys-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.18em] text-ink-50;
   }
-  .fable-link {
-    @apply text-ink-300 underline decoration-line decoration-1 underline-offset-4 transition-colors duration-200;
-  }
-  .fable-link:hover {
-    @apply text-azure-400 decoration-azure-300;
-  }
-  .fable-btn {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ease-soft;
-  }
-  .fable-btn-primary {
-    @apply fable-btn bg-azure-500 text-white hover:bg-azure-400;
-  }
-  .dark .fable-btn-primary {
-    @apply bg-azure-300 text-frost-100 hover:bg-azure-400;
-  }
-  .fable-btn-ghost {
-    @apply fable-btn border border-line text-ink-200 hover:border-azure-300 hover:text-azure-400;
+  .sys-display {
+    @apply font-display text-ink-400 font-light tracking-[-0.03em];
   }
 }
 
-/* Prose tuning for blog content */
+/* ─────────────────────────────────────────────
+   Prose tuning for blog content
+   ───────────────────────────────────────────── */
 .prose {
   @apply text-ink-200;
 }
 .prose h1, .prose h2, .prose h3, .prose h4 {
-  @apply font-serif text-ink-400;
+  @apply font-display text-ink-400;
 }
 .prose p, .prose li {
   @apply text-ink-200;
 }
 .prose a {
-  @apply text-azure-400 underline decoration-azure-200 underline-offset-2;
+  @apply text-accent-400 underline decoration-line underline-offset-2;
 }
 .prose a:hover {
-  @apply decoration-azure-400;
+  @apply decoration-accent-300;
 }
 .prose strong {
   @apply text-ink-300;
 }
 .prose code {
-  @apply font-mono text-sm bg-frost-200 px-1.5 py-0.5 rounded text-ink-300;
+  @apply font-mono text-sm bg-surface-2 px-1.5 py-0.5 rounded text-ink-300;
 }
 .prose pre {
-  @apply bg-ink-400 text-frost-50 rounded-xl p-5;
+  @apply bg-surface-0 text-ink-400 rounded-lg p-5 border border-line;
 }
 .prose pre code {
-  @apply bg-transparent text-frost-50 p-0;
+  @apply bg-transparent text-ink-400 p-0;
 }
-.dark .prose pre {
-  @apply bg-frost-200 text-ink-200;
-}
-.dark .prose pre code {
-  @apply text-ink-200;
+
+/* ─────────────────────────────────────────────
+   Reduced motion
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

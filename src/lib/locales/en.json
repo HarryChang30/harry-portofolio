@@ -1,9 +1,9 @@
 {
   "nav": {
-    "introduction": "Introduction",
     "experience": "Experience",
     "projects": "Projects",
-    "skills": "Skills",
+    "systems": "Systems",
+    "contact": "Contact",
     "blog": "Blog"
   },
   "sections": {
