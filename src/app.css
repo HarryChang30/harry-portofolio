@@ -28,26 +28,27 @@
   }
 
   /* ─────────────────────────────────────────────
-     LIGHT — opt-in
+     LIGHT — blue cinematic
+     Deep navy surfaces, ice-blue typography, azure accent
      ───────────────────────────────────────────── */
   .light {
-    --surface-0: 250 251 253;
-    --surface-1: 255 255 255;
-    --surface-2: 244 246 249;
-    --surface-3: 232 237 244;
+    --surface-0: 8 14 30;        /* deep navy — #080e1e */
+    --surface-1: 12 20 40;       /* primary — #0c1428 */
+    --surface-2: 18 28 54;       /* elevated — #121c36 */
+    --surface-3: 25 37 68;       /* cards — #192544 */
 
-    --ink-400: 15 22 40;
-    --ink-300: 40 55 80;
-    --ink-200: 70 85 110;
-    --ink-100: 110 125 150;
-    --ink-50: 150 165 185;
+    --ink-400: 220 232 250;      /* primary — #dce8fa */
+    --ink-300: 185 205 235;      /* secondary — #b9cdeb */
+    --ink-200: 145 170 210;      /* body — #91aad2 */
+    --ink-100: 105 135 180;      /* muted — #6987b4 */
+    --ink-50: 75 100 140;        /* faint — #4b648c */
 
-    --accent-400: 40 120 170;
-    --accent-300: 30 100 150;
-    --accent-200: 25 85 130;
+    --accent-400: 95 165 230;     /* azure — #5fa5e6 */
+    --accent-300: 70 140 215;     /* — #468cd7 */
+    --accent-200: 50 115 195;     /* — #3273c3 */
 
-    --line: 225 231 240;
-    --line-bright: 205 214 228;
+    --line: 28 40 66;            /* borders — #1c2842 */
+    --line-bright: 42 58 88;     /* — #2a3a58 */
   }
 
   html {
@@ -60,9 +61,14 @@
     @apply bg-surface-0 text-ink-200 font-sans transition-colors duration-300;
     font-feature-settings: 'ss01', 'cv11';
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--accent-300) / 0.04), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgb(var(--accent-300) / 0.02), transparent);
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--accent-300) / 0.06), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgb(var(--accent-300) / 0.03), transparent);
     background-attachment: fixed;
+  }
+  .light body {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--accent-300) / 0.1), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgb(var(--accent-300) / 0.05), transparent);
   }
   ::selection {
     @apply bg-accent-300/20 text-ink-400;
