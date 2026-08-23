@@ -11,6 +11,11 @@
   } else {
     locale.set('en');
   }
+
+  // Keep <html lang> in sync with the active locale
+  $: if (typeof document !== 'undefined') {
+    document.documentElement.lang = $locale === 'zh' ? 'zh' : 'en';
+  }
 </script>
 
 <div class="min-h-screen flex flex-col">

@@ -4,27 +4,27 @@
 
   const skillCategories = [
     {
-      name: "Languages",
+      key: "languages",
       skills: ["Go", "TypeScript", "Python", "Java", "C++"]
     },
     {
-      name: "Services",
+      key: "services",
       skills: ["REST", "gRPC", "MQTT"]
     },
     {
-      name: "Data",
+      key: "data",
       skills: ["PostgreSQL", "MySQL", "Redis", "MongoDB", "Elasticsearch"]
     },
     {
-      name: "Messaging",
+      key: "messaging",
       skills: ["Kafka", "NSQ", "RabbitMQ"]
     },
     {
-      name: "Infrastructure",
+      key: "infrastructure",
       skills: ["Docker", "Kubernetes", "AWS", "GCP", "AliCloud"]
     },
     {
-      name: "AI Engineering",
+      key: "ai",
       skills: ["Codex", "Claude Code", "OpenCode", "Mastra", "OpenAI-compatible SDKs"]
     }
   ];
@@ -47,12 +47,12 @@
   <div class="max-w-6xl mx-auto px-6 sm:px-8">
     <!-- Header -->
     <div class="mb-16 md:mb-24">
-      <div class="sys-eyebrow mb-5">03 — SYSTEMS</div>
+      <div class="sys-eyebrow mb-5">{$_('sections.skills.eyebrow')}</div>
       <h2 class="sys-display text-display-lg max-w-3xl mb-4" style="line-height: 1.08">
-        The systems I work with.
+        {$_('sections.skills.heading')}
       </h2>
       <p class="text-ink-200 text-lg leading-relaxed max-w-prose">
-        Technologies and tools I use to build scalable applications.
+        {$_('sections.skills.subheading')}
       </p>
     </div>
 
@@ -66,18 +66,18 @@
           class="transition-all duration-500"
           style="transition-delay: {i * 80}ms"
           role="group"
-          on:mouseenter={() => hoveredCat = cat.name}
+          on:mouseenter={() => hoveredCat = cat.key}
           on:mouseleave={() => hoveredCat = ''}
         >
           <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-accent-400 mb-5 pb-3 border-b border-line">
-            {cat.name}
+            {$_(`skills.categories.${cat.key}`)}
           </h3>
           <ul class="space-y-3">
             {#each cat.skills as skill}
               <li
                 class="font-display text-[15px] transition-colors duration-200"
-                class:text-accent-400={hoveredCat === cat.name}
-                class:text-ink-300={hoveredCat !== cat.name}
+                class:text-accent-400={hoveredCat === cat.key}
+                class:text-ink-300={hoveredCat !== cat.key}
               >
                 {skill}
               </li>

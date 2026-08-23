@@ -30,7 +30,7 @@
             style="transition-delay: 0.2s; transform: translateY({visible ? '0' : '100%'})"
           >
             <span class="inline-block w-8 h-px bg-accent-400/60 align-middle mr-3"></span>
-            Backend Software Engineer
+            {$_('hero.eyebrow')}
           </div>
         </div>
 
@@ -41,7 +41,7 @@
               class="sys-display text-display-xl transition-all duration-1000 ease-soft"
               style="transition-delay: 0.4s; transform: translateY({visible ? '0' : '105%'})"
             >
-              Hi, I'm Harry.
+              {$_('hero.title_line1')}
             </h1>
           </div>
           <div class="overflow-hidden">
@@ -49,7 +49,7 @@
               class="sys-display text-display-xl text-ink-300 transition-all duration-1000 ease-soft"
               style="transition-delay: 0.7s; transform: translateY({visible ? '0' : '105%'})"
             >
-              I build quiet systems
+              {$_('hero.title_line2')}
             </p>
           </div>
           <div class="overflow-hidden">
@@ -57,7 +57,7 @@
               class="sys-display text-display-xl text-ink-100 transition-all duration-1000 ease-soft"
               style="transition-delay: 0.9s; transform: translateY({visible ? '0' : '105%'})"
             >
-              that keep running.
+              {$_('hero.title_line3')}
             </p>
           </div>
         </div>
@@ -77,11 +77,11 @@
           style="transition-delay: 1.5s; opacity: {visible ? '1' : '0'}; transform: translateY({visible ? '0' : '16px'})"
         >
           <a href="#projects" class="group inline-flex items-center gap-2.5 px-6 py-3 border border-line-bright rounded-full text-sm font-mono text-ink-300 hover:border-accent-400 hover:text-accent-400 transition-all duration-300">
-            View My Work
+            {$_('hero.cta_work')}
             <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
           <a href="#experience" class="group inline-flex items-center gap-2.5 px-6 py-3 text-sm font-mono text-ink-100 hover:text-accent-400 transition-colors duration-300">
-            Experience
+            {$_('hero.cta_experience')}
             <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
         </div>
@@ -109,7 +109,7 @@
     class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-all duration-1000"
     style="transition-delay: 2s; opacity: {visible ? '1' : '0'}"
   >
-    <span class="sys-label text-ink-50">SCROLL TO TRACE THE SYSTEM</span>
+    <span class="sys-label text-ink-50">{$_('hero.scroll')}</span>
     <div class="w-px h-8 bg-gradient-to-b from-accent-400/40 to-transparent animate-pulse-soft"></div>
   </div>
 </section>

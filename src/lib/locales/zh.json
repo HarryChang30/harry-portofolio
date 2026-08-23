@@ -6,19 +6,34 @@
     "contact": "联系",
     "blog": "博客"
   },
+  "hero": {
+    "eyebrow": "后端软件工程师",
+    "title_line1": "你好，我是Harry。",
+    "title_line2": "我构建安静的系统",
+    "title_line3": "让它们持续运行。",
+    "cta_work": "查看我的作品",
+    "cta_experience": "工作经历",
+    "scroll": "向下滚动，追踪系统"
+  },
   "sections": {
-    "introduction": {
-      "title": "简介"
-    },
     "experience": {
-      "title": "工作经历"
+      "title": "工作经历",
+      "eyebrow": "01 — 工作经历",
+      "heading": "一路走来的团队、问题，以及那些我学会放下的东西。"
     },
     "projects": {
       "title": "项目",
-      "view_project": "查看项目"
+      "eyebrow": "02 — 项目",
+      "heading": "我交付过的东西——大多是因为有人需要它们在周一正常运转。",
+      "subheading": "这些年来我参与构建并持续维护的部分产品——每一项都是团队努力的成果。",
+      "featured": "精选 · 2025",
+      "view_system": "查看系统"
     },
     "skills": {
-      "title": "技能"
+      "title": "技能",
+      "eyebrow": "03 — 系统",
+      "heading": "我所使用的系统。",
+      "subheading": "我用来构建可扩展应用的技术与工具。"
     }
   },
   "bio": {
@@ -27,6 +42,13 @@
     "paragraph3": "这个网站收集了我参与过的项目。我尽量如实描述它们：团队协作的成果，而我只是其中一员。如果你对这里的内容感兴趣，欢迎随时联系我。"
   },
   "experience": {
+    "motifs": {
+      "nafas": "MQTT · 遥测 · 物联网网格",
+      "prakerja": "API 网关 · 身份 · 1840万用户",
+      "kuncie": "支付流程 · 内容分发",
+      "grabovo": "贷款发起 · 微服务",
+      "binus": "大学平台 · 遗留系统"
+    },
     "companies": {
       "nafas": {
         "company": "Nafas 空气质量解决方案",
@@ -87,6 +109,15 @@
     }
   },
   "projects": {
+    "now": "至今",
+    "idxplore_pipeline": [
+      "原始市场数据",
+      "PYTHON ETL",
+      "技术指标",
+      "筛选引擎",
+      "BUN API",
+      "仪表盘"
+    ],
     "items": {
       "idxplore": {
         "name": "IDXplore - 股票分析平台",
@@ -170,12 +201,25 @@
   },
   "skills": {
     "categories": {
-      "programming_languages": "编程语言",
-      "frameworks": "框架",
-      "databases": "数据库",
-      "tools": "工具",
-      "cloud": "云服务",
-      "protocols": "协议"
+      "languages": "编程语言",
+      "services": "服务",
+      "data": "数据",
+      "messaging": "消息队列",
+      "infrastructure": "基础设施",
+      "ai": "AI 工程"
     }
+  },
+  "contact": {
+    "eyebrow": "04 — 联系",
+    "heading": "仍在构建。",
+    "subtitle": "如果你对这里的内容感兴趣，欢迎随时联系我。",
+    "tagline": "安静构建，持续运行。"
+  },
+  "blog": {
+    "back": "返回首页",
+    "eyebrow": "— 随笔与写作",
+    "title": "学习博客",
+    "description": "关于软件开发与技术的思考。",
+    "empty": "还没有文章——敬请期待。"
   }
 }

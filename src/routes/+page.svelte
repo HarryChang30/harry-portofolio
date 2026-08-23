@@ -5,6 +5,7 @@
   import Experience from '../components/Experience.svelte';
   import Projects from '../components/Projects.svelte';
   import Skills from '../components/Skills.svelte';
+  import { _ } from '../lib/i18n.js';
 </script>
 
 <SystemCanvas />
@@ -21,10 +22,10 @@
 <footer id="contact" class="relative z-10 border-t border-line">
   <!-- Cinematic closing -->
   <div class="max-w-6xl mx-auto px-6 sm:px-8 py-24 md:py-40 text-center">
-    <p class="sys-eyebrow mb-6">04 — CONTACT</p>
-    <h2 class="sys-display text-display-xl mb-6">Still building.</h2>
+    <p class="sys-eyebrow mb-6">{$_('contact.eyebrow')}</p>
+    <h2 class="sys-display text-display-xl mb-6">{$_('contact.heading')}</h2>
     <p class="text-ink-100 text-lg max-w-md mx-auto mb-12">
-      If anything here interests you, my inbox is open.
+      {$_('contact.subtitle')}
     </p>
 
     <div class="flex items-center justify-center gap-6 mb-16">
@@ -51,7 +52,7 @@
         © {new Date().getFullYear()} · Harry Chang
       </div>
       <div class="font-display text-sm text-ink-100 italic">
-        Built quietly, kept running.
+        {$_('contact.tagline')}
       </div>
     </div>
   </div>

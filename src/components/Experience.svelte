@@ -13,15 +13,6 @@
     binus: "/logos/it-binus.jpg"
   };
 
-  // Per-company environmental motif (subtle CSS class hint)
-  const motifs: Record<string, string> = {
-    nafas: 'MQTT · TELEMETRY · IoT MESH',
-    prakerja: 'API GATEWAY · ID · 18.4M USERS',
-    kuncie: 'PAYMENT FLOW · CONTENT DELIVERY',
-    grabovo: 'LENDING ORIGINATION · MICROSERVICES',
-    binus: 'UNIVERSITY PLATFORM · LEGACY SYSTEMS'
-  };
-
   $: currentLang = $currentLanguage;
 
   let entries = [];
@@ -52,10 +43,10 @@
   <!-- Section header -->
   <div class="max-w-5xl mx-auto px-6 sm:px-8 mb-16 md:mb-24">
     <div class="overflow-hidden">
-      <div class="sys-eyebrow mb-5">01 — EXPERIENCE</div>
+      <div class="sys-eyebrow mb-5">{$_('sections.experience.eyebrow')}</div>
     </div>
     <h2 class="sys-display text-display-lg max-w-3xl" style="line-height: 1.08">
-      A trail of teams, problems, and the things I learned to leave behind.
+      {$_('sections.experience.heading')}
     </h2>
   </div>
 
@@ -103,7 +94,7 @@
 
               <!-- Environmental motif -->
               <div class="font-mono text-[10px] text-ink-50 tracking-wider mb-4 uppercase">
-                {motifs[experienceKey]}
+                {$_(`experience.motifs.${experienceKey}`)}
               </div>
 
               <ul class="space-y-2.5 text-ink-200 text-[15px] leading-relaxed max-w-prose">

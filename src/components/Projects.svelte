@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { _ } from '../lib/i18n.js';
+  import { _, json } from '../lib/i18n.js';
   import { currentLanguage } from '../stores/languageStore.js';
   import { onMount } from 'svelte';
 
@@ -46,11 +46,7 @@
     space_shooter: "https://www.youtube.com/watch?v=XKv58jD25YI"
   };
 
-  // IDXplore pipeline labels
-  const idxplorePipeline = [
-    'RAW MARKET DATA', 'PYTHON ETL', 'TECHNICAL INDICATORS',
-    'SCREENING ENGINE', 'BUN API', 'DASHBOARD'
-  ];
+  $: idxplorePipeline = $json('projects.idxplore_pipeline');
 
   $: currentLang = $currentLanguage;
 
@@ -94,12 +90,12 @@
       class="transition-all duration-700 ease-soft"
       style="opacity: {sectionVisible ? '1' : '0'}; transform: translateY({sectionVisible ? '0' : '16px'})"
     >
-      <div class="sys-eyebrow mb-5">02 — PROJECTS</div>
+      <div class="sys-eyebrow mb-5">{$_('sections.projects.eyebrow')}</div>
       <h2 class="sys-display text-display-lg max-w-3xl mb-4" style="line-height: 1.08">
-        Things I shipped, mostly because someone needed them working on Monday.
+        {$_('sections.projects.heading')}
       </h2>
       <p class="text-ink-200 text-lg leading-relaxed max-w-prose">
-        A selection of products I helped build and keep running over the years — every one of them a team effort.
+        {$_('sections.projects.subheading')}
       </p>
     </div>
   </div>
@@ -139,7 +135,7 @@
 
         <!-- Text -->
         <div class="lg:col-span-5 flex flex-col justify-center">
-          <div class="sys-label mb-3">FEATURED · 2025</div>
+          <div class="sys-label mb-3">{$_('sections.projects.featured')}</div>
           <h3 class="text-2xl md:text-3xl font-display text-ink-400 font-medium mb-2">
             {$_(`projects.items.idxplore.name`)}
           </h3>
@@ -150,7 +146,7 @@
             {$_(`projects.items.idxplore.description`)}
           </p>
           <a href={projectUrls.idxplore} target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 text-sm font-mono text-accent-400 hover:gap-3 transition-all duration-300">
-            VIEW SYSTEM
+            {$_('sections.projects.view_system')}
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
         </div>
@@ -195,7 +191,7 @@
             </div>
             <div class="md:col-span-1">
               <span class="font-mono text-[10px] text-ink-50 tracking-wider uppercase">
-                {$_(`projects.items.${projectKey}.startYear`)} — {$_(`projects.items.${projectKey}.endYear`) || "NOW"}
+                {$_(`projects.items.${projectKey}.startYear`)} — {$_(`projects.items.${projectKey}.endYear`) || $_('projects.now')}
               </span>
             </div>
             <div class="md:col-span-1 flex justify-end">

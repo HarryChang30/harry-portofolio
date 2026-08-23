@@ -6,19 +6,34 @@
     "contact": "Contact",
     "blog": "Blog"
   },
+  "hero": {
+    "eyebrow": "Backend Software Engineer",
+    "title_line1": "Hi, I'm Harry.",
+    "title_line2": "I build quiet systems",
+    "title_line3": "that keep running.",
+    "cta_work": "View My Work",
+    "cta_experience": "Experience",
+    "scroll": "SCROLL TO TRACE THE SYSTEM"
+  },
   "sections": {
-    "introduction": {
-      "title": "Introduction"
-    },
     "experience": {
-      "title": "Working Experience"
+      "title": "Working Experience",
+      "eyebrow": "01 — EXPERIENCE",
+      "heading": "A trail of teams, problems, and the things I learned to leave behind."
     },
     "projects": {
       "title": "Projects",
-      "view_project": "View Project"
+      "eyebrow": "02 — PROJECTS",
+      "heading": "Things I shipped, mostly because someone needed them working on Monday.",
+      "subheading": "A selection of products I helped build and keep running over the years — every one of them a team effort.",
+      "featured": "FEATURED · 2025",
+      "view_system": "VIEW SYSTEM"
     },
     "skills": {
-      "title": "Skills"
+      "title": "Skills",
+      "eyebrow": "03 — SYSTEMS",
+      "heading": "The systems I work with.",
+      "subheading": "Technologies and tools I use to build scalable applications."
     }
   },
   "bio": {
@@ -27,6 +42,13 @@
     "paragraph3": "This site collects the projects I've been part of. I've tried to describe them as they were: team efforts where I played one role among many. If anything here interests you, my inbox is open."
   },
   "experience": {
+    "motifs": {
+      "nafas": "MQTT · TELEMETRY · IoT MESH",
+      "prakerja": "API GATEWAY · ID · 18.4M USERS",
+      "kuncie": "PAYMENT FLOW · CONTENT DELIVERY",
+      "grabovo": "LENDING ORIGINATION · MICROSERVICES",
+      "binus": "UNIVERSITY PLATFORM · LEGACY SYSTEMS"
+    },
     "companies": {
       "nafas": {
         "company": "Nafas Air Quality Solutions",
@@ -87,6 +109,15 @@
     }
   },
   "projects": {
+    "now": "NOW",
+    "idxplore_pipeline": [
+      "RAW MARKET DATA",
+      "PYTHON ETL",
+      "TECHNICAL INDICATORS",
+      "SCREENING ENGINE",
+      "BUN API",
+      "DASHBOARD"
+    ],
     "items": {
       "idxplore": {
         "name": "IDXplore - Stock Analysis Platform",
@@ -170,12 +201,25 @@
   },
   "skills": {
     "categories": {
-      "programming_languages": "Programming Languages",
-      "frameworks": "Frameworks",
-      "databases": "Databases",
-      "tools": "Tools",
-      "cloud": "Cloud Services",
-      "protocols": "Protocols"
+      "languages": "Languages",
+      "services": "Services",
+      "data": "Data",
+      "messaging": "Messaging",
+      "infrastructure": "Infrastructure",
+      "ai": "AI Engineering"
     }
+  },
+  "contact": {
+    "eyebrow": "04 — CONTACT",
+    "heading": "Still building.",
+    "subtitle": "If anything here interests you, my inbox is open.",
+    "tagline": "Built quietly, kept running."
+  },
+  "blog": {
+    "back": "Back home",
+    "eyebrow": "— Notes & Writing",
+    "title": "Learning Blog",
+    "description": "Thoughts on software development and technology.",
+    "empty": "No posts yet — check back soon."
   }
 }
