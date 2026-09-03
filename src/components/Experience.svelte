@@ -16,7 +16,27 @@
   $: currentLang = $currentLanguage;
 
   let entries = [];
+
+  // timeline line draws itself as the section scrolls through the viewport
+  let sectionEl;
+  let lineProgress = 0;
+  let lineRaf = 0;
+
+  function updateLine() {
+    lineRaf = 0;
+    if (!sectionEl) return;
+    const rect = sectionEl.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    lineProgress = Math.max(0, Math.min(1, (vh * 0.72 - rect.top) / rect.height));
+  }
+  function onScroll() {
+    if (lineRaf) return;
+    lineRaf = requestAnimationFrame(updateLine);
+  }
+
   onMount(() => {
+    entries = experienceKeys.map((key) => ({ key, visible: false }));
+
     const observer = new IntersectionObserver(
       (items) => {
         items.forEach((e) => {
@@ -31,15 +51,20 @@
     );
 
     document.querySelectorAll('[data-exp]').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  });
 
-  onMount(() => {
-    entries = experienceKeys.map((key) => ({ key, visible: false }));
+    updateLine();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (lineRaf) cancelAnimationFrame(lineRaf);
+    };
   });
 </script>
 
-<section id="experience" class="relative py-28 md:py-40">
+<section id="experience" bind:this={sectionEl} class="relative py-28 md:py-40">
   <!-- Section header -->
   <div class="max-w-5xl mx-auto px-6 sm:px-8 mb-16 md:mb-24">
     <div class="overflow-hidden">
@@ -53,8 +78,12 @@
   <!-- Timeline -->
   <div class="max-w-5xl mx-auto px-6 sm:px-8">
     <div class="relative">
-      <!-- Vertical line -->
+      <!-- Vertical line: base track + accent line that draws in on scroll -->
       <div class="absolute left-[7px] md:left-[180px] top-0 bottom-0 w-px bg-line"></div>
+      <div
+        class="absolute left-[7px] md:left-[180px] top-0 w-px bg-gradient-to-b from-line-bright via-accent-400/40 to-accent-400 will-change-[height]"
+        style="height: {lineProgress * 100}%"
+      ></div>
 
       <div class="space-y-16 md:space-y-20">
         {#each experienceKeys as experienceKey, index}
@@ -64,8 +93,11 @@
             class="relative grid md:grid-cols-[180px_1fr] gap-6 md:gap-10 pl-12 md:pl-0 transition-all duration-700 ease-soft"
             style="opacity: {entries[index]?.visible ? '1' : '0'}; transform: translateY({entries[index]?.visible ? '0' : '24px'})}"
           >
-            <!-- Timeline dot -->
-            <div class="absolute left-[7px] md:left-[180px] top-1.5 -translate-x-1/2 w-2 h-2 rounded-full bg-accent-400/80 ring-4 ring-surface-0 z-10"></div>
+            <!-- Timeline dot with sonar pulse -->
+            <div class="absolute left-[7px] md:left-[180px] top-1.5 -translate-x-1/2 w-2 h-2 z-10">
+              <span class="absolute inset-0 rounded-full bg-accent-400/50 animate-signal"></span>
+              <span class="absolute inset-0 rounded-full bg-accent-400/80 ring-4 ring-surface-0"></span>
+            </div>
 
             <!-- Year -->
             <div class="md:pt-0">

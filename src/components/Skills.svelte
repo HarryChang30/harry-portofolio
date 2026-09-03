@@ -56,15 +56,12 @@
       </p>
     </div>
 
-    <!-- Categories -->
-    <div
-      class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 transition-all duration-1000 ease-soft"
-      style="opacity: {visible ? '1' : '0'}; transform: translateY({visible ? '0' : '24px'})}"
-    >
+    <!-- Categories — each rises in with its own stagger -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
       {#each skillCategories as cat, i}
         <div
-          class="transition-all duration-500"
-          style="transition-delay: {i * 80}ms"
+          class="transition-all duration-700 ease-soft"
+          style="opacity: {visible ? '1' : '0'}; transform: translateY({visible ? '0' : '18px'}); transition-delay: {i * 90}ms"
           role="group"
           on:mouseenter={() => hoveredCat = cat.key}
           on:mouseleave={() => hoveredCat = ''}

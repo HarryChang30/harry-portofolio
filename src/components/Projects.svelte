@@ -119,13 +119,19 @@
                 class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-soft"
               />
             </div>
-            <!-- Pipeline overlay -->
+            <!-- Pipeline overlay — steps light up in sequence like a signal passing through -->
             <div class="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-surface-0/90 to-transparent">
               <div class="flex items-center gap-2 flex-wrap">
                 {#each idxplorePipeline as step, i}
-                  <span class="font-mono text-[9px] md:text-[10px] text-ink-100 tracking-wider">{step}</span>
+                  <span
+                    class="font-mono text-[9px] md:text-[10px] text-ink-100 tracking-wider transition-all duration-500 ease-soft"
+                    style="opacity: {visibleEls.has('idxplore') ? '1' : '0'}; transform: translateY({visibleEls.has('idxplore') ? '0' : '6px'}); transition-delay: {300 + i * 160}ms"
+                  >{step}</span>
                   {#if i < idxplorePipeline.length - 1}
-                    <span class="text-accent-400/60 text-[10px]">→</span>
+                    <span
+                      class="text-accent-400/60 text-[10px] transition-opacity duration-500"
+                      style="opacity: {visibleEls.has('idxplore') ? '1' : '0'}; transition-delay: {300 + i * 160 + 110}ms"
+                    >→</span>
                   {/if}
                 {/each}
               </div>

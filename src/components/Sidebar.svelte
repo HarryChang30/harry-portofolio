@@ -6,6 +6,7 @@
   let scrolled = false;
   let dark = true;
   let isMenuOpen = false;
+  let progress = 0;
 
   const toggleTheme = () => {
     dark = !dark;
@@ -14,7 +15,11 @@
     try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
   };
 
-  const handleScroll = () => { scrolled = window.scrollY > 40; };
+  const handleScroll = () => {
+    scrolled = window.scrollY > 40;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+  };
 
   onMount(() => {
     dark = document.documentElement.classList.contains('dark');
@@ -38,6 +43,8 @@
 </script>
 
 <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-soft {headerClass}">
+  <!-- Reading progress — a signal tracing the page -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-accent-400/50 origin-left" style="transform: scaleX({progress})"></div>
   <nav class="max-w-6xl mx-auto px-6 sm:px-8">
     <div class="flex items-center justify-between h-14 md:h-16">
       <a href="/" class="flex items-center gap-2.5 group" on:click={closeMenu}>

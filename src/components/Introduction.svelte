@@ -1,17 +1,66 @@
 <script>
+  // @ts-nocheck
   import { _ } from '../lib/i18n.js';
   import { onMount } from 'svelte';
 
   let visible = false;
   let section;
+  let eyebrowEl;
+  let mascotY = 0;
+  let reducedMotion = false;
+
+  const GLYPHS = '01<>/#{}[]·+*_;:';
+
+  function scrambleTo(el, finalText, duration = 900) {
+    const start = performance.now();
+    const len = finalText.length;
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const locked = Math.floor(t * len);
+      let out = finalText.slice(0, locked);
+      for (let i = locked; i < len; i++) {
+        const ch = finalText[i];
+        out += ch === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+      }
+      el.textContent = out;
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // decode the eyebrow whenever it becomes visible — or when the language flips
+  $: if (visible && eyebrowEl && typeof window !== 'undefined') {
+    const text = $_('hero.eyebrow');
+    if (reducedMotion) {
+      eyebrowEl.textContent = text;
+    } else {
+      scrambleTo(eyebrowEl, text);
+    }
+  }
+
+  let rafId = 0;
+  function updateParallax() {
+    rafId = 0;
+    mascotY = Math.min(48, window.scrollY * 0.06);
+  }
+  function onScroll() {
+    if (reducedMotion || rafId) return;
+    rafId = requestAnimationFrame(updateParallax);
+  }
 
   onMount(() => {
+    reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const observer = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) visible = true; },
       { threshold: 0.1 }
     );
     observer.observe(section);
-    return () => observer.disconnect();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   });
 </script>
 
@@ -30,7 +79,7 @@
             style="transition-delay: 0.2s; transform: translateY({visible ? '0' : '100%'})"
           >
             <span class="inline-block w-8 h-px bg-accent-400/60 align-middle mr-3"></span>
-            {$_('hero.eyebrow')}
+            <span bind:this={eyebrowEl}>{$_('hero.eyebrow')}</span>
           </div>
         </div>
 
@@ -90,8 +139,8 @@
       <!-- Go mascot image -->
       <div class="md:col-span-5 flex justify-center md:justify-end">
         <div
-          class="relative transition-all duration-1000 ease-soft"
-          style="transition-delay: 1.0s; opacity: {visible ? '1' : '0'}; transform: translateY({visible ? '0' : '24px'})"
+          class="relative transition-all duration-1000 ease-soft will-change-transform"
+          style="transition-delay: 1.0s; opacity: {visible ? '1' : '0'}; transform: translateY(calc({visible ? '0' : '24px'} + {mascotY}px))"
         >
           <div class="absolute -inset-3 border border-line-bright rounded-xl rotate-2"></div>
           <img
@@ -110,6 +159,8 @@
     style="transition-delay: 2s; opacity: {visible ? '1' : '0'}"
   >
     <span class="sys-label text-ink-50">{$_('hero.scroll')}</span>
-    <div class="w-px h-8 bg-gradient-to-b from-accent-400/40 to-transparent animate-pulse-soft"></div>
+    <div class="relative w-px h-10 bg-line overflow-hidden">
+      <span class="absolute left-0 top-0 w-px h-3 bg-accent-400 animate-drip"></span>
+    </div>
   </div>
 </section>
