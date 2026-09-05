@@ -30,7 +30,8 @@
 		"@fortawesome/svelte-fontawesome": "^0.2.2",
 		"@tailwindcss/typography": "^0.5.15",
 		"marked": "^15.0.6",
-		"mdsvex": "^0.12.3"
+		"mdsvex": "^0.12.3",
+		"three": "^0.185.1"
 	},
 	"engines": {
 		"node": "20.x"

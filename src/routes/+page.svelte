@@ -1,6 +1,6 @@
 <script>
   import Sidebar from '../components/Sidebar.svelte';
-  import SystemCanvas from '../components/SystemCanvas.svelte';
+  import WebGLLayer from '../components/webgl/WebGLLayer.svelte';
   import Introduction from '../components/Introduction.svelte';
   import Experience from '../components/Experience.svelte';
   import Projects from '../components/Projects.svelte';
@@ -8,7 +8,7 @@
   import { _ } from '../lib/i18n.js';
 </script>
 
-<SystemCanvas />
+<WebGLLayer />
 <Sidebar />
 
 <main class="relative z-10">
