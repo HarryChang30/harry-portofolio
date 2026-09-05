@@ -32,10 +32,10 @@
 
     async function init() {
       try {
-        const [{ createWebGLRenderer }, { createThemeBridge }, { createTestField }] = await Promise.all([
+        const [{ createWebGLRenderer }, { createThemeBridge }, { createHeroScene }] = await Promise.all([
           import('../../lib/three/renderer.js'),
           import('../../lib/three/theme.js'),
-          import('../../lib/three/scenes/testField.js'),
+          import('../../lib/three/scenes/hero.js'),
         ]);
         const THREE = await import('three');
 
@@ -44,7 +44,7 @@
 
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const theme = createThemeBridge(THREE);
-        const scene = createTestField(THREE, app, theme);
+        const scene = createHeroScene(THREE, app, theme, { reducedMotion });
 
         app.onFrame((dt, t) => {
           theme.update(dt);
