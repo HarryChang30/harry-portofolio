@@ -279,6 +279,19 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     document.documentElement.addEventListener('pointerleave', onPointerLeave);
   }
 
+  // ── boot micro-sequence (Phase 5) ─────────────────────
+  // One-time per session: nodes power on in a stagger over ~0.9s and one
+  // telemetry label flickers like a CRT warming up. Skipped for reduced
+  // motion and repeat visits.
+  let bootT = 1;
+  if (!reducedMotion) {
+    try { bootT = sessionStorage.getItem('webgl-boot') ? 1 : 0; } catch (e) { /* private mode */ }
+  }
+  const bootEase = (x) => {
+    const c = Math.max(0, Math.min(1, x));
+    return c * c * (3 - 2 * c);
+  };
+
   // ── per-frame update ──────────────────────────────────
 
   function update(dt, t) {
@@ -291,16 +304,17 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
       focus[def.id] += (focusTarget[def.id] - focus[def.id]) * Math.min(1, dt * 2.2);
     }
 
-    // nodes: idle float + per-cluster brightness
+    // nodes: boot stagger + idle float + per-cluster brightness
     for (let i = 0; i < nodes.length; i++) {
       const n = nodes[i];
+      const boot = bootEase((bootT - (i / nodes.length) * 0.55) / 0.45);
       dummy.position.set(
         n.base.x + Math.sin(t * n.sp1 + n.ph1) * n.amp,
         n.base.y + Math.sin(t * n.sp2 + n.ph2) * n.amp * 0.8,
         n.base.z + Math.sin(t * n.sp1 * 0.7 + n.ph2) * n.amp * 0.5
       );
-      const s = n.scale * (n.hub ? 2.1 : 1);
-      dummy.scale.setScalar(s);
+      const s = n.scale * (n.hub ? 2.1 : 1) * boot;
+      dummy.scale.setScalar(Math.max(0.0001, s)); // never exactly 0 — keeps instances valid
       dummy.updateMatrix();
       nodeMesh.setMatrixAt(i, dummy.matrix);
 
@@ -385,11 +399,21 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     constGeo.attributes.color.needsUpdate = true;
     constellation.rotation.y = Math.sin(t * 0.05) * 0.08;
 
-    // telemetry label breathing
-    for (const sprite of labels) {
+    // telemetry label breathing (+ CRT flicker on the first label while booting)
+    const flicker = bootT < 1 ? (Math.sin(t * 43.0) * Math.sin(t * 17.3) > -0.3 ? 1 : 0.2) : 1;
+    for (let li = 0; li < labels.length; li++) {
+      const sprite = labels[li];
       const u = sprite.userData;
-      sprite.material.opacity = u.base + 0.05 * Math.sin(t * 0.4 + u.phase);
+      sprite.material.opacity = (u.base + 0.05 * Math.sin(t * 0.4 + u.phase)) * (li === 0 ? flicker : 1);
       sprite.material.color.copy(theme.colors.accent300).lerp(white, 0.35);
+    }
+
+    // boot clock
+    if (bootT < 1) {
+      bootT = Math.min(1, bootT + dt / 0.9);
+      if (bootT >= 1) {
+        try { sessionStorage.setItem('webgl-boot', '1'); } catch (e) { /* private mode */ }
+      }
     }
 
     // camera: drift + lerped parallax on top of the scroll-driven base

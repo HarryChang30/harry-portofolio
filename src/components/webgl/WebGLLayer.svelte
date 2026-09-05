@@ -13,6 +13,8 @@
   let canvas;
   let shown = false;
   let teardown = null;
+  let post = null;
+  let offResize = null;
 
   function fallback(reason) {
     if (import.meta.env.DEV && reason) console.info('[webgl] fallback:', reason);
@@ -72,6 +74,12 @@
           scroll = await createScrollDirector({ app, scene, reducedMotion });
         }
 
+        // cinematic post chain (bloom + grade) owns the final render
+        const { createPostChain } = await import('../../lib/three/post.js');
+        post = await createPostChain(app, theme);
+        offResize = app.onResize((w, h) => post.setSize(w, h));
+        app.setRenderFrame(() => post.render());
+
         if (reducedMotion) {
           theme.snap();
           scene.update(0, 0);
@@ -91,6 +99,9 @@
           window.removeEventListener('webgl:pulse', onPulse);
           window.removeEventListener('webgl:energy', onEnergy);
           window.removeEventListener('webgl:highlight', onHighlight);
+          offResize?.();
+          post?.dispose();
+          app.setRenderFrame(null);
           scroll?.dispose();
           theme.dispose();
           scene.dispose();

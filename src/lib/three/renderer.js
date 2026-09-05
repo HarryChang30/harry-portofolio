@@ -43,6 +43,7 @@ export async function createWebGLRenderer(canvas, {
   // attribute size, which would feed a ResizeObserver loop (buffer doubles every
   // fire). Pin style + attributes to the viewport on window resize instead —
   // the same pattern SystemCanvas uses.
+  const resizeCbs = new Set();
   function applySize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -50,12 +51,14 @@ export async function createWebGLRenderer(canvas, {
     renderer.setSize(w, h); // updateStyle — display size must track the buffer
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    for (const cb of resizeCbs) cb(w, h);
   }
   window.addEventListener('resize', applySize);
   applySize();
 
   // ── frame loop ─────────────────────────────────────────
   const frameCbs = new Set();
+  let renderOverride = null; // set by the post chain (Phase 5)
   let rafId = 0;
   let last = 0;
   let elapsed = 0;
@@ -70,7 +73,8 @@ export async function createWebGLRenderer(canvas, {
     last = now;
     elapsed += dt;
     for (const cb of frameCbs) cb(dt, elapsed);
-    renderer.render(scene, camera);
+    if (renderOverride) renderOverride();
+    else renderer.render(scene, camera);
   }
 
   function updateRunning() {
@@ -121,7 +125,8 @@ export async function createWebGLRenderer(canvas, {
   // One composed frame, no loop — the prefers-reduced-motion path.
   function renderStatic() {
     for (const cb of frameCbs) cb(0, elapsed);
-    renderer.render(scene, camera);
+    if (renderOverride) renderOverride();
+    else renderer.render(scene, camera);
   }
 
   return {
@@ -132,6 +137,14 @@ export async function createWebGLRenderer(canvas, {
     onFrame(cb) {
       frameCbs.add(cb);
       return () => frameCbs.delete(cb);
+    },
+    onResize(cb) {
+      resizeCbs.add(cb);
+      return () => resizeCbs.delete(cb);
+    },
+    /** let a post chain (Phase 5) own the final render */
+    setRenderFrame(fn) {
+      renderOverride = fn;
     },
     start: updateRunning,
     renderStatic,
