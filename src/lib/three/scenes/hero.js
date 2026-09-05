@@ -1,18 +1,11 @@
 // @ts-nocheck
 // Phase 2 — "Orbital Network": the distributed-systems graph in 3D.
 // Instanced glowing service nodes in loose clusters, curved connections,
-// light pulses traveling between them, decorative telemetry sprites, and a
-// drift + mouse-parallax camera. Cluster anchors are exported for Phase 3's
-// scroll-driven camera path. All copy stays in the DOM — sprites are
-// decorative English-only micro-copy, aria-hidden at the component level.
+// light pulses traveling between them, and a drift + mouse-parallax camera.
+// Cluster anchors are exported for Phase 3's scroll-driven camera path.
+// All copy stays in the DOM — the 3D layer renders no text at all.
 
-import { makeDiscTexture, makeTextTexture } from '../textures.js';
-
-const TELEMETRY = [
-  'WORKER ACTIVE', 'QUEUE HEALTHY', 'LATENCY 18ms',
-  'RETRY 0', 'SERVICE ONLINE', 'UPTIME 99.98%',
-  'CONN POOL 12/50', 'GC 4ms', 'ROUTE /api/health 200',
-];
+import { makeDiscTexture } from '../textures.js';
 
 // Section → cluster anchor (world position). Phase 3's camera path frames these;
 // keep them stable — the scroll choreography is tuned against them.
@@ -189,33 +182,6 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
   let longestCurve = curves[0];
   for (const c of curves) if (c.getLength() > longestCurve.getLength()) longestCurve = c;
 
-  // ── telemetry sprites (decorative) ────────────────────
-  const labelCount = narrow ? 2 : 5;
-  const labels = [];
-  for (let i = 0; i < labelCount; i++) {
-    const def = CLUSTER_DEFS[i % CLUSTER_DEFS.length];
-    const tex = makeTextTexture(THREE, TELEMETRY[(Math.random() * TELEMETRY.length) | 0]);
-    const mat = new THREE.SpriteMaterial({
-      map: tex,
-      transparent: true,
-      opacity: 0.1,
-      depthWrite: false,
-      color: 0xffffff,
-    });
-    const sprite = new THREE.Sprite(mat);
-    const aspect = tex.image.width / tex.image.height;
-    const hgt = narrow ? 1.1 : 1.5;
-    sprite.scale.set(hgt * aspect, hgt, 1);
-    sprite.position.set(
-      def.center[0] + (Math.random() - 0.5) * def.spread * 2.4,
-      def.center[1] + (Math.random() - 0.5) * def.spread * 1.6 + 1.5,
-      def.center[2] + (Math.random() - 0.5) * def.spread
-    );
-    sprite.userData = { phase: Math.random() * Math.PI * 2, base: 0.07 + Math.random() * 0.07 };
-    group.add(sprite);
-    labels.push(sprite);
-  }
-
   // ── skills constellation (Phase 4) ────────────────────
   // Six faint particle blobs in a 3×2 grid near the skills cluster, loosely
   // echoing the category grid. DOM chips stay the accessible content; hovering
@@ -280,9 +246,8 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
   }
 
   // ── boot micro-sequence (Phase 5) ─────────────────────
-  // One-time per session: nodes power on in a stagger over ~0.9s and one
-  // telemetry label flickers like a CRT warming up. Skipped for reduced
-  // motion and repeat visits.
+  // One-time per session: nodes power on in a stagger over ~0.9s. Skipped for
+  // reduced motion and repeat visits.
   let bootT = 1;
   if (!reducedMotion) {
     try { bootT = sessionStorage.getItem('webgl-boot') ? 1 : 0; } catch (e) { /* private mode */ }
@@ -403,15 +368,6 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     }
     constGeo.attributes.color.needsUpdate = true;
     constellation.rotation.y = Math.sin(t * 0.05) * 0.08;
-
-    // telemetry label breathing (+ CRT flicker on the first label while booting)
-    const flicker = bootT < 1 ? (Math.sin(t * 43.0) * Math.sin(t * 17.3) > -0.3 ? 1 : 0.2) : 1;
-    for (let li = 0; li < labels.length; li++) {
-      const sprite = labels[li];
-      const u = sprite.userData;
-      sprite.material.opacity = (u.base + 0.05 * Math.sin(t * 0.4 + u.phase)) * (li === 0 ? flicker : 1);
-      sprite.material.color.copy(theme.colors.accent300).lerp(white, 0.35);
-    }
 
     // boot clock
     if (bootT < 1) {

@@ -44,9 +44,8 @@ Link URL : https://harry-portofolio.vercel.app/
 ## 3D layer (WebGL cinematic background)
 
 The portfolio has a 3D "Orbital Network" background — a distributed-systems graph
-(instanced service nodes, curved connections, traveling light pulses, telemetry
-sprites) with a scroll-driven camera dolly, bloom + film-grain grade, and
-Lenis smooth scrolling. Built with three.js + GSAP ScrollTrigger + Lenis, all in
+(instanced service nodes, curved connections, traveling light pulses) with a
+scroll-driven camera dolly, bloom + film-grain grade, and Lenis smooth scrolling. Built with three.js + GSAP ScrollTrigger + Lenis, all in
 lazy client-only chunks.
 
 ```

@@ -16,25 +16,3 @@ export function makeDiscTexture(THREE, size = 64) {
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;
 }
-
-/** Mono uppercase text sprite texture — telemetry-style decorative micro-copy. */
-export function makeTextTexture(THREE, text, {
-  font = '500 24px "JetBrains Mono", monospace',
-  pad = 16,
-} = {}) {
-  const measure = document.createElement('canvas').getContext('2d');
-  measure.font = font;
-  const w = Math.ceil(measure.measureText(text).width) + pad * 2;
-  const h = 48;
-  const c = document.createElement('canvas');
-  c.width = Math.max(2, w);
-  c.height = h;
-  const ctx = c.getContext('2d');
-  ctx.font = font;
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText(text, pad, h / 2);
-  const tex = new THREE.CanvasTexture(c);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  return tex;
-}
