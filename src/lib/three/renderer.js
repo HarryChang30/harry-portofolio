@@ -129,7 +129,10 @@ export async function createWebGLRenderer(canvas, {
     renderer,
     scene,
     camera,
-    onFrame: (cb) => frameCbs.add(cb),
+    onFrame(cb) {
+      frameCbs.add(cb);
+      return () => frameCbs.delete(cb);
+    },
     start: updateRunning,
     renderStatic,
     dispose,

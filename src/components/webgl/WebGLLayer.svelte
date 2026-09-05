@@ -32,10 +32,11 @@
 
     async function init() {
       try {
-        const [{ createWebGLRenderer }, { createThemeBridge }, { createHeroScene }] = await Promise.all([
+        const [{ createWebGLRenderer }, { createThemeBridge }, { createHeroScene }, { createScrollDirector }] = await Promise.all([
           import('../../lib/three/renderer.js'),
           import('../../lib/three/theme.js'),
           import('../../lib/three/scenes/hero.js'),
+          import('../../lib/three/scroll.js'),
         ]);
         const THREE = await import('three');
 
@@ -57,6 +58,12 @@
         };
         canvas.addEventListener('webglcontextlost', onContextLost);
 
+        // scroll choreography (lenis + camera path) only on the animated path
+        let scroll = null;
+        if (!reducedMotion) {
+          scroll = await createScrollDirector({ app, scene, reducedMotion });
+        }
+
         if (reducedMotion) {
           theme.snap();
           scene.update(0, 0);
@@ -73,6 +80,7 @@
 
         teardown = () => {
           canvas?.removeEventListener('webglcontextlost', onContextLost);
+          scroll?.dispose();
           theme.dispose();
           scene.dispose();
           app.dispose();
