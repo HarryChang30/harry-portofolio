@@ -92,14 +92,14 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     for (const def of CLUSTER_DEFS) byId[def.id] = nodes.filter((_, i) => clusterOf[i] === def.id);
 
     const pts = [];
-    const addCurve = (a, b, weight = 1) => {
+    const addCurve = (a, b, weight = 1, clusterId) => {
       const mid = a.clone().add(b).multiplyScalar(0.5);
       const dir = b.clone().sub(a);
       const perp = new THREE.Vector3(-dir.y, dir.x, dir.z * 0.4).normalize();
       mid.add(perp.multiplyScalar(dir.length() * (0.12 + Math.random() * 0.18)));
       mid.y += (Math.random() - 0.5) * dir.length() * 0.1;
       const curve = new THREE.QuadraticBezierCurve3(a, mid, b);
-      curve.userData = { weight };
+      curve.userData = { weight, cluster: clusterId };
       curves.push(curve);
       const sampled = curve.getPoints(14);
       for (let i = 0; i < sampled.length - 1; i++) {
@@ -111,15 +111,15 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
       const list = byId[def.id];
       for (let i = 0; i < list.length; i++) {
         const a = list[i].base, b = list[(i + 1) % list.length].base;
-        addCurve(a, b);
-        if (Math.random() < 0.35) addCurve(a, list[(i + 3) % list.length].base);
+        addCurve(a, b, 1, def.id);
+        if (Math.random() < 0.35) addCurve(a, list[(i + 3) % list.length].base, 1, def.id);
       }
     }
     // inter-cluster backbones — the "packets between services" routes
     for (let c = 0; c < CLUSTER_DEFS.length - 1; c++) {
       const A = byId[CLUSTER_DEFS[c].id], B = byId[CLUSTER_DEFS[c + 1].id];
       for (let k = 0; k < 2; k++) {
-        addCurve(A[(Math.random() * A.length) | 0].base, B[(Math.random() * B.length) | 0].base, 3);
+        addCurve(A[(Math.random() * A.length) | 0].base, B[(Math.random() * B.length) | 0].base, 3, CLUSTER_DEFS[c].id);
       }
     }
 
@@ -139,8 +139,10 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
 
   // ── pulses (light packets along curves) ───────────────
   const PULSE_POOL = narrow ? 14 : 34;
-  const pulsePos = new Float32Array(PULSE_POOL * 3);
-  const pulseCol = new Float32Array(PULSE_POOL * 3);
+  const BURST_CAP = 24; // hover-burst packets share the buffer's tail
+  const PULSE_TOTAL = PULSE_POOL + BURST_CAP;
+  const pulsePos = new Float32Array(PULSE_TOTAL * 3);
+  const pulseCol = new Float32Array(PULSE_TOTAL * 3);
   const pulses = [];
   for (let i = 0; i < PULSE_POOL; i++) {
     pulses.push({ curve: null, t: Math.random(), v: 0, next: Math.random() * 2 });
@@ -173,6 +175,20 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     pulse.v = (5 + Math.random() * 9) / curve.getLength();
   }
 
+  // ── section energies & hover bursts (Phase 4) ─────────
+  // energy[cluster] ∈ 0..1 mirrors DOM progress (e.g. timeline fill) into that
+  // cluster's pulse gain; bursts are one-shot bright packets for hover moments.
+  const energy = {};
+  for (const def of CLUSTER_DEFS) energy[def.id] = 0;
+  const bursts = []; // { curve, t, v, gain }
+
+  // "all systems nominal" — the closing shot settles the whole network
+  let contactActive = false;
+  let calm = 1;
+  let heartbeat = 2.5; // s until the next featured packet (only while contactActive)
+  let longestCurve = curves[0];
+  for (const c of curves) if (c.getLength() > longestCurve.getLength()) longestCurve = c;
+
   // ── telemetry sprites (decorative) ────────────────────
   const labelCount = narrow ? 2 : 5;
   const labels = [];
@@ -199,6 +215,53 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     group.add(sprite);
     labels.push(sprite);
   }
+
+  // ── skills constellation (Phase 4) ────────────────────
+  // Six faint particle blobs in a 3×2 grid near the skills cluster, loosely
+  // echoing the category grid. DOM chips stay the accessible content; hovering
+  // a category brightens its blob via setConstellation().
+  const skillsDef = CLUSTER_DEFS.find((d) => d.id === 'skills');
+  const CONST_GROUPS = 6;
+  const CONST_POINTS = 12;
+  const constCount = CONST_GROUPS * CONST_POINTS;
+  const constPos = new Float32Array(constCount * 3);
+  const constCol = new Float32Array(constCount * 3);
+  const constPhase = new Float32Array(constCount);
+  const constActive = new Array(CONST_GROUPS).fill(false);
+  {
+    let i = 0;
+    for (let g = 0; g < CONST_GROUPS; g++) {
+      const col = g % 3, row = Math.floor(g / 3);
+      const cx = skillsDef.center[0] + 8.5 + col * 4.4;
+      const cy = skillsDef.center[1] - 1 + row * 3.6;
+      const cz = skillsDef.center[2] + 1.5;
+      for (let k = 0; k < CONST_POINTS; k++, i++) {
+        const r = 1.25 * Math.cbrt(Math.random());
+        const th = Math.random() * Math.PI * 2;
+        const ph = Math.acos(2 * Math.random() - 1);
+        constPos[i * 3] = cx + r * Math.sin(ph) * Math.cos(th);
+        constPos[i * 3 + 1] = cy + r * Math.cos(ph);
+        constPos[i * 3 + 2] = cz + r * Math.sin(ph) * Math.sin(th);
+        constPhase[i] = Math.random() * Math.PI * 2;
+      }
+    }
+  }
+  const constGeo = new THREE.BufferGeometry();
+  constGeo.setAttribute('position', new THREE.BufferAttribute(constPos, 3));
+  constGeo.setAttribute('color', new THREE.BufferAttribute(constCol, 3));
+  const constMat = new THREE.PointsMaterial({
+    size: 0.3,
+    sizeAttenuation: true,
+    map: makeDiscTexture(THREE),
+    vertexColors: true,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    fog: false,
+  });
+  const constellation = new THREE.Points(constGeo, constMat);
+  constellation.frustumCulled = false;
+  group.add(constellation);
 
   // ── camera rig (Phase 3 scroll drives base/look) ──────
   const rig = {
@@ -241,7 +304,7 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
       dummy.updateMatrix();
       nodeMesh.setMatrixAt(i, dummy.matrix);
 
-      const k = n.bright * (n.hub ? 1.5 : 1) * focus[n.cluster];
+      const k = n.bright * (n.hub ? 1.5 : 1) * focus[n.cluster] * (1 + 0.3 * (energy[n.cluster] || 0));
       tmpColor.copy(theme.colors.accent400).multiplyScalar(k);
       if (n.hub) tmpColor.lerp(white, 0.45);
       nodeMesh.setColorAt(i, tmpColor);
@@ -249,24 +312,78 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     nodeMesh.instanceMatrix.needsUpdate = true;
     if (nodeMesh.instanceColor) nodeMesh.instanceColor.needsUpdate = true;
 
-    // pulses
+    // pulses — per-cluster gain mirrors section energy; calm eases the whole
+    // network down for the contact closing shot
+    calm += ((contactActive ? 0.55 : 1) - calm) * Math.min(1, dt * 1.6);
     for (let i = 0; i < pulses.length; i++) {
       const p = pulses[i];
       if (!p.curve) { respawn(p); }
       p.t += p.v * dt;
-      if (p.t >= 1) { respawn(p); continue; }
-      const pos = p.curve.getPoint(p.t);
-      pulsePos[i * 3] = pos.x;
-      pulsePos[i * 3 + 1] = pos.y;
-      pulsePos[i * 3 + 2] = pos.z;
-      const env = Math.sin(Math.PI * p.t); // fade in/out at the endpoints
-      tmpColor.copy(theme.colors.accent300).multiplyScalar(env * 1.6);
+      let env = 0;
+      if (p.t < 1) {
+        const pos = p.curve.getPoint(p.t);
+        pulsePos[i * 3] = pos.x;
+        pulsePos[i * 3 + 1] = pos.y;
+        pulsePos[i * 3 + 2] = pos.z;
+        env = Math.sin(Math.PI * p.t); // fade in/out at the endpoints
+        env *= 1 + 0.8 * (energy[p.curve.userData.cluster] || 0);
+      } else {
+        respawn(p);
+      }
+      tmpColor.copy(theme.colors.accent300).multiplyScalar(env * 1.6 * calm);
       pulseCol[i * 3] = tmpColor.r;
       pulseCol[i * 3 + 1] = tmpColor.g;
       pulseCol[i * 3 + 2] = tmpColor.b;
     }
     pulseGeo.attributes.position.needsUpdate = true;
     pulseGeo.attributes.color.needsUpdate = true;
+
+    // hover bursts — one-shot bright packets in the buffer's tail, then gone
+    for (let i = bursts.length - 1; i >= 0; i--) {
+      const b = bursts[i];
+      b.t += b.v * dt;
+      const slot = PULSE_POOL + i;
+      if (b.t >= 1) { bursts.splice(i, 1); continue; }
+      const pos = b.curve.getPoint(b.t);
+      pulsePos[slot * 3] = pos.x;
+      pulsePos[slot * 3 + 1] = pos.y;
+      pulsePos[slot * 3 + 2] = pos.z;
+      const env = Math.sin(Math.PI * b.t) * b.gain;
+      tmpColor.copy(theme.colors.accent400).multiplyScalar(env);
+      pulseCol[slot * 3] = tmpColor.r;
+      pulseCol[slot * 3 + 1] = tmpColor.g;
+      pulseCol[slot * 3 + 2] = tmpColor.b;
+    }
+    // zero out stale burst slots past the live tail
+    for (let i = PULSE_POOL + bursts.length; i < PULSE_TOTAL; i++) {
+      pulseCol[i * 3] = 0; pulseCol[i * 3 + 1] = 0; pulseCol[i * 3 + 2] = 0;
+    }
+    pulseGeo.attributes.position.needsUpdate = true;
+    pulseGeo.attributes.color.needsUpdate = true;
+
+    // contact heartbeat — one slow bright packet on the longest backbone
+    if (contactActive) {
+      heartbeat -= dt;
+      if (heartbeat <= 0) {
+        heartbeat = 4.5;
+        if (bursts.length < BURST_CAP) {
+          bursts.push({ curve: longestCurve, t: 0, v: 4.5 / longestCurve.getLength(), gain: 2.4 });
+        }
+      }
+    }
+
+    // constellation — twinkle + hover highlight
+    for (let i = 0; i < constCount; i++) {
+      const g = Math.floor(i / CONST_POINTS);
+      const tw = 0.75 + 0.25 * Math.sin(t * 1.3 + constPhase[i]);
+      const k = (constActive[g] ? 1.6 : 0.4) * tw;
+      tmpColor.copy(theme.colors.accent300).multiplyScalar(k);
+      constCol[i * 3] = tmpColor.r;
+      constCol[i * 3 + 1] = tmpColor.g;
+      constCol[i * 3 + 2] = tmpColor.b;
+    }
+    constGeo.attributes.color.needsUpdate = true;
+    constellation.rotation.y = Math.sin(t * 0.05) * 0.08;
 
     // telemetry label breathing
     for (const sprite of labels) {
@@ -290,6 +407,25 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
   // ── Phase 3 hook: cluster ignition per section ────────
   function setSectionFocus(id, active) {
     if (id in focusTarget) focusTarget[id] = active ? 1 : 0.3;
+    if (id === 'contact') contactActive = active;
+  }
+
+  // ── Phase 4 hooks: DOM-driven moments ─────────────────
+  function setSectionEnergy(id, value) {
+    if (id in energy) energy[id] = Math.max(0, Math.min(1, value));
+  }
+
+  function pulseBurst(clusterId, strength = 1) {
+    const local = curves.filter((c) => c.userData.cluster === clusterId);
+    const pool = local.length ? local : curves;
+    for (let n = 0; n < 6 && bursts.length < BURST_CAP; n++) {
+      const curve = pool[(Math.random() * pool.length) | 0];
+      bursts.push({ curve, t: Math.random() * 0.1, v: (7 + Math.random() * 7) / curve.getLength(), gain: 1.4 + strength });
+    }
+  }
+
+  function setConstellation(index, active) {
+    if (index >= 0 && index < CONST_GROUPS) constActive[index] = active;
   }
 
   function dispose() {
@@ -311,6 +447,9 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     update,
     dispose,
     setSectionFocus,
+    setSectionEnergy,
+    pulseBurst,
+    setConstellation,
     anchors: Object.fromEntries(CLUSTER_DEFS.map((d) => [d.id, new THREE.Vector3(...d.center)])),
     rig, // Phase 3 rewrites rig.base / rig.look per scroll position
   };

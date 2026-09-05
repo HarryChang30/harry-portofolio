@@ -2,6 +2,8 @@
   import { _, json } from '../lib/i18n.js';
   import { currentLanguage } from '../stores/languageStore.js';
   import { onMount } from 'svelte';
+  import { tilt } from '../lib/actions/tilt.js';
+  import { webglPulse } from '../lib/webglBridge.js';
 
   const projectKeys = [
     'idxplore',
@@ -111,7 +113,15 @@
       <div class="grid lg:grid-cols-12 gap-8 lg:gap-10">
         <!-- Visual -->
         <div class="lg:col-span-7 group">
-          <a href={projectUrls.idxplore} target="_blank" rel="noopener noreferrer" class="block relative overflow-hidden rounded-lg border border-line">
+          <a
+            href={projectUrls.idxplore}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block relative overflow-hidden rounded-lg border border-line"
+            use:tilt={{ max: 3.5, scale: 1.004 }}
+            on:mouseenter={() => webglPulse('projects', 1)}
+            on:focusin={() => webglPulse('projects', 1)}
+          >
             <div class="aspect-[16/10] overflow-hidden bg-surface-1">
               <img
                 src={projectThumbnails.idxplore}
@@ -170,12 +180,19 @@
           class="group border-t border-line py-7 md:py-8 transition-all duration-700 ease-soft"
           style="opacity: {visibleEls.has(String(index)) ? '1' : '0'}; transform: translateY({visibleEls.has(String(index)) ? '0' : '16px'}); transition-delay: {index * 80}ms"
         >
-          <a href={projectUrls[projectKey]} target="_blank" rel="noopener noreferrer" class="grid md:grid-cols-12 gap-4 md:gap-8 items-center">
+          <a
+            href={projectUrls[projectKey]}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="grid md:grid-cols-12 gap-4 md:gap-8 items-center"
+            on:mouseenter={() => webglPulse('projects', 0.6)}
+            on:focusin={() => webglPulse('projects', 0.6)}
+          >
             <div class="md:col-span-1">
               <span class="font-mono text-xs text-ink-50">{String(index + 1).padStart(2, '0')}</span>
             </div>
             <!-- Thumbnail -->
-            <div class="md:col-span-2 md:row-span-1">
+            <div class="md:col-span-2 md:row-span-1" use:tilt={{ max: 6, scale: 1.02 }}>
               <div class="aspect-[16/10] rounded-md overflow-hidden border border-line bg-surface-1">
                 <img
                   src={projectThumbnails[projectKey]}

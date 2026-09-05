@@ -52,6 +52,14 @@
           scene.update(dt, t);
         });
 
+        // DOM → scene bridge: components emit webgl:* events via lib/webglBridge.js
+        const onPulse = (e) => scene.pulseBurst?.(e.detail.cluster, e.detail.strength);
+        const onEnergy = (e) => scene.setSectionEnergy?.(e.detail.cluster, e.detail.value);
+        const onHighlight = (e) => scene.setConstellation?.(e.detail.index, e.detail.active);
+        window.addEventListener('webgl:pulse', onPulse);
+        window.addEventListener('webgl:energy', onEnergy);
+        window.addEventListener('webgl:highlight', onHighlight);
+
         const onContextLost = (e) => {
           e.preventDefault();
           fallback('webgl context lost');
@@ -80,6 +88,9 @@
 
         teardown = () => {
           canvas?.removeEventListener('webglcontextlost', onContextLost);
+          window.removeEventListener('webgl:pulse', onPulse);
+          window.removeEventListener('webgl:energy', onEnergy);
+          window.removeEventListener('webgl:highlight', onHighlight);
           scroll?.dispose();
           theme.dispose();
           scene.dispose();

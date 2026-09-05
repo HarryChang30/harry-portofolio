@@ -2,6 +2,7 @@
   import { _, json } from '../lib/i18n.js';
   import { currentLanguage } from '../stores/languageStore.js';
   import { onMount } from 'svelte';
+  import { webglEnergy } from '../lib/webglBridge.js';
 
   const experienceKeys = ['nafas', 'prakerja', 'kuncie', 'grabovo', 'binus'];
 
@@ -21,6 +22,7 @@
   let sectionEl;
   let lineProgress = 0;
   let lineRaf = 0;
+  let mirrored = -1;
 
   function updateLine() {
     lineRaf = 0;
@@ -28,6 +30,11 @@
     const rect = sectionEl.getBoundingClientRect();
     const vh = window.innerHeight || 1;
     lineProgress = Math.max(0, Math.min(1, (vh * 0.72 - rect.top) / rect.height));
+    // mirror the fill fraction into the experience cluster's pulse gain
+    if (Math.abs(lineProgress - mirrored) > 0.005) {
+      mirrored = lineProgress;
+      webglEnergy('experience', lineProgress);
+    }
   }
   function onScroll() {
     if (lineRaf) return;

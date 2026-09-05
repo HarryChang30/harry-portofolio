@@ -1,6 +1,7 @@
 <script lang="ts">
   import { _ } from '../lib/i18n.js';
   import { onMount } from 'svelte';
+  import { webglHighlight } from '../lib/webglBridge.js';
 
   const skillCategories = [
     {
@@ -63,8 +64,8 @@
           class="transition-all duration-700 ease-soft"
           style="opacity: {visible ? '1' : '0'}; transform: translateY({visible ? '0' : '18px'}); transition-delay: {i * 90}ms"
           role="group"
-          on:mouseenter={() => hoveredCat = cat.key}
-          on:mouseleave={() => hoveredCat = ''}
+          on:mouseenter={() => { hoveredCat = cat.key; webglHighlight(i, true); }}
+          on:mouseleave={() => { hoveredCat = ''; webglHighlight(i, false); }}
         >
           <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-accent-400 mb-5 pb-3 border-b border-line">
             {$_(`skills.categories.${cat.key}`)}
