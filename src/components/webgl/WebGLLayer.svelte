@@ -35,6 +35,20 @@
 
     async function init() {
       try {
+        // Defer the 3D boot off the load-critical path: first paint, hydration,
+        // and TTI own the main thread. The CSS background is the same palette,
+        // and the canvas fades in anyway — an idle-time start is invisible,
+        // while evaluating three.js during load wrecks TBT/FCP.
+        await new Promise((resolve) => {
+          const start = () => {
+            if ('requestIdleCallback' in window) requestIdleCallback(() => resolve(), { timeout: 2000 });
+            else setTimeout(resolve, 400);
+          };
+          if (document.readyState === 'complete') start();
+          else window.addEventListener('load', start, { once: true });
+        });
+        const yieldToMain = () => new Promise((r) => setTimeout(r, 0));
+
         const [{ createWebGLRenderer }, { createThemeBridge }, { createHeroScene }, { createScrollDirector }] = await Promise.all([
           import('../../lib/three/renderer.js'),
           import('../../lib/three/theme.js'),
@@ -48,7 +62,9 @@
 
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const theme = createThemeBridge(THREE);
+        await yieldToMain();
         const scene = createHeroScene(THREE, app, theme, { reducedMotion });
+        await yieldToMain();
 
         app.onFrame((dt, t) => {
           theme.update(dt);
@@ -80,6 +96,7 @@
         post = await createPostChain(app, theme);
         offResize = app.onResize((w, h) => post.setSize(w, h));
         app.setRenderFrame(() => post.render());
+        await yieldToMain();
 
         // adaptive quality: mobile starts at tier B, desktop at A
         const debug = new URLSearchParams(window.location.search).has('debug');
