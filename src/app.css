@@ -73,6 +73,20 @@
   ::selection {
     @apply bg-accent-300/20 text-ink-400;
   }
+  /* thin scrollbar, tinted from the theme tokens */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line-bright)) transparent;
+  }
+  html::-webkit-scrollbar { width: 10px; }
+  html::-webkit-scrollbar-track { background: transparent; }
+  html::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--line-bright));
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  html::-webkit-scrollbar-thumb:hover { background-color: rgb(var(--accent-300) / 0.6); }
 }
 
 /* ─────────────────────────────────────────────
