@@ -15,6 +15,7 @@
   let teardown = null;
   let post = null;
   let offResize = null;
+  let governor = null;
 
   function fallback(reason) {
     if (import.meta.env.DEV && reason) console.info('[webgl] fallback:', reason);
@@ -80,6 +81,20 @@
         offResize = app.onResize((w, h) => post.setSize(w, h));
         app.setRenderFrame(() => post.render());
 
+        // adaptive quality: mobile starts at tier B, desktop at A
+        const debug = new URLSearchParams(window.location.search).has('debug');
+        const startTier = window.innerWidth < 900 || window.matchMedia('(pointer: coarse)').matches ? 1 : 0;
+        const { createQualityGovernor } = await import('../../lib/three/quality.js');
+        governor = createQualityGovernor({
+          app,
+          post,
+          scene,
+          initialTier: startTier,
+          fpsFloor: startTier === 0 ? 45 : 28,
+          debug,
+        });
+        if (debug) window.__webglTier = governor;
+
         if (reducedMotion) {
           theme.snap();
           scene.update(0, 0);
@@ -101,6 +116,8 @@
           window.removeEventListener('webgl:highlight', onHighlight);
           offResize?.();
           post?.dispose();
+          governor?.dispose();
+          if (window.__webglTier) delete window.__webglTier;
           app.setRenderFrame(null);
           scroll?.dispose();
           theme.dispose();

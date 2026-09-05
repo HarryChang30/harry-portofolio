@@ -9,7 +9,7 @@ export async function createWebGLRenderer(canvas, {
   fov = 50,
   near = 0.1,
   far = 220,
-  dprMax = 2,
+  dprMax: initialDprMax = 2,
 } = {}) {
   let THREE;
   try {
@@ -34,6 +34,8 @@ export async function createWebGLRenderer(canvas, {
   if (!renderer.getContext()) return null;
 
   renderer.setClearColor(0x000000, 0);
+
+  let dprMax = initialDprMax; // Phase 6 quality governor may lower this live
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(fov, 1, near, far);
@@ -145,6 +147,11 @@ export async function createWebGLRenderer(canvas, {
     /** let a post chain (Phase 5) own the final render */
     setRenderFrame(fn) {
       renderOverride = fn;
+    },
+    /** quality governor: lower/raise the pixel-ratio ceiling live */
+    setDPR(max) {
+      dprMax = max;
+      applySize();
     },
     start: updateRunning,
     renderStatic,

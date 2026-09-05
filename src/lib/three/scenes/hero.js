@@ -329,8 +329,13 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     // pulses — per-cluster gain mirrors section energy; calm eases the whole
     // network down for the contact closing shot
     calm += ((contactActive ? 0.55 : 1) - calm) * Math.min(1, dt * 1.6);
+    const activePool = Math.round(pulses.length * poolFraction); // quality tier gate
     for (let i = 0; i < pulses.length; i++) {
       const p = pulses[i];
+      if (i >= activePool) { // over-budget slots stay dark (additive → invisible)
+        pulseCol[i * 3] = 0; pulseCol[i * 3 + 1] = 0; pulseCol[i * 3 + 2] = 0;
+        continue;
+      }
       if (!p.curve) { respawn(p); }
       p.t += p.v * dt;
       let env = 0;
@@ -452,6 +457,13 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     if (index >= 0 && index < CONST_GROUPS) constActive[index] = active;
   }
 
+  // ── Phase 6 hook: quality tier ────────────────────────
+  let poolFraction = 1;
+  function setQualityTier(t) {
+    poolFraction = t.pool ?? 1;
+    constellation.visible = t.constellation !== false;
+  }
+
   function dispose() {
     window.removeEventListener('pointermove', onPointerMove);
     document.documentElement.removeEventListener('pointerleave', onPointerLeave);
@@ -474,6 +486,7 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     setSectionEnergy,
     pulseBurst,
     setConstellation,
+    setQualityTier,
     anchors: Object.fromEntries(CLUSTER_DEFS.map((d) => [d.id, new THREE.Vector3(...d.center)])),
     rig, // Phase 3 rewrites rig.base / rig.look per scroll position
   };

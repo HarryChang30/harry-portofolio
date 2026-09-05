@@ -24,10 +24,11 @@ export async function createPostChain(app, theme) {
   const grade = new ShaderPass(GradeShader);
   composer.addPass(grade);
 
+  let bloomScale = 1; // Phase 6 quality tiers scale the mood's bloom strength
   function applyMood() {
     const isLight = document.documentElement.classList.contains('light');
     const g = isLight ? GRADES.light : GRADES.dark;
-    bloom.strength = g.bloomStrength;
+    bloom.strength = g.bloomStrength * bloomScale;
     if (app.scene.fog) app.scene.fog.density = g.fogDensity;
     grade.uniforms.uGrain.value = g.grain;
     grade.uniforms.uVignette.value = g.vignette;
@@ -45,8 +46,11 @@ export async function createPostChain(app, theme) {
 
     /** Phase 6 quality tiers plug in here */
     setQuality(q) {
-      bloom.enabled = !!q.bloom;
-      if (typeof q.bloomStrength === 'number') bloom.strength = q.bloomStrength;
+      if ('bloom' in q) bloom.enabled = !!q.bloom;
+      if (typeof q.bloomScale === 'number') {
+        bloomScale = q.bloomScale;
+        applyMood(); // keep mood constants authoritative, scaled by tier
+      }
     },
 
     setSize(w, h) {
