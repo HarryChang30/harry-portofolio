@@ -39,7 +39,7 @@
       <a href="https://github.com/HarryChang30" target="_blank" rel="noopener noreferrer" class="text-ink-100 hover:text-accent-400 transition-colors font-mono text-sm" aria-label="GitHub">
         GitHub
       </a>
-      <a href="https://linkedin.com/in/harrychang122" target="_blank" rel="noopener noreferrer" class="text-ink-100 hover:text-accent-400 transition-colors font-mono text-sm" aria-label="LinkedIn">
+      <a href="https://linkedin.com/in/harrychang12" target="_blank" rel="noopener noreferrer" class="text-ink-100 hover:text-accent-400 transition-colors font-mono text-sm" aria-label="LinkedIn">
         LinkedIn
       </a>
     </div>
