@@ -5,10 +5,10 @@
 // operate in display space (what the eye sees), not linear light.
 
 export const GRADES = {
-  // graphite + phosphor — deeper fog, stronger glow
-  dark: { bloomStrength: 0.85, fogDensity: 0.013, grain: 0.035, vignette: 0.26, aberration: 0.9 },
+  // night sky — sharper bloom, deeper vignette, calmer grain
+  dark: { bloomStrength: 0.75, fogDensity: 0.008, grain: 0.022, vignette: 0.3, aberration: 0.8 },
   // deep navy + azure — softer glow, calmer grain
-  light: { bloomStrength: 0.55, fogDensity: 0.016, grain: 0.028, vignette: 0.22, aberration: 0.7 },
+  light: { bloomStrength: 0.5, fogDensity: 0.01, grain: 0.018, vignette: 0.26, aberration: 0.65 },
 };
 
 export const GradeShader = {

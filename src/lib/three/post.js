@@ -18,7 +18,7 @@ export async function createPostChain(app, theme) {
 
   const composer = new EffectComposer(app.renderer);
   composer.addPass(new RenderPass(app.scene, app.camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.85, 0.55, 0.6);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.75, 0.35, 0.7);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
   const grade = new ShaderPass(GradeShader);
