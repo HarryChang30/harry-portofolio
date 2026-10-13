@@ -119,6 +119,11 @@
       "仪表盘"
     ],
     "items": {
+      "nafas_residential": {
+        "name": "Nafas — Clean Air Zone 住宅空气净化",
+        "startYear": 2025,
+        "description": "Nafas 的住宅空气质量订阅服务——智能空气监测、互联净化器与 Nafas 应用整合为一项月度套餐。在后端方面，我负责构建 Go 语言的计费、订阅与支付服务（支持定期扣款），维护每日处理约 10 万条空气质量遥测数据并写入 BigQuery 的 NSQ worker 管道，并实现平台与互联 IoT 设备之间的 MQTT 双向通信。"
+      },
       "idxplore": {
         "name": "IDXplore - 股票分析平台",
         "startYear": 2025,

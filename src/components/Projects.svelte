@@ -6,6 +6,7 @@
   import { webglPulse } from '../lib/webglBridge.js';
 
   const projectKeys = [
+    'nafas_residential',
     'idxplore',
     'prakerja_dashboard', 'prakerja_job', 'prakerja_api',
     'kuncie_mobile', 'kuncie_catalog', 'kuncie_package',
@@ -17,6 +18,7 @@
   ];
 
   const projectThumbnails: Record<string, string> = {
+    nafas_residential: "/projects/nafas-residential.png",
     idxplore: "/projects/idxplore-dashboard.png",
     portfolio: "/projects/portofolio-websites.png",
     prakerja_dashboard: "/projects/prakerja-dashboard.png",
@@ -33,6 +35,7 @@
   };
 
   const projectUrls: Record<string, string> = {
+    nafas_residential: "https://nafas.com/id-en/residential",
     idxplore: "https://builder-dashboard-three.vercel.app/",
     portfolio: "https://harry-portofolio.vercel.app/",
     prakerja_dashboard: "https://dashboard.prakerja.go.id/masuk?history=/",
@@ -52,14 +55,24 @@
 
   $: currentLang = $currentLanguage;
 
+  // $_() returns the raw key when a translation is missing — treat that as "no
+  // endYear" and show the "now" label instead.
+  $: endYearLabel = (key) => {
+    const endKey = `projects.items.${key}.endYear`;
+    const end = $_(endKey);
+    return end === endKey ? $_('projects.now') : end;
+  };
+
   $: sortedKeys = [...projectKeys].sort((a, b) => {
-    const endYearA = $_(`projects.items.${a}.endYear`) || new Date().getFullYear();
-    const endYearB = $_(`projects.items.${b}.endYear`) || new Date().getFullYear();
-    return Number(endYearB) - Number(endYearA);
+    const endYearA = Number($_(`projects.items.${a}.endYear`)) || new Date().getFullYear();
+    const endYearB = Number($_(`projects.items.${b}.endYear`)) || new Date().getFullYear();
+    return endYearB - endYearA;
   });
 
   $: featuredKey = sortedKeys[0];
-  $: otherKeys = sortedKeys.slice(1);
+  // idxplore is the hardcoded featured case study above; everything else,
+  // including projects that sort above it (current work), stays in the index.
+  $: otherKeys = sortedKeys.filter((k) => k !== 'idxplore');
 
   let visibleEls = new Set();
   let sectionVisible = false;
@@ -214,7 +227,7 @@
             </div>
             <div class="md:col-span-1">
               <span class="font-mono text-[10px] text-ink-50 tracking-wider uppercase">
-                {$_(`projects.items.${projectKey}.startYear`)} — {$_(`projects.items.${projectKey}.endYear`) || $_('projects.now')}
+                {$_(`projects.items.${projectKey}.startYear`)} — {endYearLabel(projectKey)}
               </span>
             </div>
             <div class="md:col-span-1 flex justify-end">

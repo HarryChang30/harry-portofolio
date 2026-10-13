@@ -119,6 +119,11 @@
       "DASHBOARD"
     ],
     "items": {
+      "nafas_residential": {
+        "name": "Nafas — Clean Air Zone Residential",
+        "startYear": 2025,
+        "description": "Nafas's residential air-quality subscription — smart monitoring, connected purifiers, and the Nafas app under one monthly plan. On the backend I build the Go billing, subscription, and payment services behind scheduled collection, run an NSQ worker pipeline processing ~100k air-quality telemetry records per day into BigQuery, and implement MQTT two-way communication between the platform and connected IoT devices."
+      },
       "idxplore": {
         "name": "IDXplore - Stock Analysis Platform",
         "startYear": 2025,
