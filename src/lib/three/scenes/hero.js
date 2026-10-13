@@ -172,32 +172,6 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
   stars.frustumCulled = false;
   group.add(stars);
 
-  // ── Moon ─────────────────────────────────────────────
-  const moonPos = new THREE.Vector3(35, 42, -55);
-  const moonGeo = new THREE.CircleGeometry(2.5, 32);
-  const moonMat = new THREE.MeshBasicMaterial({
-    color: 0xf0e8d8,
-    transparent: true,
-    opacity: 0.85,
-    fog: false,
-  });
-  const moon = new THREE.Mesh(moonGeo, moonMat);
-  moon.position.copy(moonPos);
-  moon.lookAt(0, 0, 0);
-  group.add(moon);
-
-  const moonGlowGeo = new THREE.CircleGeometry(5.5, 32);
-  const moonGlowMat = new THREE.MeshBasicMaterial({
-    color: 0xd8d0c0,
-    transparent: true,
-    opacity: 0.12,
-    fog: false,
-  });
-  const moonGlow = new THREE.Mesh(moonGlowGeo, moonGlowMat);
-  moonGlow.position.copy(moonPos).multiplyScalar(1.005);
-  moonGlow.lookAt(0, 0, 0);
-  group.add(moonGlow);
-
   // ── Shooting stars ───────────────────────────────────
   const SHOOTING_STAR_POOL = 6;
   const shootingStars = [];
@@ -359,9 +333,6 @@ export function createHeroScene(THREE, app, theme, { reducedMotion = false } = {
     for (let i = 0; i < clouds.length; i++) {
       clouds[i].position.x += Math.sin(t * 0.02 + i * 1.7) * 0.005;
     }
-
-    // Moon — subtle glow pulse
-    moonGlowMat.opacity = 0.1 + 0.04 * Math.sin(t * 0.3);
 
     // Boot clock
     if (bootT < 1) {
